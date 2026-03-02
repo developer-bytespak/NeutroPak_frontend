@@ -20,35 +20,39 @@ const ProductCard: React.FC<ProductCardProps> = ({
   slug = 'product-slug',
 }) => {
   return (
-    <div className="product-card">
-      <div className="product-image">
-        <Link href={`/product/${slug}`}>
+    <div className="card overflow-hidden group hover:shadow-2xl transition-all duration-300">
+      <div className="relative h-56 bg-gray-200 overflow-hidden">
+        <Link href={`/product/${slug}`} className="block w-full h-full">
           <Image
             src={image}
             alt={name}
-            width={200}
-            height={200}
-            priority={false}
+            width={250}
+            height={250}
+            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
           />
         </Link>
-        <div className="product-badge">New</div>
+        <div className="absolute top-3 right-3 bg-gold-600 text-white px-3 py-1 rounded-full text-sm font-semibold">
+          Sale
+        </div>
       </div>
 
-      <div className="product-content">
-        <h3>
+      <div className="p-4">
+        <h3 className="text-lg font-bold text-gray-900 mb-2 line-clamp-2 group-hover:text-gold-600 transition-colors">
           <Link href={`/product/${slug}`}>{name}</Link>
         </h3>
 
-        <div className="product-rating">
-          <div className="stars">★★★★☆</div>
-          <span className="reviews">({reviews} reviews)</span>
+        <div className="flex items-center gap-2 mb-3">
+          <span className="text-gold-400 text-sm">★★★★★</span>
+          <span className="text-gray-500 text-xs">({reviews})</span>
         </div>
 
-        <p className="product-price">${price.toFixed(2)}</p>
+        <p className="text-2xl font-bold text-gold-600 mb-4">
+          ₨{(price as number).toLocaleString()}
+        </p>
 
-        <div className="product-actions">
-          <button className="btn-add-cart">Add to Cart</button>
-          <button className="btn-wishlist">♡</button>
+        <div className="flex gap-2">
+          <button className="flex-1 btn-primary text-sm">Add to Cart</button>
+          <button className="btn-sm border border-gray-300 text-gray-600 hover:text-amber-600">♡</button>
         </div>
       </div>
     </div>

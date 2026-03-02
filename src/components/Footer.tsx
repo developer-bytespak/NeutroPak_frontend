@@ -1,56 +1,85 @@
+'use client';
+
 import React from 'react';
 import Link from 'next/link';
 
 const Footer: React.FC = () => {
   return (
-    <footer className="footer">
-      <div className="footer-container">
-        <div className="footer-section">
-          <h3>About NeutroPak</h3>
-          <p>Your trusted e-commerce platform for quality products and exceptional service.</p>
-        </div>
+    <footer className="bg-gray-900 text-gray-100 mt-16">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        {/* Footer Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 mb-8">
+          {/* About */}
+          <div>
+            <h3 className="text-lg font-bold text-gold-400 mb-4">Honeeza</h3>
+            <p className="text-gray-400 text-sm leading-relaxed">
+              Premium raw honey from trusted beekeepers. Pure, natural, and lab-tested.
+            </p>
+            <div className="flex gap-3 mt-4">
+              <a href="#facebook" className="text-gray-400 hover:text-gold-400 transition-colors">📘</a>
+              <a href="#instagram" className="text-gray-400 hover:text-gold-400 transition-colors">📷</a>
+              <a href="#whatsapp" className="text-gray-400 hover:text-gold-400 transition-colors">💬</a>
+            </div>
+          </div>
 
-        <div className="footer-section">
-          <h3>Quick Links</h3>
-          <ul>
-            <li><Link href="/shop">Shop</Link></li>
-            <li><Link href="/about">About Us</Link></li>
-            <li><Link href="/contact">Contact</Link></li>
-            <li><Link href="/blog">Blog</Link></li>
-          </ul>
-        </div>
+          {/* Quick Links */}
+          <div>
+            <h3 className="text-lg font-bold text-gold-400 mb-4">Shop</h3>
+            <ul className="space-y-2">
+              <li><Link href="/shop" className="text-gray-400 hover:text-gold-400 transition-colors text-sm">All Products</Link></li>
+              <li><Link href="/shop?category=wild-honey" className="text-gray-400 hover:text-gold-400 transition-colors text-sm">Wild Honey</Link></li>
+              <li><Link href="/shop?category=farm-honey" className="text-gray-400 hover:text-gold-400 transition-colors text-sm">Farm Honey</Link></li>
+              <li><Link href="/blog" className="text-gray-400 hover:text-gold-400 transition-colors text-sm">Honey Guide</Link></li>
+            </ul>
+          </div>
 
-        <div className="footer-section">
-          <h3>Policies</h3>
-          <ul>
-            <li><Link href="/privacy-policy">Privacy Policy</Link></li>
-            <li><Link href="/terms-and-conditions">Terms & Conditions</Link></li>
-            <li><Link href="/shipping-policy">Shipping Policy</Link></li>
-            <li><Link href="/refund-return-policy">Refund & Returns</Link></li>
-          </ul>
-        </div>
+          {/* Company */}
+          <div>
+            <h3 className="text-lg font-bold text-gold-400 mb-4">Company</h3>
+            <ul className="space-y-2">
+              <li><Link href="/about" className="text-gray-400 hover:text-gold-400 transition-colors text-sm">About Us</Link></li>
+              <li><Link href="/contact" className="text-gray-400 hover:text-gold-400 transition-colors text-sm">Contact</Link></li>
+              <li><Link href="/faqs" className="text-gray-400 hover:text-gold-400 transition-colors text-sm">FAQs</Link></li>
+              <li><Link href="/blog" className="text-gray-400 hover:text-gold-400 transition-colors text-sm">Blog</Link></li>
+            </ul>
+          </div>
 
-        <div className="footer-section">
-          <h3>Contact</h3>
-          <ul>
-            <li>Email: support@neutropak.com</li>
-            <li>Phone: +1 (555) 123-4567</li>
-            <li>Address: 123 Commerce St, NY 10001</li>
-          </ul>
-        </div>
+          {/* Policies */}
+          <div>
+            <h3 className="text-lg font-bold text-gold-400 mb-4">Legal</h3>
+            <ul className="space-y-2">
+              <li><Link href="/privacy-policy" className="text-gray-400 hover:text-gold-400 transition-colors text-sm">Privacy Policy</Link></li>
+              <li><Link href="/terms-and-conditions" className="text-gray-400 hover:text-gold-400 transition-colors text-sm">Terms & Conditions</Link></li>
+              <li><Link href="/shipping-policy" className="text-gray-400 hover:text-gold-400 transition-colors text-sm">Shipping Info</Link></li>
+              <li><Link href="/refund-return-policy" className="text-gray-400 hover:text-gold-400 transition-colors text-sm">Returns</Link></li>
+            </ul>
+          </div>
 
-        <div className="footer-section">
-          <h3>Follow Us</h3>
-          <div className="social-links">
-            <a href="#facebook" title="Facebook">f</a>
-            <a href="#twitter" title="Twitter">𝕏</a>
-            <a href="#instagram" title="Instagram">📷</a>
+          {/* Contact */}
+          <div>
+            <h3 className="text-lg font-bold text-gold-400 mb-4">Contact</h3>
+            <div className="space-y-2 text-sm text-gray-400">
+              <p><span className="font-semibold">Email:</span> info@honeeza.com</p>
+              <p><span className="font-semibold">Phone:</span> +92 337 9788677</p>
+              <p><span className="font-semibold">Hours:</span> Mon-Fri 9-6 PM</p>
+              <p><span className="font-semibold">Location:</span> Swabi, KPK</p>
+            </div>
           </div>
         </div>
-      </div>
 
-      <div className="footer-bottom">
-        <p>&copy; 2025 NeutroPak. All rights reserved.</p>
+        {/* Divider */}
+        <div className="border-t border-gray-800 pt-8">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+            <p className="text-gray-400 text-sm">
+              &copy; 2025 Honeeza. All rights reserved.
+            </p>
+            <div className="flex gap-6 text-gray-400 text-sm">
+              <Link href="/disclaimer" className="hover:text-gold-400 transition-colors">Disclaimer</Link>
+              <span>•</span>
+              <a href="#newsletter" className="hover:text-gold-400 transition-colors">Newsletter</a>
+            </div>
+          </div>
+        </div>
       </div>
     </footer>
   );

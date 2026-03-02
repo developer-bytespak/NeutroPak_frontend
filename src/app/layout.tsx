@@ -5,17 +5,17 @@ import { CartProvider } from '@/store/CartContext';
 import '../styles/globals.css';
 
 export const metadata: Metadata = {
-  title: 'NeutroPak - Premium E-Commerce Store',
-  description: 'Your trusted platform for quality products and exceptional service',
+  title: 'Honeeza - Raw Honey, As Nature Made It',
+  description: '100% organic, pure, and lab-tested raw honey from trusted beekeepers in Pakistan. Free COD delivery nationwide.',
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body>
+      <body className="bg-white">
         <CartProvider>
           <Navbar />
-          <main className="main-content">{children}</main>
+          <main>{children}</main>
           <Footer />
         </CartProvider>
       </body>
