@@ -1,4 +1,4 @@
-import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
+import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
 
@@ -19,7 +19,7 @@ axiosInstance.interceptors.request.use(
     }
     return config;
   },
-  (error) => {
+  (error: unknown) => {
     return Promise.reject(error);
   }
 );
@@ -27,7 +27,7 @@ axiosInstance.interceptors.request.use(
 // Response interceptor
 axiosInstance.interceptors.response.use(
   (response: AxiosResponse) => response,
-  (error) => {
+  (error: AxiosError) => {
     if (error.response?.status === 401) {
       // Handle unauthorized
       console.error('Unauthorized access');
@@ -39,10 +39,10 @@ axiosInstance.interceptors.response.use(
 export const apiGet = <T,>(url: string, config?: AxiosRequestConfig) =>
   axiosInstance.get<T>(url, config);
 
-export const apiPost = <T,>(url: string, data?: any, config?: AxiosRequestConfig) =>
+export const apiPost = <T, D = unknown>(url: string, data?: D, config?: AxiosRequestConfig) =>
   axiosInstance.post<T>(url, data, config);
 
-export const apiPut = <T,>(url: string, data?: any, config?: AxiosRequestConfig) =>
+export const apiPut = <T, D = unknown>(url: string, data?: D, config?: AxiosRequestConfig) =>
   axiosInstance.put<T>(url, data, config);
 
 export const apiDelete = <T,>(url: string, config?: AxiosRequestConfig) =>

@@ -1,4 +1,5 @@
 import React, { ReactNode } from 'react';
+import Link from 'next/link';
 
 interface LayoutProps {
   children: ReactNode;
@@ -11,7 +12,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         <nav className="navbar">
           <div className="nav-brand">NeutroPak</div>
           <ul className="nav-menu">
-            <li><a href="/">Home</a></li>
+            <li><Link href="/">Home</Link></li>
           </ul>
         </nav>
       </header>
