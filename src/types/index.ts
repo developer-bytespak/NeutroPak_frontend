@@ -46,3 +46,11 @@ export interface AuthToken {
   refreshToken: string;
   expiresIn: number;
 }
+
+export interface JwtPayload {
+  id: string;
+  email: string;
+  role: 'admin' | 'user';
+  iat: number;
+  exp: number;
+}
