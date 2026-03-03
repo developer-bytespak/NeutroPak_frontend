@@ -10,12 +10,21 @@ export interface User {
 export interface Product {
   id: string;
   name: string;
+  slug: string;
   description: string;
+  fullDescription: string;
   price: number;
+  originalPrice: number;
   category: string;
-  imageUrl?: string;
-  createdAt: Date;
-  updatedAt: Date;
+  rating: number;
+  reviews: number;
+  images: string[];
+  variants: Array<{ size: string; price: number }>;
+  inStock: boolean;
+  sku: string;
+  imageUrl?: string; // Legacy
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
 export interface Order {
