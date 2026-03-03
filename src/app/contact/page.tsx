@@ -68,8 +68,8 @@ const ContactPage = () => {
                   <span className="text-2xl">✉️</span>
                   <div>
                     <p className="text-gray-600 text-sm">Email :</p>
-                    <a href="mailto:info@honeeza.com" className="font-semibold text-gray-900 hover:text-red-900">
-                      info@honeeza.com
+                    <a href="mailto:info@NeutroPak.com" className="font-semibold text-gray-900 hover:text-red-900">
+                      info@NeutroPak.com
                     </a>
                   </div>
                 </div>
@@ -77,7 +77,7 @@ const ContactPage = () => {
                 <div className="flex items-start gap-3">
                   <span className="text-2xl">📞</span>
                   <div>
-                    <p className="text-gray-600 text-sm">Phone (Honeeza Official) :</p>
+                    <p className="text-gray-600 text-sm">Phone (NeutroPak Official) :</p>
                     <a href="tel:+923379788677" className="font-semibold text-gray-900 hover:text-red-900">
                       0337 9788677
                     </a>

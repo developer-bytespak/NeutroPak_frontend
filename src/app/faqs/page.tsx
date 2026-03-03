@@ -39,22 +39,22 @@ const FAQPage = () => {
       ],
     },
     {
-      title: 'About Honeeza Honey',
+      title: 'About NeutroPak Honey',
       id: 'about',
       items: [
         {
           id: '6',
-          question: 'What makes Honeeza honey special?',
+          question: 'What makes NeutroPak honey special?',
           answer: 'We source directly from trusted beekeepers, lab-test every batch for purity, use no additives or heating, and maintain cold extraction methods to preserve all natural enzymes and nutrients.',
         },
         {
           id: '7',
-          question: 'How is Honeeza honey sourced?',
+          question: 'How is NeutroPak honey sourced?',
           answer: 'We partner with ethical, small-scale beekeepers who practice sustainable beekeeping. Our honey is harvested naturally, minimally processed, and never mixed with inferior quality honey.',
         },
         {
           id: '8',
-          question: 'Is all Honeeza honey certified organic?',
+          question: 'Is all NeutroPak honey certified organic?',
           answer: 'While not all batches have formal certification, our honey is produced to organic standards with no pesticides, chemicals, or additives. Each batch undergoes rigorous lab testing.',
         },
       ],
@@ -102,7 +102,7 @@ const FAQPage = () => {
       ],
     },
     {
-      title: 'Ordering from Honeeza: Shipping & Payments',
+      title: 'Ordering from NeutroPak: Shipping & Payments',
       id: 'ordering',
       items: [
         {
@@ -123,13 +123,13 @@ const FAQPage = () => {
       ],
     },
     {
-      title: 'Wholesale and bulk buying with Honeeza',
+      title: 'Wholesale and bulk buying with NeutroPak',
       id: 'wholesale',
       items: [
         {
           id: '18',
           question: 'Do you offer wholesale prices?',
-          answer: 'Yes! We offer attractive wholesale pricing for bulk orders. Contact us at +92 337 9788677 or info@honeeza.com for wholesale inquiries and custom pricing.',
+          answer: 'Yes! We offer attractive wholesale pricing for bulk orders. Contact us at +92 337 9788677 or info@NeutroPak.com for wholesale inquiries and custom pricing.',
         },
         {
           id: '19',
@@ -144,8 +144,8 @@ const FAQPage = () => {
       items: [
         {
           id: '20',
-          question: 'How can I contact Honeeza support?',
-          answer: 'You can reach us via WhatsApp at +92 337 9788677, email at info@honeeza.com, or fill out our contact form on the website. We respond within 24 hours.',
+          question: 'How can I contact NeutroPak support?',
+          answer: 'You can reach us via WhatsApp at +92 337 9788677, email at info@NeutroPak.com, or fill out our contact form on the website. We respond within 24 hours.',
         },
         {
           id: '21',

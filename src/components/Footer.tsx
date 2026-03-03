@@ -11,7 +11,7 @@ const Footer: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 mb-8">
           {/* About */}
           <div>
-            <h3 className="text-lg font-bold text-gold-400 mb-4">Honeeza</h3>
+            <h3 className="text-lg font-bold text-gold-400 mb-4">NeutroPak</h3>
             <p className="text-gray-400 text-sm leading-relaxed">
               Premium raw honey from trusted beekeepers. Pure, natural, and lab-tested.
             </p>
@@ -59,7 +59,7 @@ const Footer: React.FC = () => {
           <div>
             <h3 className="text-lg font-bold text-gold-400 mb-4">Contact</h3>
             <div className="space-y-2 text-sm text-gray-400">
-              <p><span className="font-semibold">Email:</span> info@honeeza.com</p>
+              <p><span className="font-semibold">Email:</span> info@NeutroPak.com</p>
               <p><span className="font-semibold">Phone:</span> +92 337 9788677</p>
               <p><span className="font-semibold">Hours:</span> Mon-Fri 9-6 PM</p>
               <p><span className="font-semibold">Location:</span> Swabi, KPK</p>
@@ -71,7 +71,7 @@ const Footer: React.FC = () => {
         <div className="border-t border-gray-800 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="text-gray-400 text-sm">
-              &copy; 2025 Honeeza. All rights reserved.
+              &copy; 2025 NeutroPak. All rights reserved.
             </p>
             <div className="flex gap-6 text-gray-400 text-sm">
               <Link href="/disclaimer" className="hover:text-gold-400 transition-colors">Disclaimer</Link>

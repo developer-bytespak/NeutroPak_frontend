@@ -28,7 +28,7 @@ const AboutPage = () => {
     {
       icon: '🧪',
       title: 'Lab Test',
-      description: 'Each batch undergoes lab testing for moisture, sucrose ratio, HMF levels, antibiotics, and adulteration. Only the batches that pass every parameter are bottled under the Honeeza name.',
+      description: 'Each batch undergoes lab testing for moisture, sucrose ratio, HMF levels, antibiotics, and adulteration. Only the batches that pass every parameter are bottled under the NeutroPak name.',
     },
     {
       icon: '🍯',
@@ -49,7 +49,7 @@ const AboutPage = () => {
         <div className="absolute inset-0 bg-black bg-opacity-20"></div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
           <h1 className="text-5xl md:text-6xl font-bold text-white mb-2">
-            About Honeeza
+            About NeutroPak
           </h1>
           <p className="text-lg text-yellow-50">Our Story, Our Mission, Our Commitment to Purity</p>
         </div>
@@ -63,18 +63,18 @@ const AboutPage = () => {
               {/* Left - Image */}
               <div className="order-2 lg:order-1">
                 <div className="bg-yellow-100 rounded-lg overflow-hidden h-96 flex items-center justify-center">
-                  <div className="text-gray-400 text-lg">Honeeza - Honey Image</div>
+                  <div className="text-gray-400 text-lg">NeutroPak - Honey Image</div>
                 </div>
               </div>
 
               {/* Right - Content */}
               <div className="order-1 lg:order-2">
-                <p className="text-sm font-semibold text-gray-700 italic mb-3">About Honeeza - Pakistan's Trusted Honey Brand</p>
+                <p className="text-sm font-semibold text-gray-700 italic mb-3">About NeutroPak - Pakistan's Trusted Honey Brand</p>
                 <h1 className="text-5xl lg:text-6xl font-bold text-red-900 mb-6 leading-tight">
                   Who We Are?
                 </h1>
                 <p className="text-gray-700 text-lg mb-8 leading-relaxed">
-                  Honeeza is a premium honey brand dedicated to delivering honey in its purest, most natural form. Honeeza is built on a simple belief — purity should never be compromised. We focus on ethical harvesting, honest ingredients, and transparent practices so you always know exactly what you're bringing home. Our commitment begins at the hive and ends in your jar — with nothing added, nothing taken away.
+                  NeutroPak is a premium honey brand dedicated to delivering honey in its purest, most natural form. NeutroPak is built on a simple belief — purity should never be compromised. We focus on ethical harvesting, honest ingredients, and transparent practices so you always know exactly what you're bringing home. Our commitment begins at the hive and ends in your jar — with nothing added, nothing taken away.
                 </p>
                 <Link
                   href="/shop"
@@ -99,10 +99,10 @@ const AboutPage = () => {
                 Our Story
               </h2>
               <p className="text-gray-700 text-lg mb-4 leading-relaxed">
-                Honeeza's journey began in 2018 when Jawed, inspired by local beekeepers, started his own beekeeping practice. For two years he worked hands-on with hives, learning every detail of natural honey production. As demand grew, he entered the market full-time — connecting directly with seasoned beekeepers, studying different honey varieties across Pakistan, and supplying large dealers and wholesalers.
+                NeutroPak's journey began in 2018 when Jawed, inspired by local beekeepers, started his own beekeeping practice. For two years he worked hands-on with hives, learning every detail of natural honey production. As demand grew, he entered the market full-time — connecting directly with seasoned beekeepers, studying different honey varieties across Pakistan, and supplying large dealers and wholesalers.
               </p>
               <p className="text-gray-700 text-lg mb-4 leading-relaxed">
-                Over the years, he developed a rare skill: the ability to identify real and fake honey instantly, even when many experienced sellers couldn't. Later, I (Irfan Ullah) joined him with a shared vision — to bring this expertise and honesty online. Together, we built Honeeza to offer pure honey in both retail and wholesale, sourced only from the regions where each specific honey naturally grows.
+                Over the years, he developed a rare skill: the ability to identify real and fake honey instantly, even when many experienced sellers couldn't. Later, I (Irfan Ullah) joined him with a shared vision — to bring this expertise and honesty online. Together, we built NeutroPak to offer pure honey in both retail and wholesale, sourced only from the regions where each specific honey naturally grows.
               </p>
               <p className="text-gray-700 text-lg leading-relaxed">
                 With Jawed's experience and our commitment to purity, we are confident in delivering both unmatched quality and reliable quantity to every customer.
@@ -137,7 +137,7 @@ const AboutPage = () => {
                 Our Process
               </h2>
               <p className="text-gray-700 text-lg leading-relaxed">
-                At Honeeza, purity isn't just a claim — it's a process. Every jar begins in the untouched floral regions of Pakistan, where our partner beekeepers use ethical, traditional methods passed down for generations. From hive to bottle, every step is controlled, tested, and protected so you receive honey exactly as nature created it: raw, unheated, enzyme-rich, and completely free from additives or adulteration.
+                At NeutroPak, purity isn't just a claim — it's a process. Every jar begins in the untouched floral regions of Pakistan, where our partner beekeepers use ethical, traditional methods passed down for generations. From hive to bottle, every step is controlled, tested, and protected so you receive honey exactly as nature created it: raw, unheated, enzyme-rich, and completely free from additives or adulteration.
               </p>
             </div>
           </div>

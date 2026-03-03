@@ -10,7 +10,7 @@ export default function PrivacyPolicy() {
         <section className="legal-section">
           <h2>1. Introduction</h2>
           <p>
-            Honeeza (&quot;we&quot; or &quot;our&quot;) is committed to protecting your privacy. This page explains our policies regarding the 
+            NeutroPak (&quot;we&quot; or &quot;our&quot;) is committed to protecting your privacy. This page explains our policies regarding the 
             collection, use, and disclosure of your personal data when you use our website and how to control your information.
           </p>
         </section>
@@ -58,7 +58,7 @@ export default function PrivacyPolicy() {
 
         <section className="legal-section">
           <h2>6. Contact Us</h2>
-          <p>For privacy concerns, contact us at info@honeeza.com or +92 337 9788677</p>
+          <p>For privacy concerns, contact us at info@NeutroPak.com or +92 337 9788677</p>
         </section>
       </div>
     </main>

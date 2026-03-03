@@ -51,7 +51,7 @@ export default function TermsAndConditions() {
         <section className="legal-section">
           <h2>6. Limitation of Liability</h2>
           <p>
-            Honeeza and its suppliers are not liable for any damages arising from use or inability to use our website or products.
+            NeutroPak and its suppliers are not liable for any damages arising from use or inability to use our website or products.
           </p>
         </section>
 

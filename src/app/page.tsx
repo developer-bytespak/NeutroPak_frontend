@@ -114,8 +114,8 @@ const HomePage = () => {
   const faqItems = [
     {
       id: '1',
-      question: 'Is Honeeza honey 100% pure and natural?',
-      answer: 'Yes. Honeeza offers raw, unprocessed, and chemical-free honey sourced directly from trusted beekeepers. No sugar, no additives, no heating.',
+      question: 'Is NeutroPak honey 100% pure and natural?',
+      answer: 'Yes. NeutroPak offers raw, unprocessed, and chemical-free honey sourced directly from trusted beekeepers. No sugar, no additives, no heating.',
       category: 'Basics',
     },
     {
@@ -126,7 +126,7 @@ const HomePage = () => {
     },
     {
       id: '3',
-      question: 'What makes Honeeza different from regular store-bought honey?',
+      question: 'What makes NeutroPak different from regular store-bought honey?',
       answer: 'We ensure direct sourcing from trusted beekeepers, are lab-tested for purity, and never add sugar or additives.',
       category: 'Basics',
     },
@@ -138,7 +138,7 @@ const HomePage = () => {
     },
     {
       id: '5',
-      question: 'Can diabetics consume Honeeza honey?',
+      question: 'Can diabetics consume NeutroPak honey?',
       answer: 'While honey is natural, diabetics should consult their doctors before consumption.',
       category: 'Health',
     },
@@ -219,12 +219,12 @@ const HomePage = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
             {/* Left Side */}
             <div>
-              <p className="text-sm font-semibold text-gray-700 mb-2">Why Choose Honeeza?</p>
+              <p className="text-sm font-semibold text-gray-700 mb-2">Why Choose NeutroPak?</p>
               <h2 className="text-4xl md:text-5xl font-bold text-red-900 mb-6 leading-tight">
                 Where Sweetness Meets Health
               </h2>
               <p className="text-gray-800 text-lg mb-8 leading-relaxed">
-                Honeeza source honey from ethical, small-scale beekeepers across Pakistan 
+                NeutroPak source honey from ethical, small-scale beekeepers across Pakistan 
                 and tested for purity before it reaches you. No heating, no additives, 
                 no industrial processing — just real honey with all its natural enzymes, 
                 pollen, flavor, and health benefits intact.
@@ -302,7 +302,7 @@ const HomePage = () => {
                 The Story Behind Every Drop
               </h2>
               <p className="text-gray-600 text-lg mb-4 leading-relaxed">
-                At Honeeza, purity isn't just a claim — it's a process. Every jar begins in the 
+                At NeutroPak, purity isn't just a claim — it's a process. Every jar begins in the 
                 untouched regions of Pakistan, where our partner beekeepers use ethical, traditional 
                 methods passed down for generations.
               </p>
@@ -316,7 +316,7 @@ const HomePage = () => {
               </Link>
             </div>
             <div className="bg-gold-100 rounded-lg overflow-hidden h-96 flex items-center justify-center">
-              <div className="text-gray-400 text-lg">Honeeza Beekeepers</div>
+              <div className="text-gray-400 text-lg">NeutroPak Beekeepers</div>
             </div>
           </div>
         </div>

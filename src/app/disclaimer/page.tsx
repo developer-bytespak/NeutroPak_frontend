@@ -7,7 +7,7 @@ export default function Disclaimer() {
       <div className="bg-gold-50 py-12">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <h1 className="text-4xl font-bold text-gray-900">Disclaimer</h1>
-          <p className="text-gray-600 mt-2">Important information about Honeeza services and website use</p>
+          <p className="text-gray-600 mt-2">Important information about NeutroPak services and website use</p>
         </div>
       </div>
 
@@ -18,12 +18,12 @@ export default function Disclaimer() {
           <section className="mb-12">
             <h2 className="text-2xl font-bold text-gray-900 mb-4">General Disclaimer</h2>
             <p className="text-gray-700 mb-3">
-              The information provided on the Honeeza website (www.honeeza.com) is for general informational purposes only. 
+              The information provided on the NeutroPak website (www.NeutroPak.com) is for general informational purposes only. 
               While we strive to provide accurate and up-to-date information, we make no warranties, express or implied, 
               about the accuracy, reliability, completeness, or timeliness of any information on this website.
             </p>
             <p className="text-gray-700">
-              Your use of this website and any information obtained from it is entirely at your own risk. Honeeza shall 
+              Your use of this website and any information obtained from it is entirely at your own risk. NeutroPak shall 
               not be liable for any loss or damage resulting from your reliance on any such information or from interruptions, 
               delays, or omissions in service.
             </p>
@@ -44,7 +44,7 @@ export default function Disclaimer() {
               <li>Infants under 12 months should not consume honey due to botulism risk</li>
             </ul>
             <p className="text-gray-700">
-              Honeeza does not make medical claims and takes no responsibility for how individuals use our products. 
+              NeutroPak does not make medical claims and takes no responsibility for how individuals use our products. 
               Please consult with your doctor or healthcare provider before making any changes to your diet or health regimen.
             </p>
           </section>
@@ -63,7 +63,7 @@ export default function Disclaimer() {
               <li>Exact weights and measures may have minor variations (±2%)</li>
             </ul>
             <p className="text-gray-700">
-              Honeeza reserves the right to refuse or cancel any order, and to correct or update product information at any time.
+              NeutroPak reserves the right to refuse or cancel any order, and to correct or update product information at any time.
             </p>
           </section>
 
@@ -71,13 +71,13 @@ export default function Disclaimer() {
           <section className="mb-12">
             <h2 className="text-2xl font-bold text-gray-900 mb-4">Limitation of Liability</h2>
             <p className="text-gray-700 mb-3">
-              TO THE MAXIMUM EXTENT PERMITTED BY LAW, HONEEZA SHALL NOT BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, 
+              TO THE MAXIMUM EXTENT PERMITTED BY LAW, NEUTROPAK SHALL NOT BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, 
               CONSEQUENTIAL, OR PUNITIVE DAMAGES ARISING OUT OF YOUR USE OF THIS WEBSITE OR PRODUCTS, EVEN IF WE HAVE BEEN 
               ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
             </p>
             <p className="text-gray-700">
               This includes, but is not limited to, damages for loss of profits, goodwill, data, or other intangible losses, 
-              even if Honeeza has been advised of the possibility of such damages.
+              even if NeutroPak has been advised of the possibility of such damages.
             </p>
           </section>
 
@@ -89,10 +89,10 @@ export default function Disclaimer() {
               do not constitute an endorsement of those websites or their contents.
             </p>
             <ul className="list-disc pl-6 mb-3 text-gray-700">
-              <li>Honeeza is not responsible for the content of external websites</li>
+              <li>NeutroPak is not responsible for the content of external websites</li>
               <li>We do not endorse products or services offered on linked websites</li>
               <li>Use of external websites is at your own risk and subject to their terms</li>
-              <li>Honeeza is not responsible for any loss or damage from accessing external links</li>
+              <li>NeutroPak is not responsible for any loss or damage from accessing external links</li>
             </ul>
             <p className="text-gray-700">
               Please review the terms and privacy policies of any external websites before providing personal information.
@@ -103,10 +103,10 @@ export default function Disclaimer() {
           <section className="mb-12">
             <h2 className="text-2xl font-bold text-gray-900 mb-4">Website & Services Provided "As-Is"</h2>
             <p className="text-gray-700 mb-3">
-              The Honeeza website and services are provided on an "AS-IS" and "AS-AVAILABLE" basis without warranties of any kind.
+              The NeutroPak website and services are provided on an "AS-IS" and "AS-AVAILABLE" basis without warranties of any kind.
             </p>
             <p className="text-gray-700 mb-3">
-              Except as expressly stated, Honeeza disclaims all warranties, expressed or implied, including but not limited to:
+              Except as expressly stated, NeutroPak disclaims all warranties, expressed or implied, including but not limited to:
             </p>
             <ul className="list-disc pl-6 mb-3 text-gray-700">
               <li>Warranties of merchantability, fitness for a particular purpose, and non-infringement</li>
@@ -119,7 +119,7 @@ export default function Disclaimer() {
           <section className="mb-12">
             <h2 className="text-2xl font-bold text-gray-900 mb-4">Modifications to This Disclaimer</h2>
             <p className="text-gray-700">
-              Honeeza reserves the right to modify this disclaimer at any time without prior notice. Changes become effective 
+              NeutroPak reserves the right to modify this disclaimer at any time without prior notice. Changes become effective 
               immediately upon posting to the website. Continued use of the website following notice of such changes constitutes 
               your acceptance of the updated disclaimer. We encourage you to review this page periodically for updates.
             </p>
@@ -132,7 +132,7 @@ export default function Disclaimer() {
               If you have any questions or concerns about this disclaimer, please contact us:
             </p>
             <div className="space-y-2 text-gray-700">
-              <p><strong>Email:</strong> <a href="mailto:info@honeeza.com" className="text-gold-600 hover:text-gold-700">info@honeeza.com</a></p>
+              <p><strong>Email:</strong> <a href="mailto:info@NeutroPak.com" className="text-gold-600 hover:text-gold-700">info@NeutroPak.com</a></p>
               <p><strong>Phone:</strong> <a href="tel:+923379788677" className="text-gold-600 hover:text-gold-700">+92 337 9788677</a></p>
               <p><strong>Address:</strong> Swabi, Khyber Pakhtunkhwa, Pakistan</p>
             </div>
