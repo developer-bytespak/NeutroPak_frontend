@@ -7,7 +7,7 @@ interface OrderDetailProps {
   };
 }
 export const metadata = {
-  title: 'Order Details - Admin | NeutroPak',
+  title: 'Order Details - Admin | NutreoPak',
   description: 'Order details',
 };
 

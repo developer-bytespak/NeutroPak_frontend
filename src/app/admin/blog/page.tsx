@@ -5,7 +5,7 @@ import Link from 'next/link';
 
 export default function AdminBlog() {
   const posts = [
-    { id: 1, title: 'Getting Started with NeutroPak', author: 'Admin', status: 'Published', published: 'Mar 1, 2025', views: 234 },
+    { id: 1, title: 'Getting Started with NutreoPak', author: 'Admin', status: 'Published', published: 'Mar 1, 2025', views: 234 },
     { id: 2, title: 'Health Benefits of Raw Honey', author: 'Admin', status: 'Published', published: 'Feb 28, 2025', views: 456 },
     { id: 3, title: 'How to Store Honey Properly', author: 'Admin', status: 'Draft', published: 'Unpublished', views: 0 },
   ];

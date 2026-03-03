@@ -5,9 +5,9 @@ import ProductCard from '@/components/ProductCard';
 import Link from 'next/link';
 
 const ShopPage = () => {
-  const [priceRange, setPriceRange] = useState([790, 4400]);
+  const [priceRange, setPriceRange] = useState([790, 6000]);
   const [appliedFilters, setAppliedFilters] = useState({
-    priceRange: [790, 4400],
+    priceRange: [790, 6000],
     stockStatus: null,
   });
   const [tempStockStatus, setTempStockStatus] = useState(null);
@@ -16,52 +16,60 @@ const ShopPage = () => {
   // Sample products data
   const allProducts = [
     {
-      slug: 'sidr-honey-125g',
-      name: 'Sidr (Beri) Honey - 125g',
-      price: 799,
-      image: '/sidr-honey-125g.jpg',
+      slug: 'cinnamon-infused-honey-500g',
+      name: 'Cinnamon Infused Honey (500g)',
+      price: 1450,
+      image: '/cinamin(500g).JPG',
       reviews: 150,
-      category: 'farm-honey',
+      category: 'infused-honey',
     },
     {
-      slug: 'sidr-honey-250g',
-      name: 'Sidr (Beri) Honey - 250g',
-      price: 1599,
-      image: '/sidr-honey-250g.jpg',
+      slug: 'chilli-infused-honey-500g',
+      name: 'Chilli Infused Honey (500g)',
+      price: 1450,
+      image: '/chilli(500g).JPG',
       reviews: 200,
-      category: 'farm-honey',
+      category: 'infused-honey',
     },
     {
-      slug: 'sidr-honey-500g',
-      name: 'Sidr (Beri) Honey - 500g',
-      price: 2399,
-      image: '/sidr-honey-500g.jpg',
+      slug: 'acacia-honey-500g',
+      name: 'Acacia Honey (500g)',
+      price: 1380,
+      image: '/acacia(500g).JPG',
       reviews: 180,
       category: 'farm-honey',
     },
     {
-      slug: 'sidr-honey-1kg',
-      name: 'Sidr (Beri) Honey - 1kg',
-      price: 4399,
-      image: '/sidr-honey-1kg.jpg',
+      slug: 'acacia-honey-250g',
+      name: 'Acacia Honey (250g)',
+      price: 850,
+      image: '/acaciaa(250g).png',
       reviews: 220,
       category: 'farm-honey',
     },
     {
-      slug: 'wild-forest-honey-250g',
-      name: 'Wild Forest Honey - 250g',
-      price: 1899,
-      image: '/wild-honey-250g.jpg',
+      slug: 'chilli-infused-honey-250g',
+      name: 'Chilli Infused Honey (250g)',
+      price: 930,
+      image: '/chilli(250g).png',
       reviews: 160,
-      category: 'wild-honey',
+      category: 'infused-honey',
     },
     {
-      slug: 'wild-forest-honey-500g',
-      name: 'Wild Forest Honey - 500g',
-      price: 3299,
-      image: '/wild-honey-500g.jpg',
+      slug: 'cinnamon-infused-honey-250g',
+      name: 'Cinnamon Infused Honey (250g)',
+      price: 930,
+      image: '/cinamin_infused(250g).png',
       reviews: 190,
-      category: 'wild-honey',
+      category: 'infused-honey',
+    },
+    {
+      slug: 'gift-box-250g',
+      name: 'Gift Box (250g)',
+      price: 2450,
+      image: '/giftbox.jpeg',
+      reviews: 210,
+      category: 'gift-sets',
     },
   ];
 

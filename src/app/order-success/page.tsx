@@ -143,8 +143,8 @@ const OrderSuccessPage = () => {
           <p>
             If you have any questions about your
             order, please contact us at{' '}
-            <a href="mailto:info@NeutroPak.com">
-              info@NeutroPak.com
+            <a href="mailto:nutreopak@gmail.com">
+              nutreopak@gmail.com
             </a>{' '}
             or call{' '}
             <a href="tel:+923379788677">

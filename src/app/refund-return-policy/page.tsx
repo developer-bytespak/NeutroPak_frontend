@@ -29,7 +29,7 @@ const RefundReturnPolicy = () => {
         <section className="legal-section">
           <h2>3. How to Return</h2>
           <ol>
-            <li>Contact us at info@NeutroPak.com or +92 337 9788677 within 30 days</li>
+            <li>Contact us at nutreopak@gmail.com or +92 337 9788677 within 30 days</li>
             <li>Provide your order number and photos of the issue</li>
             <li>We will guide you through the return process</li>
             <li>Ship the item back (prepaid label provided for defective items)</li>

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ProductCard from '@/components/ProductCard';
 import Image from 'next/image';
 
@@ -12,94 +12,329 @@ interface ProductDetailPageProps {
 
 const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ params }) => {
   const [quantity, setQuantity] = useState(1);
-  const [selectedVariant, setSelectedVariant] = useState('250g');
+  const [selectedVariant, setSelectedVariant] = useState<string>('');
 
-  // Sample product data - would be fetched from backend
-  const product = {
-    id: '1',
-    name: 'Sidr (Beri) Honey - Pure Raw Honey',
-    slug: params.slug,
-    price: 1599,
-    originalPrice: 1800,
-    rating: 4.9,
-    reviews: 200,
-    description:
-      'Pure, raw Sidr honey collected from trusted beekeepers in Pakistan. 100% organic, unheated, and lab-tested for quality. Contains all natural enzymes and antioxidants.',
-    fullDescription: `Sidr (Beri) honey is one of the most sought-after honey varieties due to its exceptional health benefits and rich taste. Our Sidr honey is sourced from the best beekeepers in Pakistan who use traditional methods to maintain purity.
+  useEffect(() => {
+    // Set initial variant after component mounts
+    const productsDatabase: { [key: string]: any } = {
+      'cinnamon-infused-honey-500g': {
+        variants: [{ size: 'Standard', price: 1450 }]
+      },
+      'chilli-infused-honey-500g': {
+        variants: [{ size: 'Standard', price: 1450 }]
+      },
+      'acacia-honey-500g': {
+        variants: [{ size: 'Standard', price: 1380 }]
+      },
+      'acacia-honey-250g': {
+        variants: [{ size: 'Standard', price: 850 }]
+      },
+      'chilli-infused-honey-250g': {
+        variants: [{ size: 'Standard', price: 930 }]
+      },
+      'cinnamon-infused-honey-250g': {
+        variants: [{ size: 'Standard', price: 930 }]
+      },
+      'gift-box-250g': {
+        variants: [{ size: 'Standard', price: 2450 }]
+      },
+    };
+    
+    const product = productsDatabase[params.slug];
+    if (product && product.variants.length > 0) {
+      setSelectedVariant(product.variants[0].size);
+    }
+  }, [params.slug]);
+
+  // All products database
+  const productsDatabase: { [key: string]: any } = {
+    'cinnamon-infused-honey-500g': {
+      id: '1',
+      name: 'Cinnamon Infused Honey (500g)',
+      slug: 'cinnamon-infused-honey-500g',
+      price: 1450,
+      originalPrice: 1599,
+      rating: 4.9,
+      reviews: 150,
+      category: 'Infused Honey',
+      description: 'Premium cinnamon-infused honey combining the warmth of cinnamon with pure raw honey. Perfect for health-conscious consumers looking for natural flavor and medicinal benefits.',
+      fullDescription: `Our Cinnamon Infused Honey is a perfect blend of premium raw honey and premium-grade cinnamon powder. This natural infusion provides all the benefits of raw honey combined with cinnamon's warming properties.
 
 Key Benefits:
-• Boosts immunity and energy levels
-• Rich in antioxidants and enzymes
-• Natural antibacterial properties
-• Supports digestive health
-• Improves sleep quality
+• Boosts metabolism and energy
+• Rich in antioxidants and cinnamon's natural healing properties
+• Supports healthy blood sugar levels
+• Natural anti-inflammatory properties
+• Perfect for tea, warm milk, or direct consumption
 
 Our Process:
-Every batch is cold-extracted, gently filtered to preserve nutrients, and lab-tested for purity. We never add sugar or use artificial processing methods.`,
-    images: [
-      '/sidr-honey-250g.jpg',
-      '/sidr-honey-250g-back.jpg',
-      '/sidr-honey-bottle.jpg',
-    ],
-    variants: [
-      { size: '125g', price: 799 },
-      { size: '250g', price: 1599 },
-      { size: '500g', price: 2399 },
-      { size: '1kg', price: 4399 },
-    ],
-    inStock: true,
-    sku: 'SIDR-250G-001',
-    category: 'Farm Honey',
+We carefully infuse premium cinnamon powder into cold-extracted honey, maintaining all natural enzymes and nutrients. No artificial flavoring or additives—just pure honey and pure cinnamon.`,
+      images: [
+        '/cinamin(500g).JPG',
+        '/cinamin(500g).JPG',
+        '/cinamin(500g).JPG',
+      ],
+      variants: [
+        { size: 'Standard', price: 1450 }
+      ],
+      inStock: true,
+      sku: 'CINNAMON-500G-001',
+    },
+    'chilli-infused-honey-500g': {
+      id: '2',
+      name: 'Chilli Infused Honey (500g)',
+      slug: 'chilli-infused-honey-500g',
+      price: 1450,
+      originalPrice: 1599,
+      rating: 4.8,
+      reviews: 200,
+      category: 'Infused Honey',
+      description: 'Fiery chilli-infused honey that brings heat and wellness together. Ideal for those seeking a unique taste with thermogenic benefits.',
+      fullDescription: `Our Chilli Infused Honey combines the smoothness of raw honey with the warming kick of premium chilli peppers. This bold infusion is perfect for those who want natural spice with health benefits.
+
+Key Benefits:
+• Boosts metabolism and thermogenesis
+• Rich in capsaicin for circulation and energy
+• Natural antibacterial properties
+• Supports respiratory and digestive health
+• Adds unique flavor to food and beverages
+
+Our Process:
+Premium chilli is carefully infused into our cold-extracted honey, preserving all beneficial compounds. No artificial heat or additives—purely natural ingredients.`,
+      images: [
+        '/chilli(500g).JPG',
+        '/chilli(500g).JPG',
+        '/chilli(500g).JPG',
+      ],
+      variants: [
+        { size: 'Standard', price: 1450 }
+      ],
+      inStock: true,
+      sku: 'CHILLI-500G-001',
+    },
+    'acacia-honey-500g': {
+      id: '3',
+      name: 'Acacia Honey (500g)',
+      slug: 'acacia-honey-500g',
+      price: 1380,
+      originalPrice: 1599,
+      rating: 4.9,
+      reviews: 180,
+      category: 'Farm Honey',
+      description: 'Pure acacia honey known for its light flavor and rapid crystallization. One of the finest honey varieties for direct consumption and health benefits.',
+      fullDescription: `Acacia honey is among the most sought-after varieties due to its light color, mild taste, and exceptional health benefits. Our acacia honey is sourced from pristine acacia forests.
+
+Key Benefits:
+• Gentle on stomach and digestive system
+• High in antioxidants and minerals
+• Ideal for allergy management
+• Natural energy boost
+• Excellent for skin health
+
+Our Process:
+Collected from acacia flowers in untouched regions, our honey undergoes cold extraction and gentle filtration to preserve all nutrients. Lab-tested for purity and quality.`,
+      images: [
+        '/acacia(500g).JPG',
+        '/acacia(500g).JPG',
+        '/acacia(500g).JPG',
+      ],
+      variants: [
+        { size: 'Standard', price: 1380 }
+      ],
+      inStock: true,
+      sku: 'ACACIA-500G-001',
+    },
+    'acacia-honey-250g': {
+      id: '4',
+      name: 'Acacia Honey (250g)',
+      slug: 'acacia-honey-250g',
+      price: 850,
+      originalPrice: 999,
+      rating: 4.9,
+      reviews: 220,
+      category: 'Farm Honey',
+      description: 'Premium acacia honey in a convenient 250g size. Perfect for sampling premium quality or gifting.',
+      fullDescription: `Our Acacia Honey (250g) is the perfect introduction to premium honey. Same quality as our larger sizes, packaged for convenience and value.
+
+Key Benefits:
+• Light, pure taste perfect for all ages
+• Health-promoting minerals and enzymes
+• Smaller size for experimentation
+• Great gift option
+• Lab-tested for purity
+
+Our Process:
+Same cold-extraction and rigorous testing as all our products, just in a smaller convenient size.`,
+      images: [
+        '/acaciaa(250g).png',
+        '/acaciaa(250g).png',
+        '/acaciaa(250g).png',
+      ],
+      variants: [
+        { size: 'Standard', price: 850 }
+      ],
+      inStock: true,
+      sku: 'ACACIA-250G-001',
+    },
+    'chilli-infused-honey-250g': {
+      id: '5',
+      name: 'Chilli Infused Honey (250g)',
+      slug: 'chilli-infused-honey-250g',
+      price: 930,
+      originalPrice: 1099,
+      rating: 4.8,
+      reviews: 160,
+      category: 'Infused Honey',
+      description: 'Compact size of our signature chilli-infused honey. Experience the heat without commitment.',
+      fullDescription: `Try our Chilli Infused Honey in a smaller 250g size. Perfect for testing or use as a flavorful gift.
+
+Key Benefits:
+• Premium infused honey in compact size
+• Perfect for trying before investing in larger quantity
+• Great for gifting
+• Full nutritional benefits of chilli-infused honey
+
+Our Process:
+Same premium infusion process as our standard size with rigorous quality control.`,
+      images: [
+        '/chilli(250g).png',
+        '/chilli(250g).png',
+        '/chilli(250g).png',
+      ],
+      variants: [
+        { size: 'Standard', price: 930 }
+      ],
+      inStock: true,
+      sku: 'CHILLI-250G-001',
+    },
+    'cinnamon-infused-honey-250g': {
+      id: '6',
+      name: 'Cinnamon Infused Honey (250g)',
+      slug: 'cinnamon-infused-honey-250g',
+      price: 930,
+      originalPrice: 1099,
+      rating: 4.9,
+      reviews: 190,
+      category: 'Infused Honey',
+      description: 'Cinnamon-infused honey in 250g. Perfect for warming beverages and natural health benefits.',
+      fullDescription: `Our Cinnamon Infused Honey (250g) brings warmth and wellness to your daily routine in a convenient size.
+
+Key Benefits:
+• Smaller size for experimentation
+• Full cinnamon and honey benefits
+• Perfect for tea and warm beverages
+• Great gift option
+• Maintains all natural properties
+
+Our Process:
+Premium infusion maintained in this smaller size with same rigorous quality standards.`,
+      images: [
+        '/cinaman_infused(250g).png',
+        '/cinaman_infused(250g).png',
+        '/cinaman_infused(250g).png',
+      ],
+      variants: [
+        { size: 'Standard', price: 930 }
+      ],
+      inStock: true,
+      sku: 'CINNAMON-250G-001',
+    },
+    'gift-box-250g': {
+      id: '7',
+      name: 'Gift Box (250g)',
+      slug: 'gift-box-250g',
+      price: 2450,
+      originalPrice: 2999,
+      rating: 5.0,
+      reviews: 210,
+      category: 'Gift Sets',
+      description: 'Premium gift-packaged honey set. Perfect for special occasions and corporate gifting.',
+      fullDescription: `Our Gift Box is the perfect present for honey lovers. Beautifully packaged with premium protection for safe delivery.
+
+Contents:
+• Premium 250g honey selection
+• Elegant gift packaging
+• Perfect presentation
+• Ideal for corporate gifts and special occasions
+
+Our Process:
+Same premium honey quality with added gift packaging for that special touch. Carefully packaged to ensure safe delivery.`,
+      images: [
+        '/giftbox.jpeg',
+        '/giftbox.jpeg',
+        '/giftbox.jpeg',
+      ],
+      variants: [
+        { size: 'Standard', price: 2450 }
+      ],
+      inStock: true,
+      sku: 'GIFTBOX-250G-001',
+    },
   };
+
+  // Get product from database based on slug
+  const product = productsDatabase[params.slug] || productsDatabase['cinnamon-infused-honey-500g'];
 
   const relatedProducts = [
     {
-      slug: 'wild-forest-honey-250g',
-      name: 'Wild Forest Honey - 250g',
-      price: 1899,
-      image: '/wild-honey-250g.jpg',
-      reviews: 160,
+      slug: 'cinnamon-infused-honey-500g',
+      name: 'Cinnamon Infused Honey (500g)',
+      price: 1450,
+      image: '/cinamin(500g).JPG',
+      reviews: 150,
     },
     {
-      slug: 'sidr-honey-500g',
-      name: 'Sidr Honey - 500g',
-      price: 2399,
-      image: '/sidr-honey-500g.jpg',
-      reviews: 180,
+      slug: 'chilli-infused-honey-500g',
+      name: 'Chilli Infused Honey (500g)',
+      price: 1450,
+      image: '/chilli(500g).JPG',
+      reviews: 200,
     },
     {
-      slug: 'acacia-honey-250g',
-      name: 'Acacia Honey - 250g',
-      price: 1499,
-      image: '/acacia-honey-250g.jpg',
-      reviews: 140,
+      slug: 'gift-box-250g',
+      name: 'Gift Box (250g)',
+      price: 2450,
+      image: '/giftbox.jpeg',
+      reviews: 210,
     },
   ];
 
   return (
-    <main className="product-detail-page">
-      <section className="product-section">
-        <div className="container">
-          <div className="product-grid">
+    <main className="bg-white">
+      {/* Preload main image */}
+      <link rel="preload" as="image" href={product.images[0]} />
+      
+      {/* Product Section */}
+      <section className="py-16 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
             {/* Product Images */}
-            <div className="product-images">
-              <div className="main-image">
+            <div className="flex flex-col gap-6">
+              <div className="bg-gray-100 rounded-lg overflow-hidden flex items-center justify-center h-96">
                 <Image
                   src={product.images[0]}
                   alt={product.name}
                   width={400}
                   height={400}
                   priority
+                  quality={100}
+                  unoptimized
+                  loading="eager"
+                  className="w-full h-full object-contain"
                 />
               </div>
-              <div className="thumbnail-images">
+              <div className="flex gap-3">
                 {product.images.map((img, idx) => (
-                  <div key={idx} className="thumbnail">
+                  <div key={idx} className="bg-gray-100 rounded-lg overflow-hidden w-20 h-20 flex items-center justify-center cursor-pointer hover:border-2 hover:border-gold-600">
                     <Image
                       src={img}
                       alt={`${product.name} ${idx + 1}`}
                       width={80}
                       height={80}
+                      quality={100}
+                      unoptimized
+                      loading="eager"
+                      className="w-full h-full object-contain"
                     />
                   </div>
                 ))}
@@ -107,67 +342,71 @@ Every batch is cold-extracted, gently filtered to preserve nutrients, and lab-te
             </div>
 
             {/* Product Details */}
-            <div className="product-details">
-              <div className="breadcrumb">
-                <a href="/">Home</a> / <a href="/shop">Shop</a> /{' '}
-                <span>{product.category}</span>
+            <div>
+              <div className="mb-6">
+                <a href="/" className="text-gray-600 hover:text-gray-800 text-sm">Home</a> / 
+                <a href="/shop" className="text-gray-600 hover:text-gray-800 text-sm"> Shop</a> / 
+                <span className="text-gray-800 text-sm"> {product.category}</span>
               </div>
 
-              <h1>{product.name}</h1>
+              <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">{product.name}</h1>
 
-              <div className="rating">
-                <span className="stars">
+              <div className="flex items-center gap-4 mb-6">
+                <span className="text-gold-400 text-lg">
                   {'★'.repeat(Math.floor(product.rating))}
                   {'☆'.repeat(5 - Math.floor(product.rating))}
                 </span>
-                <span className="rating-value">
+                <span className="text-gray-600 text-sm">
                   {product.rating}/5 ({product.reviews} reviews)
                 </span>
               </div>
 
-              <div className="price-section">
-                <span className="current-price">
-                  ₨{product.price}
+              <div className="flex items-center gap-4 mb-6">
+                <span className="text-3xl font-bold text-gold-600">
+                  ₨{product.price.toLocaleString()}
                 </span>
                 {product.originalPrice && (
-                  <span className="original-price">
-                    ₨{product.originalPrice}
+                  <span className="text-xl text-gray-400 line-through">
+                    ₨{product.originalPrice.toLocaleString()}
                   </span>
                 )}
               </div>
 
-              <p className="description">{product.description}</p>
+              <p className="text-gray-700 mb-8">{product.description}</p>
 
               {/* Variants */}
-              <div className="variants-section">
-                <h3>Select Size</h3>
-                <div className="variants-grid">
-                  {product.variants.map((variant) => (
-                    <button
-                      key={variant.size}
-                      className={`variant-btn ${
-                        selectedVariant === variant.size
-                          ? 'active'
-                          : ''
-                      }`}
-                      onClick={() =>
-                        setSelectedVariant(variant.size)
-                      }
-                    >
-                      {variant.size} - ₨{variant.price}
-                    </button>
-                  ))}
+              {product.variants.length > 1 && (
+                <div className="mb-8">
+                  <h3 className="text-lg font-bold text-gray-900 mb-4">Select Size</h3>
+                  <div className="grid grid-cols-2 gap-3">
+                    {product.variants.map((variant) => (
+                      <button
+                        key={variant.size}
+                        className={`py-3 px-4 rounded-lg font-bold transition-all ${
+                          selectedVariant === variant.size
+                            ? 'bg-gold-600 text-white'
+                            : 'bg-gray-100 text-gray-900 hover:bg-gray-200'
+                        }`}
+                        onClick={() =>
+                          setSelectedVariant(variant.size)
+                        }
+                      >
+                        {variant.size} - ₨{variant.price.toLocaleString()}
+                      </button>
+                    ))}
+                  </div>
                 </div>
-              </div>
+              )}
 
               {/* Quantity */}
-              <div className="quantity-section">
-                <h3>Quantity</h3>
-                <div className="quantity-input">
+              <div className="mb-8">
+                <h3 className="text-lg font-bold text-gray-900 mb-4">Quantity</h3>
+                <div className="flex items-center gap-4">
                   <button
                     onClick={() =>
                       setQuantity(Math.max(1, quantity - 1))
                     }
+                    className="w-12 h-12 rounded-lg bg-gray-100 hover:bg-gray-200 font-bold text-lg"
                   >
                     −
                   </button>
@@ -175,9 +414,11 @@ Every batch is cold-extracted, gently filtered to preserve nutrients, and lab-te
                     type="number"
                     value={quantity}
                     readOnly
+                    className="w-16 h-12 text-center border border-gray-300 rounded-lg"
                   />
                   <button
                     onClick={() => setQuantity(quantity + 1)}
+                    className="w-12 h-12 rounded-lg bg-gray-100 hover:bg-gray-200 font-bold text-lg"
                   >
                     +
                   </button>
@@ -185,38 +426,33 @@ Every batch is cold-extracted, gently filtered to preserve nutrients, and lab-te
               </div>
 
               {/* Add to Cart */}
-              <div className="product-actions">
+              <div className="flex gap-4 mb-8">
                 <button
-                  className="btn btn-primary btn-large"
+                  className="flex-1 bg-gold-600 hover:bg-gold-700 text-white font-bold py-4 rounded-lg transition-colors disabled:opacity-50"
                   disabled={!product.inStock}
                 >
                   Add to Cart
                 </button>
-                <button className="btn btn-outlined btn-large">
-                  Add to Wishlist ♡
+                <button className="w-14 h-14 border-2 border-gray-300 rounded-lg hover:border-gold-600 text-2xl flex items-center justify-center">
+                  ♡
                 </button>
               </div>
 
               {/* Product Info */}
-              <div className="product-info">
-                <div className="info-item">
-                  <strong>SKU:</strong> {product.sku}
+              <div className="bg-gray-50 p-6 rounded-lg space-y-3">
+                <div className="flex justify-between">
+                  <strong className="text-gray-700">SKU:</strong>
+                  <span className="text-gray-600">{product.sku}</span>
                 </div>
-                <div className="info-item">
-                  <strong>Category:</strong>{' '}
-                  {product.category}
+                <div className="flex justify-between">
+                  <strong className="text-gray-700">Category:</strong>
+                  <span className="text-gray-600">{product.category}</span>
                 </div>
-                <div className="info-item">
-                  <strong>Stock Status:</strong>{' '}
-                  {product.inStock ? (
-                    <span className="in-stock">
-                      In Stock
-                    </span>
-                  ) : (
-                    <span className="out-stock">
-                      Out of Stock
-                    </span>
-                  )}
+                <div className="flex justify-between">
+                  <strong className="text-gray-700">Stock Status:</strong>
+                  <span className={product.inStock ? 'text-green-600' : 'text-red-600'}>
+                    {product.inStock ? 'In Stock' : 'Out of Stock'}
+                  </span>
                 </div>
               </div>
             </div>
@@ -225,11 +461,11 @@ Every batch is cold-extracted, gently filtered to preserve nutrients, and lab-te
       </section>
 
       {/* Description Tab */}
-      <section className="product-description-section">
-        <div className="container">
-          <h2>Product Details</h2>
+      <section className="py-16 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-3xl font-bold text-gray-900 mb-8">Product Details</h2>
           <div
-            className="description-content"
+            className="prose prose-lg max-w-none text-gray-700 space-y-4"
             dangerouslySetInnerHTML={{
               __html: product.fullDescription.replace(
                 /\n/g,
@@ -241,10 +477,10 @@ Every batch is cold-extracted, gently filtered to preserve nutrients, and lab-te
       </section>
 
       {/* Related Products */}
-      <section className="related-products">
-        <div className="container">
-          <h2>Related Products</h2>
-          <div className="products-grid">
+      <section className="py-16 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-3xl font-bold text-gray-900 mb-12">Related Products</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {relatedProducts.map((product) => (
               <ProductCard key={product.slug} {...product} />
             ))}

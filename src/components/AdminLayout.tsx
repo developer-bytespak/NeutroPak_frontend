@@ -50,7 +50,7 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
       <aside className="admin-sidebar">
         <div className="sidebar-header">
           <span className="collapse-icon">☰</span>
-          <h2>NeutroPak Admin</h2>
+          <h2>NutreoPak Admin</h2>
         </div>
 
         <nav className="sidebar-nav">

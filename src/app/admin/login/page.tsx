@@ -40,7 +40,7 @@ const AdminLogin: NextPage = () => {
           <div className="login-box">
             <div className="text-center mb-8">
               <Link href="/" className="text-4xl font-bold text-gold-600 hover:text-gold-700">
-                NeutroPak
+                NutreoPak
               </Link>
             </div>
 

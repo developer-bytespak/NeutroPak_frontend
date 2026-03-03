@@ -14,7 +14,7 @@ export default function BlogPost({ params }: BlogPostProps) {
   return (
     <>
       <Head>
-        <title>Blog Post - NeutroPak</title>
+        <title>Blog Post - NutreoPak</title>
         <meta name="description" content="Read our blog post" />
       </Head>
 
@@ -24,7 +24,7 @@ export default function BlogPost({ params }: BlogPostProps) {
             <Link href="/blog" className="back-link">← Back to Blog</Link>
             <h1>Blog Post Title</h1>
             <div className="post-meta">
-              <span className="author">By NeutroPak</span>
+              <span className="author">By NutreoPak</span>
               <span className="date">March 3, 2025</span>
               <span className="read-time">5 min read</span>
             </div>

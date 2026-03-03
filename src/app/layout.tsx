@@ -5,7 +5,7 @@ import { CartProvider } from '@/store/CartContext';
 import '../styles/globals.css';
 
 export const metadata: Metadata = {
-  title: 'NeutroPak - Raw Honey, As Nature Made It',
+  title: 'NutreoPak - Raw Honey, As Nature Made It',
   description: '100% organic, pure, and lab-tested raw honey from trusted beekeepers in Pakistan. Free COD delivery nationwide.',
 };
 
