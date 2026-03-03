@@ -1,9 +1,10 @@
 'use client';
 
 import { usePathname } from 'next/navigation';
+import { Suspense } from 'react';
 import Navbar from './Navbar';
 
-export default function NavbarWrapper() {
+function NavbarContent() {
   const pathname = usePathname();
 
   // Don't show navbar on admin pages
@@ -12,4 +13,12 @@ export default function NavbarWrapper() {
   }
 
   return <Navbar />;
+}
+
+export default function NavbarWrapper() {
+  return (
+    <Suspense fallback={<div className="h-16 bg-white shadow-md" />}>
+      <NavbarContent />
+    </Suspense>
+  );
 }

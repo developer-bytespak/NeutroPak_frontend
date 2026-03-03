@@ -1,9 +1,9 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import ProductCard from '@/components/ProductCard';
 import Image from 'next/image';
-import { useCart } from '@/store/CartContext';
+import CartContext from '@/store/CartContext';
 
 interface ProductDetailPageProps {
   params: {
@@ -14,7 +14,7 @@ interface ProductDetailPageProps {
 const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ params }) => {
   const [quantity, setQuantity] = useState(1);
   const [selectedVariant, setSelectedVariant] = useState<string>('');
-  const { addToCart } = useCart();
+  const cartContext = useContext(CartContext);
 
   useEffect(() => {
     // Set initial variant after component mounts
@@ -430,7 +430,13 @@ Same premium honey quality with added gift packaging for that special touch. Car
               {/* Add to Cart */}
               <div className="flex gap-4 mb-8">
                 <button
-                  onClick={() => addToCart(product, quantity)}
+                  onClick={() => {
+                    if (cartContext) {
+                      cartContext.addToCart(product, quantity);
+                    } else {
+                      alert('Cart is not available. Please refresh the page.');
+                    }
+                  }}
                   className="flex-1 bg-gold-600 hover:bg-gold-700 text-white font-bold py-4 rounded-lg transition-colors disabled:opacity-50"
                   disabled={!product.inStock}
                 >

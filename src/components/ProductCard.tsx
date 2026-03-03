@@ -1,9 +1,9 @@
 'use client';
 
-import React from 'react';
+import React, { useContext } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useCart } from '@/store/CartContext';
+import CartContext from '@/store/CartContext';
 import { Product } from '@/types';
 
 interface ProductCardProps extends Partial<Product> {
@@ -25,9 +25,13 @@ const ProductCard: React.FC<ProductCardProps> = ({
   slug = 'product-slug',
   ...rest
 }) => {
-  const { addToCart } = useCart();
+  const cartContext = useContext(CartContext);
 
   const handleAddToCart = () => {
+    if (!cartContext) {
+      alert('Cart is not available. Please refresh the page.');
+      return;
+    }
     const product: Product = {
       id: id || slug || '',
       name: name || '',
@@ -44,7 +48,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
       inStock: rest.inStock !== false,
       sku: rest.sku || '',
     };
-    addToCart(product, 1);
+    cartContext.addToCart(product, 1);
   };
   return (
     <div className="card overflow-hidden group hover:shadow-2xl transition-all duration-300 flex flex-col h-full">
