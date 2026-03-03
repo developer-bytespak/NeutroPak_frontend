@@ -61,3 +61,262 @@
     @apply w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-gold-600 focus:ring-2 focus:ring-gold-100 resize-none;
   }
 }
+
+/* ==================== ADMIN STYLES ==================== */
+
+/* Admin Login Page */
+.admin-login-page {
+  @apply min-h-screen bg-gradient-to-br from-yellow-50 via-yellow-100 to-amber-50 flex items-center justify-center px-4;
+}
+
+.login-container {
+  @apply w-full max-w-md;
+}
+
+.login-box {
+  @apply bg-white rounded-3xl shadow-2xl p-6 space-y-5 border-t-4 border-yellow-500;
+}
+
+.login-box h1 {
+  @apply text-3xl font-bold text-yellow-600 text-center mb-1;
+}
+
+.login-box > p {
+  @apply text-center text-gray-600 text-base mb-5;
+}
+
+.login-form {
+  @apply space-y-4;
+}
+
+.form-group {
+  @apply space-y-1.5;
+}
+
+.form-group label {
+  @apply block text-sm font-bold text-gray-700;
+}
+
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group input[type="password"] {
+  @apply w-full px-4 py-2.5 border-2 border-yellow-300 rounded-lg focus:outline-none focus:border-yellow-500 focus:ring-2 focus:ring-yellow-100 transition-all text-gray-900 bg-yellow-50;
+}
+
+.form-group input[type="checkbox"] {
+  @apply w-4 h-4 cursor-pointer accent-yellow-500;
+}
+
+.form-group label[for="remember"] {
+  @apply flex items-center gap-2 font-normal text-gray-600 text-sm;
+}
+
+.login-btn {
+  @apply w-full bg-gradient-to-r from-yellow-500 to-amber-500 text-white font-bold py-2.5 rounded-lg hover:from-yellow-600 hover:to-amber-600 transition-all transform hover:scale-105 active:scale-95 shadow-lg;
+}
+
+.login-footer {
+  @apply text-center space-y-1;
+}
+
+.login-footer a {
+  @apply text-yellow-600 hover:text-yellow-700 font-semibold transition-colors text-sm;
+}
+
+/* Admin Layout */
+.admin-layout {
+  @apply flex min-h-screen bg-gray-50;
+}
+
+.admin-sidebar {
+  @apply w-64 bg-gray-900 text-white fixed h-screen overflow-y-auto transition-all duration-300 z-50 lg:relative lg:translate-x-0;
+}
+
+.admin-sidebar.closed {
+  @apply -translate-x-full lg:translate-x-0 lg:w-20;
+}
+
+.sidebar-header {
+  @apply bg-gradient-to-r from-gold-600 to-gold-700 p-6 flex justify-between items-center;
+}
+
+.sidebar-header h2 {
+  @apply text-xl font-bold text-white;
+}
+
+.toggle-btn {
+  @apply text-white text-2xl cursor-pointer hover:opacity-80 transition-opacity;
+}
+
+.sidebar-nav {
+  @apply flex flex-col gap-2 p-4;
+}
+
+.nav-link {
+  @apply px-4 py-3 rounded-lg text-gray-200 hover:bg-gold-600 hover:text-white transition-colors font-medium;
+}
+
+.nav-link.active {
+  @apply bg-gold-600 text-white;
+}
+
+.sidebar-footer {
+  @apply p-4 border-t border-gray-700 space-y-2;
+}
+
+.logout-btn {
+  @apply w-full px-4 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors font-semibold;
+}
+
+/* Admin Main */
+.admin-main {
+  @apply flex-1 flex flex-col lg:ml-0;
+}
+
+.admin-header {
+  @apply bg-white shadow-md px-6 py-4 flex items-center justify-between sticky top-0 z-40;
+}
+
+.menu-toggle {
+  @apply text-2xl cursor-pointer text-gray-700 hover:text-gold-600 transition-colors lg:hidden;
+}
+
+.header-actions {
+  @apply flex items-center gap-4;
+}
+
+.search-input {
+  @apply px-4 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-gold-600 transition-colors hidden md:block;
+}
+
+.user-menu {
+  @apply px-4 py-2 bg-gold-600 text-white rounded-lg hover:bg-gold-700 transition-colors font-semibold cursor-pointer;
+}
+
+.admin-content {
+  @apply flex-1 p-6 lg:p-8;
+}
+
+.admin-footer {
+  @apply bg-gray-900 text-gray-400 text-center py-4 px-6 text-sm;
+}
+
+/* Admin Dashboard */
+.admin-dashboard {
+  @apply space-y-8;
+}
+
+.admin-dashboard h1 {
+  @apply text-3xl font-bold text-gray-900 mb-6;
+}
+
+.stats-grid {
+  @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6;
+}
+
+.stat-card {
+  @apply bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow;
+}
+
+.stat-card h3 {
+  @apply text-gray-600 font-semibold mb-2;
+}
+
+.stat-value {
+  @apply text-3xl font-bold text-gold-600;
+}
+
+.dashboard-charts {
+  @apply grid grid-cols-1 lg:grid-cols-2 gap-6;
+}
+
+.chart-section {
+  @apply bg-white p-6 rounded-lg shadow-md;
+}
+
+.chart-section h2 {
+  @apply text-xl font-bold text-gray-900 mb-4;
+}
+
+/* Admin Tables */
+.admin-table {
+  @apply w-full border-collapse;
+}
+
+.admin-table thead {
+  @apply bg-gray-100;
+}
+
+.admin-table th {
+  @apply px-6 py-3 text-left font-semibold text-gray-700 border-b-2 border-gray-300;
+}
+
+.admin-table tbody tr {
+  @apply border-b border-gray-200 hover:bg-gray-50 transition-colors;
+}
+
+.admin-table td {
+  @apply px-6 py-4;
+}
+
+/* Admin Forms */
+.admin-form {
+  @apply bg-white rounded-lg shadow-md p-6 space-y-6;
+}
+
+.form-section {
+  @apply space-y-4;
+}
+
+.form-section h3 {
+  @apply text-lg font-bold text-gray-900 mb-4 pb-2 border-b-2 border-gold-300;
+}
+
+.form-row {
+  @apply grid grid-cols-1 md:grid-cols-2 gap-6;
+}
+
+.form-row.full {
+  @apply grid-cols-1;
+}
+
+.admin-form label {
+  @apply block text-sm font-semibold text-gray-700 mb-2;
+}
+
+.admin-form input,
+.admin-form select,
+.admin-form textarea {
+  @apply w-full px-4 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-gold-600 focus:ring-2 focus:ring-gold-100 transition-all;
+}
+
+.form-buttons {
+  @apply flex gap-4 pt-6;
+}
+
+.btn-save {
+  @apply px-6 py-3 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700 transition-colors;
+}
+
+.btn-cancel {
+  @apply px-6 py-3 bg-gray-600 text-white font-semibold rounded-lg hover:bg-gray-700 transition-colors;
+}
+
+.btn-delete {
+  @apply px-6 py-3 bg-red-600 text-white font-semibold rounded-lg hover:bg-red-700 transition-colors;
+}
+
+.btn-edit {
+  @apply px-3 py-2 bg-blue-600 text-white text-sm font-semibold rounded hover:bg-blue-700 transition-colors;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .admin-sidebar {
+    @apply absolute left-0 top-0;
+  }
+  
+  .admin-sidebar.closed {
+    @apply -translate-x-full;
+  }
+}

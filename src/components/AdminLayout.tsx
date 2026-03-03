@@ -1,57 +1,113 @@
 'use client';
 
-import React, { ReactNode } from 'react';
+import React, { ReactNode, useState } from 'react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 interface AdminLayoutProps {
   children: ReactNode;
 }
 
 const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
-  const [sidebarOpen, setSidebarOpen] = React.useState(true);
+  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const pathname = usePathname();
+
+  const isActive = (href: string) => {
+    return pathname === href || pathname.startsWith(href + '/');
+  };
 
   return (
     <div className="admin-layout">
+      {/* Overlay for mobile */}
+      {sidebarOpen && (
+        <div
+          className="fixed inset-0 bg-black bg-opacity-50 lg:hidden z-40"
+          onClick={() => setSidebarOpen(false)}
+        />
+      )}
+
       <aside className={`admin-sidebar ${sidebarOpen ? 'open' : 'closed'}`}>
         <div className="sidebar-header">
-          <h2>Admin Panel</h2>
+          <h2>NeutroPak Admin</h2>
           <button
-            className="toggle-btn"
-            onClick={() => setSidebarOpen(!sidebarOpen)}
+            className="toggle-btn lg:hidden"
+            onClick={() => setSidebarOpen(false)}
           >
-            {sidebarOpen ? '✕' : '☰'}
+            ✕
           </button>
         </div>
 
         <nav className="sidebar-nav">
-          <Link href="/admin/dashboard" className="nav-link">
-            Dashboard
+          <Link 
+            href="/admin/dashboard" 
+            className={`nav-link ${isActive('/admin/dashboard') ? 'active' : ''}`}
+            onClick={() => setSidebarOpen(false)}
+          >
+            📊 Dashboard
           </Link>
-          <Link href="/admin/products" className="nav-link">
-            Products
+          <Link 
+            href="/admin/products" 
+            className={`nav-link ${isActive('/admin/products') ? 'active' : ''}`}
+            onClick={() => setSidebarOpen(false)}
+          >
+            🛍️ Products
           </Link>
-          <Link href="/admin/orders" className="nav-link">
-            Orders
+          <Link 
+            href="/admin/orders" 
+            className={`nav-link ${isActive('/admin/orders') ? 'active' : ''}`}
+            onClick={() => setSidebarOpen(false)}
+          >
+            📦 Orders
           </Link>
-          <Link href="/admin/payments" className="nav-link">
-            Payments
+          <Link 
+            href="/admin/payments" 
+            className={`nav-link ${isActive('/admin/payments') ? 'active' : ''}`}
+            onClick={() => setSidebarOpen(false)}
+          >
+            💳 Payments
           </Link>
-          <Link href="/admin/blog" className="nav-link">
-            Blog
+          <Link 
+            href="/admin/blog" 
+            className={`nav-link ${isActive('/admin/blog') ? 'active' : ''}`}
+            onClick={() => setSidebarOpen(false)}
+          >
+            📝 Blog
           </Link>
-          <Link href="/admin/pages" className="nav-link">
-            Pages
+          <Link 
+            href="/admin/pages" 
+            className={`nav-link ${isActive('/admin/pages') ? 'active' : ''}`}
+            onClick={() => setSidebarOpen(false)}
+          >
+            📄 Pages
           </Link>
         </nav>
 
         <div className="sidebar-footer">
-          <Link href="#settings" className="nav-link">
-            Settings
+          <Link 
+            href="#settings" 
+            className="nav-link"
+            onClick={() => setSidebarOpen(false)}
+          >
+            ⚙️ Settings
           </Link>
-          <Link href="/" className="nav-link">
-            View Store
+          <Link 
+            href="/" 
+            className="nav-link"
+            onClick={() => setSidebarOpen(false)}
+          >
+            👁️ View Store
           </Link>
-          <button className="logout-btn">Logout</button>
+          <button 
+            className="logout-btn"
+            onClick={() => {
+              // TODO: Implement logout
+              setTimeout(() => {
+                window.location.href = '/admin/login';
+              }, 300);
+            }}
+          >
+            🚪 Logout
+          </button>
         </div>
       </aside>
 
@@ -64,8 +120,12 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
             ☰
           </button>
           <div className="header-actions">
-            <input type="text" placeholder="Search..." className="search-input" />
-            <button className="user-menu">👤 Admin</button>
+            <input 
+              type="text" 
+              placeholder="Search..." 
+              className="search-input"
+            />
+            <button className="user-menu">👤 Admin User</button>
           </div>
         </header>
 
