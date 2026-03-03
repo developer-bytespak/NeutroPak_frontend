@@ -1,7 +1,8 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import Link from 'next/link';
+import CartContext from '@/store/CartContext';
 
 const CheckoutPage = () => {
   const [formData, setFormData] = useState({
@@ -14,6 +15,14 @@ const CheckoutPage = () => {
     postalCode: '',
     paymentMethod: 'cod',
   });
+
+  const cartContext = useContext(CartContext);
+  const cart = cartContext?.cart || [];
+  const subtotal = cartContext?.total || 0;
+  const taxRate = 0.1; // 10% tax
+  const tax = Math.round(subtotal * taxRate);
+  const shippingCost = 0; // Free shipping
+  const total = subtotal + tax + shippingCost;
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -227,44 +236,55 @@ const CheckoutPage = () => {
             <div className="card p-8 h-fit sticky top-20">
               <h2 className="text-2xl font-bold text-gray-900 mb-6">Order Summary</h2>
 
-              <div className="space-y-3 mb-6 pb-6 border-b border-gray-200">
-                <div className="flex justify-between">
-                  <span className="text-gray-700">Sidr Honey (250g)</span>
-                  <span className="font-semibold text-gray-900">₨ 1,599</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-gray-700">Wild Forest Honey (500g) x2</span>
-                  <span className="font-semibold text-gray-900">₨ 6,598</span>
-                </div>
-              </div>
+              {cart.length > 0 ? (
+                <>
+                  <div className="space-y-3 mb-6 pb-6 border-b border-gray-200">
+                    {cart.map((item) => (
+                      <div key={item.id} className="flex justify-between">
+                        <span className="text-gray-700">{item.name} x{item.quantity}</span>
+                        <span className="font-semibold text-gray-900">
+                          ₨ {(item.price * item.quantity).toLocaleString('en-PK')}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
 
-              <div className="space-y-3 mb-6 pb-6 border-b border-gray-200">
-                <div className="flex justify-between">
-                  <span className="text-gray-700">Subtotal:</span>
-                  <span className="font-semibold text-gray-900">₨ 8,197</span>
+                  <div className="space-y-3 mb-6 pb-6 border-b border-gray-200">
+                    <div className="flex justify-between">
+                      <span className="text-gray-700">Subtotal:</span>
+                      <span className="font-semibold text-gray-900">₨ {subtotal.toLocaleString('en-PK')}</span>
+                    </div>
+
+                    <div className="flex justify-between">
+                      <span className="text-gray-700">Shipping:</span>
+                      <span className="text-green-600 font-bold">FREE</span>
+                    </div>
+
+                    <div className="flex justify-between">
+                      <span className="text-gray-700">Tax:</span>
+                      <span className="font-semibold text-gray-900">₨ {tax.toLocaleString('en-PK')}</span>
+                    </div>
+                  </div>
+
+                  <div className="flex justify-between py-3 border-b-2 border-gray-300 mb-6">
+                    <span className="font-bold text-gray-900">Total:</span>
+                    <span className="text-xl font-bold text-gold-600">₨ {total.toLocaleString('en-PK')}</span>
+                  </div>
+
+                  <div className="space-y-2 text-sm text-gray-600">
+                    <p className="flex items-center gap-2"><span className="text-green-600">✓</span> Secure Checkout</p>
+                    <p className="flex items-center gap-2"><span className="text-green-600">✓</span> SSL Encrypted</p>
+                    <p className="flex items-center gap-2"><span className="text-green-600">✓</span> Money Back Guarantee</p>
+                  </div>
+                </>
+              ) : (
+                <div className="py-12 text-center">
+                  <p className="text-gray-500 mb-4">Your cart is empty</p>
+                  <Link href="/shop" className="btn-primary inline-block">
+                    Continue Shopping
+                  </Link>
                 </div>
-
-                <div className="flex justify-between">
-                  <span className="text-gray-700">Shipping:</span>
-                  <span className="text-green-600 font-bold">FREE</span>
-                </div>
-
-                <div className="flex justify-between">
-                  <span className="text-gray-700">Tax:</span>
-                  <span className="font-semibold text-gray-900">₨ 410</span>
-                </div>
-              </div>
-
-              <div className="flex justify-between py-3 border-b-2 border-gray-300 mb-6">
-                <span className="font-bold text-gray-900">Total:</span>
-                <span className="text-xl font-bold text-gold-600">₨ 8,607</span>
-              </div>
-
-              <div className="space-y-2 text-sm text-gray-600">
-                <p className="flex items-center gap-2"><span className="text-green-600">✓</span> Secure Checkout</p>
-                <p className="flex items-center gap-2"><span className="text-green-600">✓</span> SSL Encrypted</p>
-                <p className="flex items-center gap-2"><span className="text-green-600">✓</span> Money Back Guarantee</p>
-              </div>
+              )}
             </div>
           </aside>
         </div>
