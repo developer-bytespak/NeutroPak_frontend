@@ -40,10 +40,18 @@ const AboutPage = () => {
   return (
     <main className="bg-white">
       {/* Page Header */}
-      <section className="bg-gold-50 py-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h1 className="text-4xl font-bold text-gray-900 mb-2">About Honeeza</h1>
-          <p className="text-lg text-gray-600">Our Story, Our Mission, Our Commitment to Purity</p>
+      <section
+        className="relative bg-center bg-cover py-32"
+        style={{
+          backgroundImage: 'url(/about_sec.png)',
+        }}
+      >
+        <div className="absolute inset-0 bg-black bg-opacity-20"></div>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+          <h1 className="text-5xl md:text-6xl font-bold text-white mb-2">
+            About Honeeza
+          </h1>
+          <p className="text-lg text-yellow-50">Our Story, Our Mission, Our Commitment to Purity</p>
         </div>
       </section>
 
