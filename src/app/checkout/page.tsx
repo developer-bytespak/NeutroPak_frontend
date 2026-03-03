@@ -42,10 +42,16 @@ const CheckoutPage = () => {
   return (
     <main>
       {/* Page Header */}
-      <section className="bg-gold-50 py-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Checkout</h1>
-          <p className="text-lg text-gray-600">Complete your order</p>
+      <section
+        className="relative bg-center bg-cover py-32"
+        style={{
+          backgroundImage: 'url(/checkout.webp)',
+        }}
+      >
+        <div className="absolute inset-0 bg-black bg-opacity-20" />
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h1 className="text-5xl md:text-6xl font-bold text-white mb-2">Checkout</h1>
+          <p className="text-lg text-yellow-50">Complete your order</p>
         </div>
       </section>
 
