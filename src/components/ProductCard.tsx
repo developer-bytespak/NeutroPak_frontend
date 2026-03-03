@@ -1,8 +1,12 @@
+'use client';
+
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useCart } from '@/store/CartContext';
+import { Product } from '@/types';
 
-interface ProductCardProps {
+interface ProductCardProps extends Partial<Product> {
   id?: string;
   name?: string;
   price?: number;
@@ -13,12 +17,35 @@ interface ProductCardProps {
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({
+  id = '',
   name = 'Product Name',
   price = 99.99,
   image = '/product-placeholder.jpg',
   reviews = 120,
   slug = 'product-slug',
+  ...rest
 }) => {
+  const { addToCart } = useCart();
+
+  const handleAddToCart = () => {
+    const product: Product = {
+      id: id || slug || '',
+      name: name || '',
+      price: price as number,
+      originalPrice: price as number,
+      slug: slug || '',
+      category: rest.category || '',
+      description: rest.description || '',
+      fullDescription: rest.fullDescription || '',
+      rating: rest.rating || 5,
+      reviews: reviews || 0,
+      images: image ? [image] : [],
+      variants: rest.variants || [],
+      inStock: rest.inStock !== false,
+      sku: rest.sku || '',
+    };
+    addToCart(product, 1);
+  };
   return (
     <div className="card overflow-hidden group hover:shadow-2xl transition-all duration-300 flex flex-col h-full">
       <div className="relative h-56 bg-gray-200 overflow-hidden">
@@ -54,8 +81,13 @@ const ProductCard: React.FC<ProductCardProps> = ({
         </p>
 
         <div className="flex gap-2 mt-auto">
-          <button className="flex-1 btn-primary text-sm">Add to Cart</button>
-          <button className="btn-sm border border-gray-300 text-gray-600 hover:text-amber-600">♡</button>
+          <button 
+            onClick={handleAddToCart}
+            className="flex-1 btn-primary text-sm hover:bg-gold-700 transition-colors"
+          >
+            Add to Cart
+          </button>
+          <button className="btn-sm border border-gray-300 text-gray-600 hover:text-amber-600 transition-colors">♡</button>
         </div>
       </div>
     </div>
