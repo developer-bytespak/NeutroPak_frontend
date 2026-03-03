@@ -7,9 +7,9 @@ const ShopPage = () => {
   const [priceRange, setPriceRange] = useState([790, 6000]);
   const [appliedFilters, setAppliedFilters] = useState({
     priceRange: [790, 6000],
-    stockStatus: null,
+    stockStatus: null as 'onSale' | 'inStock' | null,
   });
-  const [tempStockStatus, setTempStockStatus] = useState(null);
+  const [tempStockStatus, setTempStockStatus] = useState<'onSale' | 'inStock' | null>(null);
   const [sortBy, setSortBy] = useState('popularity');
 
   // Sample products data
