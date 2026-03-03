@@ -229,9 +229,9 @@ Key Benefits:
 Our Process:
 Premium infusion maintained in this smaller size with same rigorous quality standards.`,
       images: [
-        '/cinaman_infused(250g).png',
-        '/cinaman_infused(250g).png',
-        '/cinaman_infused(250g).png',
+        '/cinamin_infused(250g).png',
+        '/cinamin_infused(250g).png',
+        '/cinamin_infused(250g).png',
       ],
       variants: [
         { size: 'Standard', price: 930 }
@@ -461,18 +461,60 @@ Same premium honey quality with added gift packaging for that special touch. Car
       </section>
 
       {/* Description Tab */}
-      <section className="py-16 bg-gray-50">
+      <section className="py-20 bg-gradient-to-b from-yellow-50 via-amber-50 to-yellow-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-gray-900 mb-8">Product Details</h2>
-          <div
-            className="prose prose-lg max-w-none text-gray-700 space-y-4"
-            dangerouslySetInnerHTML={{
-              __html: product.fullDescription.replace(
-                /\n/g,
-                '<br/>'
-              ),
-            }}
-          />
+          <div className="bg-gradient-to-br from-yellow-50 to-amber-50 rounded-2xl shadow-lg p-12 lg:p-16 border-2 border-yellow-200">
+            <h2 className="text-4xl lg:text-5xl font-bold text-red-900 mb-4 pb-4 border-b-4 border-gold-600">
+              Product Details
+            </h2>
+            
+            <div className="mt-12 space-y-8 text-lg text-gray-800 leading-relaxed">
+              <div
+                className="whitespace-pre-wrap"
+                dangerouslySetInnerHTML={{
+                  __html: product.fullDescription
+                    .replace(/Key Benefits:/g, '<h3 class="text-2xl font-bold text-red-900 mt-8 mb-4">Key Benefits:</h3>')
+                    .replace(/Our Process:/g, '<h3 class="text-2xl font-bold text-red-900 mt-8 mb-4">Our Process:</h3>')
+                    .replace(/• /g, '<div class="flex items-start gap-4 ml-4 my-3"><span class="text-gold-600 text-2xl font-bold flex-shrink-0">✓</span><span>')
+                    .replace(/\n/g, '\n')
+                    .split('\n')
+                    .map((line: string) => {
+                      if (line.includes('text-2xl')) return line;
+                      if (line.includes('✓')) return line + '</span></div>';
+                      return line;
+                    })
+                    .join('\n')
+                }}
+              />
+            </div>
+
+            {/* Key Info Cards */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12 pt-8 border-t-2 border-yellow-200">
+              <div className="bg-gradient-to-br from-yellow-100 to-amber-100 p-6 rounded-xl border-2 border-yellow-300 hover:shadow-lg transition-shadow">
+                <div className="flex items-center gap-3 mb-2">
+                  <span className="text-4xl">🐝</span>
+                  <h4 className="font-bold text-red-900 text-lg">100% Pure</h4>
+                </div>
+                <p className="text-gray-800 text-sm leading-relaxed">Unprocessed and unheated, preserving all natural benefits and enzymes</p>
+              </div>
+              
+              <div className="bg-gradient-to-br from-amber-100 to-yellow-100 p-6 rounded-xl border-2 border-amber-300 hover:shadow-lg transition-shadow">
+                <div className="flex items-center gap-3 mb-2">
+                  <span className="text-4xl">🧪</span>
+                  <h4 className="font-bold text-red-900 text-lg">Lab Tested</h4>
+                </div>
+                <p className="text-gray-800 text-sm leading-relaxed">Rigorous quality testing for purity and authenticity</p>
+              </div>
+              
+              <div className="bg-gradient-to-br from-yellow-100 to-amber-100 p-6 rounded-xl border-2 border-yellow-300 hover:shadow-lg transition-shadow">
+                <div className="flex items-center gap-3 mb-2">
+                  <span className="text-4xl">🌿</span>
+                  <h4 className="font-bold text-red-900 text-lg">Ethically Sourced</h4>
+                </div>
+                <p className="text-gray-800 text-sm leading-relaxed">From trusted beekeepers using traditional methods</p>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
