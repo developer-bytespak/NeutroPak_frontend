@@ -30,12 +30,6 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
     return pathname === href || pathname.startsWith(href + '/');
   };
 
-  const closeSidebar = () => {
-    if (!isLargeScreen) {
-      setSidebarOpen(false);
-    }
-  };
-
   return (
     <div className="admin-layout">
       {/* Mobile Overlay */}

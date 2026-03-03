@@ -15,7 +15,7 @@ const Navbar: React.FC = () => {
 
   useEffect(() => {
     setIsHydrated(true);
-  }, []);
+  }, [cartContext]); // Added cartContext dependency
 
   useEffect(() => {
     if (cartContext) {

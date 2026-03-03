@@ -326,7 +326,7 @@ Same premium honey quality with added gift packaging for that special touch. Car
                 />
               </div>
               <div className="flex gap-3">
-                {product.images.map((img, idx) => (
+                {product.images.map((img: string, idx: number) => (
                   <div key={idx} className="bg-gray-100 rounded-lg overflow-hidden w-20 h-20 flex items-center justify-center cursor-pointer hover:border-2 hover:border-gold-600">
                     <Image
                       src={img}
@@ -381,7 +381,7 @@ Same premium honey quality with added gift packaging for that special touch. Car
                 <div className="mb-8">
                   <h3 className="text-lg font-bold text-gray-900 mb-4">Select Size</h3>
                   <div className="grid grid-cols-2 gap-3">
-                    {product.variants.map((variant) => (
+                    {product.variants.map((variant: any) => (
                       <button
                         key={variant.size}
                         className={`py-3 px-4 rounded-lg font-bold transition-all ${

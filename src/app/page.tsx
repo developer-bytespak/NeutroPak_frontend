@@ -4,34 +4,12 @@ import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import HeroBanner from '@/components/HeroBanner';
-import CategoryCard from '@/components/CategoryCard';
 import ProductCard from '@/components/ProductCard';
 import ReviewCard from '@/components/ReviewCard';
 import FeaturesSlider from '@/components/FeaturesSlider';
 
 const HomePage = () => {
   // Sample data
-  const categories = [
-    {
-      name: 'Wild Honey',
-      description: 'Pure wild forest honey from untouched regions',
-      image: '/wild-honey.jpg',
-      link: '/shop?category=wild-honey',
-    },
-    {
-      name: 'Farm Honey',
-      description: 'Organic farm honey from trusted beekeepers',
-      image: '/farm-honey.jpg',
-      link: '/shop?category=farm-honey',
-    },
-  ];
-
-  const trustBadges = [
-    { icon: '❤️', text: '100% Organic Raw Honey' },
-    { icon: '🔒', text: 'Money Back Guarantee' },
-    { icon: '🚚', text: 'Free COD All Over Pakistan' },
-  ];
-
   const valueProps = [
     {
       icon: '🐝',

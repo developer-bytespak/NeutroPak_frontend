@@ -11,7 +11,7 @@ export const metadata = {
   description: 'Order details',
 };
 
-export default function OrderDetail({ params }: OrderDetailProps) {
+export default function OrderDetail({ params: _params }: OrderDetailProps) {
   return (
     <AdminLayout>
         <main className="admin-order-detail">

@@ -1,4 +1,3 @@
-import { NextPage } from 'next';
 import Head from 'next/head';
 import Link from 'next/link';
 
@@ -8,8 +7,7 @@ interface BlogPostProps {
   };
 }
 
-export default function BlogPost({ params }: BlogPostProps) {
-  const { slug } = params;
+export default function BlogPost({ params: _params }: BlogPostProps) {
 
   return (
     <>

@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useState } from 'react';
-import FAQAccordion from '@/components/FAQAccordion';
 
 const FAQPage = () => {
   const [expandedCategory, setExpandedCategory] = useState<number | null>(0);
