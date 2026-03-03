@@ -35,13 +35,6 @@ const Navbar: React.FC = () => {
           {/* Actions */}
           <div className="flex items-center gap-4">
             <Link 
-              href="/search" 
-              className="btn-icon text-gray-700 hover:text-gold-600" 
-              title="Search"
-            >
-              🔍
-            </Link>
-            <Link 
               href="/cart" 
               className="relative btn-icon text-gray-700 hover:text-gold-600" 
               title="Cart"
@@ -51,12 +44,6 @@ const Navbar: React.FC = () => {
                 0
               </span>
             </Link>
-            <button 
-              className="btn-icon text-gray-700 hover:text-gold-600" 
-              title="Account"
-            >
-              👤
-            </button>
           </div>
         </div>
       </div>

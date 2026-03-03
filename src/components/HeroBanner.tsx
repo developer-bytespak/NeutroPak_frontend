@@ -18,11 +18,13 @@ const HeroBanner: React.FC<HeroBannerProps> = ({
 }) => {
   return (
     <section
-      className="relative w-full min-h-screen bg-center bg-cover flex items-center justify-start"
+      className="relative w-screen h-screen bg-center bg-cover flex items-center justify-start overflow-hidden"
       style={{
         backgroundImage: `url(${backgroundImage})`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
+        marginLeft: 'calc(-50vw + 50%)',
+        marginRight: 'calc(-50vw + 50%)',
       }}
     >
       <div className="absolute inset-0 bg-black bg-opacity-40" />

@@ -2,8 +2,21 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Custom component styles */
+/* Custom animations */
+@keyframes slideLeft {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
 @layer components {
+  .animate-slide-left {
+    animation: slideLeft 30s linear infinite;
+  }
+
   .btn-primary {
     @apply px-6 py-3 bg-gold-600 text-white rounded-lg hover:bg-gold-700 transition-colors font-semibold;
   }
