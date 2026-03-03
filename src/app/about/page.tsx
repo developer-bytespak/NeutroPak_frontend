@@ -4,6 +4,39 @@ import React from 'react';
 import Link from 'next/link';
 
 const AboutPage = () => {
+  const processSteps = [
+    {
+      icon: '🐝',
+      title: 'Sourcing',
+      description: 'Our honey comes from Sidr, Acacia, Forest, Wildflower and Himalayan regions — far from pollution and agriculture chemicals. We partner only with beekeepers who follow natural foraging and avoid sugar-feeding, antibiotics, and artificial hives.',
+    },
+    {
+      icon: '🚫',
+      title: 'Zero-Sugar Feeding',
+      description: 'We strictly work with beekeepers who never feed sugar syrup to bees during production season. This ensures the honey is produced from flowers only, not sugar. Pure honey from pure sources.',
+    },
+    {
+      icon: '❄️',
+      title: 'Cold Extraction',
+      description: 'Our honey is extracted at natural temperatures (below 35°C). We never boil, pasteurize, or over-filter our honey, preserving enzymes, antioxidants, pollen grains, and natural texture.',
+    },
+    {
+      icon: '🔍',
+      title: 'Triple-Stage Filtration',
+      description: 'We use a gentle triple-filtration process to remove hive debris, wax particles, and impurities — while keeping all natural enzymes, pollen and nutrients intact.',
+    },
+    {
+      icon: '🧪',
+      title: 'Lab Test',
+      description: 'Each batch undergoes lab testing for moisture, sucrose ratio, HMF levels, antibiotics, and adulteration. Only the batches that pass every parameter are bottled under the Honeeza name.',
+    },
+    {
+      icon: '🍯',
+      title: 'Careful Packaging',
+      description: 'Each batch is carefully packed without altering its natural state. Every jar is sealed fresh to maintain purity from the moment it leaves the hive.',
+    },
+  ];
+
   return (
     <main className="bg-white">
       {/* Page Header */}
@@ -14,110 +47,133 @@ const AboutPage = () => {
         </div>
       </section>
 
-      {/* Brand Story */}
-      <section className="py-16 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+      {/* Who We Are Section */}
+      <section className="py-16 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto">
+          <div className="bg-pink-50 rounded-2xl p-8 lg:p-12">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+              {/* Left - Image */}
+              <div className="order-2 lg:order-1">
+                <div className="bg-yellow-100 rounded-lg overflow-hidden h-96 flex items-center justify-center">
+                  <div className="text-gray-400 text-lg">Honeeza - Honey Image</div>
+                </div>
+              </div>
+
+              {/* Right - Content */}
+              <div className="order-1 lg:order-2">
+                <p className="text-sm font-semibold text-gray-700 italic mb-3">About Honeeza - Pakistan's Trusted Honey Brand</p>
+                <h1 className="text-5xl lg:text-6xl font-bold text-red-900 mb-6 leading-tight">
+                  Who We Are?
+                </h1>
+                <p className="text-gray-700 text-lg mb-8 leading-relaxed">
+                  Honeeza is a premium honey brand dedicated to delivering honey in its purest, most natural form. Honeeza is built on a simple belief — purity should never be compromised. We focus on ethical harvesting, honest ingredients, and transparent practices so you always know exactly what you're bringing home. Our commitment begins at the hive and ends in your jar — with nothing added, nothing taken away.
+                </p>
+                <Link
+                  href="/shop"
+                  className="inline-block bg-yellow-500 hover:bg-yellow-600 text-white font-bold px-8 py-3 rounded-lg transition-colors"
+                >
+                  Shop Pure Honey
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Our Story Section */}
+      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-gray-50">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            {/* Left - Content */}
             <div>
-              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">Our Story</h2>
-              <p className="text-gray-600 text-lg mb-4 leading-relaxed">
-                Honeeza was born from a simple belief: honey should be honey, not sugar water 
-                or processed syrup. In a market filled with adulterated products, we decided to 
-                do something different.
+              <p className="text-sm font-semibold text-gray-700 italic mb-3">How It All Started</p>
+              <h2 className="text-5xl font-bold text-red-900 mb-6 leading-tight">
+                Our Story
+              </h2>
+              <p className="text-gray-700 text-lg mb-4 leading-relaxed">
+                Honeeza's journey began in 2018 when Jawed, inspired by local beekeepers, started his own beekeeping practice. For two years he worked hands-on with hives, learning every detail of natural honey production. As demand grew, he entered the market full-time — connecting directly with seasoned beekeepers, studying different honey varieties across Pakistan, and supplying large dealers and wholesalers.
               </p>
-              <p className="text-gray-600 text-lg leading-relaxed">
-                We partnered with small-scale, ethical beekeepers across Pakistan who follow 
-                traditional methods and reject industrial shortcuts. Every jar of Honeeza represents 
-                their passion for purity and our commitment to delivering authentic, lab-tested honey.
+              <p className="text-gray-700 text-lg mb-4 leading-relaxed">
+                Over the years, he developed a rare skill: the ability to identify real and fake honey instantly, even when many experienced sellers couldn't. Later, I (Irfan Ullah) joined him with a shared vision — to bring this expertise and honesty online. Together, we built Honeeza to offer pure honey in both retail and wholesale, sourced only from the regions where each specific honey naturally grows.
+              </p>
+              <p className="text-gray-700 text-lg leading-relaxed">
+                With Jawed's experience and our commitment to purity, we are confident in delivering both unmatched quality and reliable quantity to every customer.
               </p>
             </div>
-            <div className="bg-gold-100 rounded-lg overflow-hidden h-96 flex items-center justify-center">
-              <div className="text-gray-400 text-lg">Honeeza Beekeepers</div>
+
+            {/* Right - Image */}
+            <div>
+              <div className="bg-gold-100 rounded-lg overflow-hidden h-96 flex items-center justify-center">
+                <div className="text-gray-400 text-lg">Beekeeping Image</div>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Mission & Vision */}
-      <section className="py-16 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div className="card p-8 text-center bg-gradient-to-br from-gold-50 to-white">
-              <h3 className="text-2xl font-bold text-gray-900 mb-4">🎯 Our Mission</h3>
-              <p className="text-gray-600 leading-relaxed">
-                To bring pure, raw, lab-tested honey directly from beekeepers to families across Pakistan, 
-                eliminating the middleman and ensuring authenticity at every step.
-              </p>
+      {/* Our Process Section */}
+      <section className="py-16 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            {/* Left - Image */}
+            <div className="order-2 lg:order-1">
+              <div className="bg-gold-100 rounded-lg overflow-hidden h-96 flex items-center justify-center">
+                <div className="text-gray-400 text-lg">Beekeeper Image</div>
+              </div>
             </div>
-            <div className="card p-8 text-center bg-gradient-to-br from-gold-50 to-white">
-              <h3 className="text-2xl font-bold text-gray-900 mb-4">🌟 Our Vision</h3>
-              <p className="text-gray-600 leading-relaxed">
-                To make pure honey the standard, not the exception. To build trust through 
-                transparency, science, and an unwavering commitment to quality.
+
+            {/* Right - Content */}
+            <div className="order-1 lg:order-2">
+              <p className="text-sm font-semibold text-gray-700 italic mb-3">The Story Behind Every Drop</p>
+              <h2 className="text-5xl font-bold text-red-900 mb-6 leading-tight">
+                Our Process
+              </h2>
+              <p className="text-gray-700 text-lg leading-relaxed">
+                At Honeeza, purity isn't just a claim — it's a process. Every jar begins in the untouched floral regions of Pakistan, where our partner beekeepers use ethical, traditional methods passed down for generations. From hive to bottle, every step is controlled, tested, and protected so you receive honey exactly as nature created it: raw, unheated, enzyme-rich, and completely free from additives or adulteration.
               </p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Why We Do What We Do */}
-      <section className="py-16 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="section-title">Why We Do What We Do</h2>
-            <p className="section-subtitle">
-              The honey market is broken. Consumers don't know what they&apos;re getting. 
-              Adulteration is rampant. Beekeepers are squeezed on prices. We&apos;re here to fix that.
-            </p>
+      {/* Process Steps Timeline */}
+      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-pink-50">
+        <div className="max-w-7xl mx-auto">
+          {/* Timeline Icons Header */}
+          <div className="flex justify-between items-center mb-16 gap-2">
+            {processSteps.map((step, idx) => (
+              <React.Fragment key={idx}>
+                <div className="flex flex-col items-center flex-shrink-0 flex-1">
+                  <div className="text-5xl text-yellow-500 mb-4">{step.icon}</div>
+                </div>
+                {idx < processSteps.length - 1 && (
+                  <div className="w-16 h-1 bg-yellow-500 flex-shrink-0 -mx-8" />
+                )}
+              </React.Fragment>
+            ))}
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="card p-6 border-l-4 border-gold-600">
-              <h4 className="text-lg font-bold text-gray-900 mb-3">💙 For Consumers</h4>
-              <p className="text-gray-600">You deserve to know what you're buying. Pure honey, nothing more.</p>
-            </div>
-            <div className="card p-6 border-l-4 border-gold-600">
-              <h4 className="text-lg font-bold text-gray-900 mb-3">🐝 For Beekeepers</h4>
-              <p className="text-gray-600">Fair prices for quality work. Your craft deserves respect.</p>
-            </div>
-            <div className="card p-6 border-l-4 border-gold-600">
-              <h4 className="text-lg font-bold text-gray-900 mb-3">🌍 For Nature</h4>
-              <p className="text-gray-600">Supporting ethical beekeeping protects our ecosystem.</p>
-            </div>
-          </div>
-        </div>
-      </section>
 
-      {/* Commitment to Purity */}
-      <section className="py-16 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="section-title text-center mb-12">Our Commitment to Purity</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <div className="card p-6 hover:shadow-lg transition-shadow">
-              <h4 className="text-lg font-bold text-gray-900 mb-2">🔗 Direct Sourcing</h4>
-              <p className="text-gray-600 text-sm">We work directly with beekeepers, eliminating traders who can't guarantee purity.</p>
-            </div>
-            <div className="card p-6 hover:shadow-lg transition-shadow">
-              <h4 className="text-lg font-bold text-gray-900 mb-2">🚫 Zero Additives</h4>
-              <p className="text-gray-600 text-sm">No sugar, no syrup, no artificial anything. Just honey as nature made it.</p>
-            </div>
-            <div className="card p-6 hover:shadow-lg transition-shadow">
-              <h4 className="text-lg font-bold text-gray-900 mb-2">🧪 Lab Testing</h4>
-              <p className="text-gray-600 text-sm">Every batch is tested for moisture, sucrose ratio, HMF levels, and authenticity.</p>
-            </div>
-            <div className="card p-6 hover:shadow-lg transition-shadow">
-              <h4 className="text-lg font-bold text-gray-900 mb-2">❄️ Cold Extraction</h4>
-              <p className="text-gray-600 text-sm">Extracted below 35°C to preserve all natural enzymes and nutrients.</p>
-            </div>
+          {/* Process Details Grid - 6 columns */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
+            {processSteps.map((step, idx) => (
+              <div key={idx} className="text-center px-2">
+                <h3 className="text-lg font-bold text-red-900 mb-2">{step.title}</h3>
+                <p className="text-gray-700 text-sm leading-relaxed">{step.description}</p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
       {/* Contact CTA */}
-      <section className="py-16 bg-gradient-to-r from-gold-600 to-gold-700 text-white">
+      <section className="py-16 bg-gradient-to-r from-yellow-500 to-yellow-600 text-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">Questions About Our Honey?</h2>
           <p className="text-lg mb-8 opacity-95">We're here to help. Contact us anytime.</p>
-          <Link href="/contact" className="inline-block bg-white text-gold-600 px-8 py-3 rounded-lg font-bold hover:bg-gold-50 transition-colors">
+          <Link
+            href="/contact"
+            className="inline-block bg-white text-yellow-600 px-8 py-3 rounded-lg font-bold hover:bg-gray-100 transition-colors"
+          >
             Get in Touch
           </Link>
         </div>

@@ -9,6 +9,7 @@ import ReviewCard from '@/components/ReviewCard';
 import FAQAccordion from '@/components/FAQAccordion';
 import ProcessSteps from '@/components/ProcessSteps';
 import BlogCard from '@/components/BlogCard';
+import FeaturesSlider from '@/components/FeaturesSlider';
 
 const HomePage = () => {
   // Sample data
@@ -208,6 +209,9 @@ const HomePage = () => {
         ctaText="Shop Pure Honey Now"
         ctaLink="/shop"
       />
+
+      {/* Features Slider */}
+      <FeaturesSlider />
 
       {/* Why Choose Section */}
       <section className="py-16 bg-yellow-200">
