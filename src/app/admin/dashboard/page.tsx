@@ -61,41 +61,57 @@ const AdminDashboard: NextPage = () => {
                   <td><span className="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm font-semibold">Processing</span></td>
                   <td>2024-03-03</td>
                 </tr>
+                <tr>
+                  <td>#ORD004</td>
+                  <td>Maria Hassan</td>
+                  <td>₨4,599</td>
+                  <td><span className="px-3 py-1 bg-green-100 text-green-700 rounded-full text-sm font-semibold">Completed</span></td>
+                  <td>2024-03-04</td>
+                </tr>
+                <tr>
+                  <td>#ORD005</td>
+                  <td>Ali Ahmed</td>
+                  <td>₨2,299</td>
+                  <td><span className="px-3 py-1 bg-yellow-100 text-yellow-700 rounded-full text-sm font-semibold">Pending</span></td>
+                  <td>2024-03-05</td>
+                </tr>
+                <tr>
+                  <td>#ORD006</td>
+                  <td>Sara Khan</td>
+                  <td>₨3,499</td>
+                  <td><span className="px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-sm font-semibold">Shipped</span></td>
+                  <td>2024-03-06</td>
+                </tr>
+                <tr>
+                  <td>#ORD007</td>
+                  <td>Usman Malik</td>
+                  <td>₨5,899</td>
+                  <td><span className="px-3 py-1 bg-green-100 text-green-700 rounded-full text-sm font-semibold">Completed</span></td>
+                  <td>2024-03-07</td>
+                </tr>
+                <tr>
+                  <td>#ORD008</td>
+                  <td>Zainab Hussain</td>
+                  <td>₨1,599</td>
+                  <td><span className="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm font-semibold">Processing</span></td>
+                  <td>2024-03-08</td>
+                </tr>
+                <tr>
+                  <td>#ORD009</td>
+                  <td>Bilal Ahmed</td>
+                  <td>₨2,999</td>
+                  <td><span className="px-3 py-1 bg-green-100 text-green-700 rounded-full text-sm font-semibold">Completed</span></td>
+                  <td>2024-03-09</td>
+                </tr>
+                <tr>
+                  <td>#ORD010</td>
+                  <td>Hina Khan</td>
+                  <td>₨4,199</td>
+                  <td><span className="px-3 py-1 bg-yellow-100 text-yellow-700 rounded-full text-sm font-semibold">Pending</span></td>
+                  <td>2024-03-10</td>
+                </tr>
               </tbody>
             </table>
-          </section>
-
-          <section className="chart-section">
-            <h2>Sales Overview</h2>
-            <div className="space-y-4">
-              <div>
-                <div className="flex justify-between mb-2">
-                  <span className="font-semibold text-gray-700">Sidr Honey</span>
-                  <span className="text-gold-600 font-bold">65%</span>
-                </div>
-                <div className="w-full bg-gray-200 rounded-full h-2">
-                  <div className="bg-gold-600 h-2 rounded-full" style={{ width: '65%' }}></div>
-                </div>
-              </div>
-              <div>
-                <div className="flex justify-between mb-2">
-                  <span className="font-semibold text-gray-700">Wild Forest Honey</span>
-                  <span className="text-gold-600 font-bold">45%</span>
-                </div>
-                <div className="w-full bg-gray-200 rounded-full h-2">
-                  <div className="bg-gold-600 h-2 rounded-full" style={{ width: '45%' }}></div>
-                </div>
-              </div>
-              <div>
-                <div className="flex justify-between mb-2">
-                  <span className="font-semibold text-gray-700">Other Products</span>
-                  <span className="text-gold-600 font-bold">30%</span>
-                </div>
-                <div className="w-full bg-gray-200 rounded-full h-2">
-                  <div className="bg-gold-600 h-2 rounded-full" style={{ width: '30%' }}></div>
-                </div>
-              </div>
-            </div>
           </section>
         </div>
       </main>
