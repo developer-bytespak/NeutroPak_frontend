@@ -1,8 +1,10 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import AdminLayout from '@/components/AdminLayout';
+import { productService } from '@/services/productService';
 
 interface EditProductProps {
   params: {
@@ -12,16 +14,50 @@ interface EditProductProps {
 
 export default function EditProduct({ params }: EditProductProps) {
   const { id } = params;
+  const router = useRouter();
 
   const [formData, setFormData] = useState({
-    name: 'Product Name',
-    sku: 'SKU-001',
-    price: '99.99',
-    stock: '50',
-    description: 'Product description',
+    name: '',
+    description: '',
+    price: '',
+    category: '',
+    stock: '',
   });
 
+  const [loading, setLoading] = useState(true);
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+
+  useEffect(() => {
+    loadProduct();
+  }, [id]);
+
+  const loadProduct = async () => {
+    try {
+      setLoading(true);
+      setError('');
+      const response = await productService.getProductById(parseInt(id));
+      if (response.data.success) {
+        const product = response.data.data;
+        setFormData({
+          name: product.name,
+          description: product.description,
+          price: product.price.toString(),
+          category: product.category,
+          stock: product.stock.toString(),
+        });
+      } else {
+        setError('Failed to load product');
+      }
+    } catch (err: any) {
+      setError('Error loading product: ' + (err.response?.data?.message || err.message));
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -31,16 +67,57 @@ export default function EditProduct({ params }: EditProductProps) {
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Updated product data:', formData);
-    // Add your API call here
+    try {
+      setSubmitting(true);
+      setError('');
+      setSuccess('');
+
+      const response = await productService.updateProduct(parseInt(id), {
+        name: formData.name,
+        description: formData.description,
+        price: parseFloat(formData.price),
+        category: formData.category,
+        stock: parseInt(formData.stock),
+      });
+
+      if (response.data.success) {
+        setSuccess('Product updated successfully!');
+        setTimeout(() => {
+          router.push('/admin/products');
+        }, 1500);
+      } else {
+        setError(response.data.message || 'Failed to update product');
+      }
+    } catch (err: any) {
+      setError('Error updating product: ' + (err.response?.data?.message || err.message));
+      console.error(err);
+    } finally {
+      setSubmitting(false);
+    }
   };
 
-  const handleDeleteConfirm = () => {
-    console.log('Delete product:', id);
-    // Add your delete API call here
-    setShowDeleteModal(false);
+  const handleDeleteConfirm = async () => {
+    try {
+      setSubmitting(true);
+      setError('');
+      const response = await productService.deleteProduct(parseInt(id));
+      if (response.data.success) {
+        setSuccess('Product deleted successfully!');
+        setTimeout(() => {
+          router.push('/admin/products');
+        }, 1500);
+      } else {
+        setError(response.data.message || 'Failed to delete product');
+      }
+    } catch (err: any) {
+      setError('Error deleting product: ' + (err.response?.data?.message || err.message));
+      console.error(err);
+    } finally {
+      setSubmitting(false);
+      setShowDeleteModal(false);
+    }
   };
 
   return (
@@ -52,110 +129,137 @@ export default function EditProduct({ params }: EditProductProps) {
             <p className="text-gray-600 mt-2">Update the product details and save your changes</p>
           </div>
 
+          {error && (
+            <div className="bg-red-100 border-2 border-red-500 text-red-700 px-4 py-3 rounded-lg mb-6">
+              {error}
+            </div>
+          )}
+
+          {success && (
+            <div className="bg-green-100 border-2 border-green-500 text-green-700 px-4 py-3 rounded-lg mb-6">
+              {success}
+            </div>
+          )}
+
           <div className="bg-white rounded-xl shadow-lg border-t-4 border-yellow-500 p-8">
-            <form onSubmit={handleSubmit} className="product-form">
-              {/* Product Name */}
-              <div className="form-group">
-                <label htmlFor="name" className="form-label">Product Name *</label>
-                <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  className="form-input"
-                  placeholder="Enter product name"
-                  required
-                />
-              </div>
-
-              {/* SKU */}
-              <div className="form-group">
-                <label htmlFor="sku" className="form-label">SKU (Stock Keeping Unit) *</label>
-                <input
-                  type="text"
-                  id="sku"
-                  name="sku"
-                  value={formData.sku}
-                  onChange={handleChange}
-                  className="form-input"
-                  placeholder="Enter SKU"
-                  required
-                />
-              </div>
-
-              {/* Price and Stock - Grid */}
-              <div className="form-grid">
+            {loading ? (
+              <p className="text-center text-gray-500 py-8">Loading product...</p>
+            ) : (
+              <form onSubmit={handleSubmit} className="product-form">
+                {/* Product Name */}
                 <div className="form-group">
-                  <label htmlFor="price" className="form-label">Price (₨) *</label>
+                  <label htmlFor="name" className="form-label">Product Name *</label>
                   <input
-                    type="number"
-                    id="price"
-                    name="price"
-                    value={formData.price}
+                    type="text"
+                    id="name"
+                    name="name"
+                    value={formData.name}
                     onChange={handleChange}
                     className="form-input"
-                    placeholder="0.00"
-                    step="0.01"
-                    min="0"
+                    placeholder="Enter product name"
                     required
+                    disabled={submitting}
                   />
                 </div>
 
+                {/* Category */}
                 <div className="form-group">
-                  <label htmlFor="stock" className="form-label">Stock Quantity *</label>
-                  <input
-                    type="number"
-                    id="stock"
-                    name="stock"
-                    value={formData.stock}
+                  <label htmlFor="category" className="form-label">Category *</label>
+                  <select
+                    id="category"
+                    name="category"
+                    value={formData.category}
                     onChange={handleChange}
                     className="form-input"
-                    placeholder="0"
-                    min="0"
                     required
-                  />
+                    disabled={submitting}
+                  >
+                    <option value="">Select a category</option>
+                    <option value="Honey">Honey</option>
+                    <option value="Dates">Dates</option>
+                    <option value="Supplements">Supplements</option>
+                    <option value="Other">Other</option>
+                  </select>
                 </div>
-              </div>
 
-              {/* Description */}
-              <div className="form-group">
-                <label htmlFor="description" className="form-label">Description</label>
-                <textarea
-                  id="description"
-                  name="description"
-                  value={formData.description}
-                  onChange={handleChange}
-                  className="form-textarea"
-                  placeholder="Enter detailed product description..."
-                  rows={5}
-                />
-                <p className="text-xs text-gray-500 mt-1">{formData.description.length}/500 characters</p>
-              </div>
+                {/* Price and Stock - Grid */}
+                <div className="form-grid">
+                  <div className="form-group">
+                    <label htmlFor="price" className="form-label">Price (₨) *</label>
+                    <input
+                      type="number"
+                      id="price"
+                      name="price"
+                      value={formData.price}
+                      onChange={handleChange}
+                      className="form-input"
+                      placeholder="0.00"
+                      step="0.01"
+                      min="0"
+                      required
+                      disabled={submitting}
+                    />
+                  </div>
 
-              {/* Form Actions */}
-              <div className="form-actions-edit">
-                <button
-                  type="submit"
-                  className="btn-submit"
-                >
-                  ✓ Update Product
-                </button>
-                <button
-                  type="button"
-                  className="btn-danger"
-                  onClick={() => setShowDeleteModal(true)}
-                >
-                  🗑 Delete Product
-                </button>
-                <Link
-                  href="/admin/products"
-                  className="btn-cancel"
-                >
-                  ✕ Cancel
-                </Link>
-              </div>
-            </form>
+                  <div className="form-group">
+                    <label htmlFor="stock" className="form-label">Stock Quantity *</label>
+                    <input
+                      type="number"
+                      id="stock"
+                      name="stock"
+                      value={formData.stock}
+                      onChange={handleChange}
+                      className="form-input"
+                      placeholder="0"
+                      min="0"
+                      required
+                      disabled={submitting}
+                    />
+                  </div>
+                </div>
+
+                {/* Description */}
+                <div className="form-group">
+                  <label htmlFor="description" className="form-label">Description</label>
+                  <textarea
+                    id="description"
+                    name="description"
+                    value={formData.description}
+                    onChange={handleChange}
+                    className="form-textarea"
+                    placeholder="Enter detailed product description..."
+                    rows={5}
+                    disabled={submitting}
+                  />
+                  <p className="text-xs text-gray-500 mt-1">{formData.description.length}/500 characters</p>
+                </div>
+
+                {/* Form Actions */}
+                <div className="form-actions-edit">
+                  <button
+                    type="submit"
+                    className="btn-submit"
+                    disabled={submitting || loading}
+                  >
+                    {submitting ? '⏳ Updating...' : '✓ Update Product'}
+                  </button>
+                  <button
+                    type="button"
+                    className="btn-danger"
+                    onClick={() => setShowDeleteModal(true)}
+                    disabled={submitting || loading}
+                  >
+                    🗑 Delete Product
+                  </button>
+                  <Link
+                    href="/admin/products"
+                    className="btn-cancel"
+                  >
+                    ✕ Cancel
+                  </Link>
+                </div>
+              </form>
+            )}
           </div>
 
           {/* Delete Confirmation Modal */}
@@ -175,15 +279,17 @@ export default function EditProduct({ params }: EditProductProps) {
                 <div className="flex gap-3">
                   <button
                     onClick={() => setShowDeleteModal(false)}
-                    className="flex-1 px-4 py-2.5 bg-gray-200 text-gray-800 font-bold rounded-lg hover:bg-gray-300 transition-colors"
+                    className="flex-1 px-4 py-2.5 bg-gray-200 text-gray-800 font-bold rounded-lg hover:bg-gray-300 transition-colors disabled:opacity-50"
+                    disabled={submitting}
                   >
                     Cancel
                   </button>
                   <button
                     onClick={handleDeleteConfirm}
-                    className="flex-1 px-4 py-2.5 bg-red-600 text-white font-bold rounded-lg hover:bg-red-700 transition-colors"
+                    className="flex-1 px-4 py-2.5 bg-red-600 text-white font-bold rounded-lg hover:bg-red-700 transition-colors disabled:opacity-50"
+                    disabled={submitting}
                   >
-                    Delete Product
+                    {submitting ? '⏳ Deleting...' : 'Delete Product'}
                   </button>
                 </div>
               </div>

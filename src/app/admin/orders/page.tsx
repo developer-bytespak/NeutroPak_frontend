@@ -1,109 +1,82 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import AdminLayout from '@/components/AdminLayout';
+import { orderService } from '@/services/orderService';
 
 interface Order {
-  id: string;
-  customer: string;
-  amount: number;
+  id: number;
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  amount?: number;
   status: string;
-  date: string;
-  email?: string;
-  phone?: string;
-  items?: { name: string; qty: number; price: number }[];
-  address?: string;
-  shippingMethod?: string;
+  createdAt: string;
+  address: string;
+  city: string;
+  postalCode: string;
+  shippingMethod: string;
+  orderItems: Array<{ product?: { name: string }; quantity: number; price: number }>;
 }
 
 export default function AdminOrders() {
+  const [orders, setOrders] = useState<Order[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
   const [showOverlay, setShowOverlay] = useState(false);
+  const [updateError, setUpdateError] = useState('');
 
-  const orders: Order[] = [
-    {
-      id: '#ORD-001',
-      customer: 'Ahmed Khan',
-      amount: 2599,
-      status: 'Completed',
-      date: 'Mar 1, 2025',
-      email: 'ahmed.khan@email.com',
-      phone: '+92-300-1234567',
-      items: [
-        { name: 'Premium Sunscreen SPF 50', qty: 2, price: 1299 },
-      ],
-      address: '123 Main Street, Karachi, Pakistan',
-      shippingMethod: 'Express Delivery',
-    },
-    {
-      id: '#ORD-002',
-      customer: 'Fatima Ali',
-      amount: 3999,
-      status: 'Pending',
-      date: 'Mar 2, 2025',
-      email: 'fatima.ali@email.com',
-      phone: '+92-300-7654321',
-      items: [
-        { name: 'Face Moisturizer', qty: 1, price: 1999 },
-        { name: 'Lip Balm Pack', qty: 2, price: 999 },
-      ],
-      address: '456 Oak Avenue, Lahore, Pakistan',
-      shippingMethod: 'Standard Delivery',
-    },
-    {
-      id: '#ORD-003',
-      customer: 'Hassan Raza',
-      amount: 1799,
-      status: 'Processing',
-      date: 'Mar 3, 2025',
-      email: 'hassan.raza@email.com',
-      phone: '+92-300-9876543',
-      items: [
-        { name: 'Makeup Primer', qty: 1, price: 1799 },
-      ],
-      address: '789 Pine Road, Islamabad, Pakistan',
-      shippingMethod: 'Standard Delivery',
-    },
-    {
-      id: '#ORD-004',
-      customer: 'Zara Khan',
-      amount: 4599,
-      status: 'Shipped',
-      date: 'Mar 3, 2025',
-      email: 'zara.khan@email.com',
-      phone: '+92-300-5555555',
-      items: [
-        { name: 'Luxury Skincare Set', qty: 1, price: 3599 },
-        { name: 'Face Serum', qty: 1, price: 999 },
-      ],
-      address: '321 Elm Street, Multan, Pakistan',
-      shippingMethod: 'Express Delivery',
-    },
-    {
-      id: '#ORD-005',
-      customer: 'Ali Hassan',
-      amount: 2199,
-      status: 'Delivered',
-      date: 'Mar 2, 2025',
-      email: 'ali.hassan@email.com',
-      phone: '+92-300-6666666',
-      items: [
-        { name: 'Body Lotion', qty: 2, price: 699 },
-        { name: 'Bath Soap Set', qty: 1, price: 799 },
-      ],
-      address: '654 Birch Lane, Peshawar, Pakistan',
-      shippingMethod: 'Standard Delivery',
-    },
-  ];
+  useEffect(() => {
+    loadOrders();
+  }, []);
+
+  const loadOrders = async () => {
+    try {
+      setLoading(true);
+      const response = await orderService.listOrders(1, 100);
+      if (response.data.success) {
+        setOrders(response.data.data.orders);
+      } else {
+        setError('Failed to load orders');
+      }
+    } catch (err: any) {
+      setError('Error loading orders');
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleStatusChange = async (orderId: number, newStatus: string) => {
+    try {
+      setUpdateError('');
+      const response = await orderService.updateOrderStatus(orderId, newStatus);
+      if (response.data.success) {
+        // Update local state
+        setOrders((prevOrders) =>
+          prevOrders.map((order) => (order.id === orderId ? { ...order, status: newStatus } : order))
+        );
+        if (selectedOrder && selectedOrder.id === orderId) {
+          setSelectedOrder({ ...selectedOrder, status: newStatus });
+        }
+      } else {
+        setUpdateError(response.data.message || 'Failed to update order status');
+      }
+    } catch (err: any) {
+      setUpdateError(err.response?.data?.message || 'Error updating order status');
+    }
+  };
 
   const getStatusStyles = (status: string) => {
     const statusStyles: { [key: string]: string } = {
-      'Completed': 'bg-green-100 text-green-700',
-      'Pending': 'bg-yellow-100 text-yellow-700',
-      'Processing': 'bg-blue-100 text-blue-700',
-      'Shipped': 'bg-purple-100 text-purple-700',
-      'Delivered': 'bg-green-100 text-green-700',
-      'Cancelled': 'bg-red-100 text-red-700',
+      'COMPLETED': 'bg-green-100 text-green-700',
+      'DELIVERED': 'bg-green-100 text-green-700',
+      'PENDING': 'bg-yellow-100 text-yellow-700',
+      'CONFIRMED': 'bg-blue-100 text-blue-700',
+      'SHIPPED': 'bg-purple-100 text-purple-700',
+      'CANCELLED': 'bg-red-100 text-red-700',
     };
     return statusStyles[status] || 'bg-gray-100 text-gray-700';
   };
@@ -123,42 +96,51 @@ export default function AdminOrders() {
       <main className="admin-dashboard">
         <h1>Orders Management</h1>
 
+        {error && (
+          <div className="bg-red-100 border-2 border-red-500 text-red-700 px-4 py-3 rounded-lg mb-6">
+            {error}
+          </div>
+        )}
+
         <div className="bg-white rounded-lg shadow-md overflow-hidden">
-          <table className="admin-table">
-            <thead>
-              <tr>
-                <th>Order ID</th>
-                <th>Customer</th>
-                <th>Amount</th>
-                <th>Status</th>
-                <th>Date</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {orders.map((order) => (
-                <tr key={order.id}>
-                  <td className="font-bold text-gray-900">{order.id}</td>
-                  <td className="text-gray-700">{order.customer}</td>
-                  <td className="font-bold text-gold-600">₨{order.amount.toLocaleString()}</td>
-                  <td>
-                    <span className={`px-3 py-1 rounded-full text-sm font-semibold ${getStatusStyles(order.status)}`}>
-                      {order.status}
-                    </span>
-                  </td>
-                  <td className="text-gray-600">{order.date}</td>
-                  <td>
-                    <button
-                      onClick={() => handleViewOrder(order)}
-                      className="btn-edit"
-                    >
-                      View
-                    </button>
-                  </td>
+          {loading ? (
+            <p className="p-8 text-center text-gray-500">Loading orders...</p>
+          ) : orders.length > 0 ? (
+            <table className="admin-table">
+              <thead>
+                <tr>
+                  <th>Order ID</th>
+                  <th>Customer</th>
+                  <th>Amount</th>
+                  <th>Status</th>
+                  <th>Date</th>
+                  <th>Actions</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {orders.map((order) => (
+                  <tr key={order.id}>
+                    <td className="font-bold text-gray-900">ORD-2026-{String(order.id).padStart(6, '0')}</td>
+                    <td className="text-gray-700">{`${order.firstName} ${order.lastName}`}</td>
+                    <td className="font-bold text-gold-600">₨{(order.amount || 0).toLocaleString('en-PK')}</td>
+                    <td>
+                      <span className={`px-3 py-1 rounded-full text-sm font-semibold ${getStatusStyles(order.status)}`}>
+                        {order.status}
+                      </span>
+                    </td>
+                    <td className="text-gray-600">{new Date(order.createdAt).toLocaleDateString('en-PK')}</td>
+                    <td>
+                      <button onClick={() => handleViewOrder(order)} className="btn-edit">
+                        View
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          ) : (
+            <p className="p-8 text-center text-gray-500">No orders found</p>
+          )}
         </div>
       </main>
 
@@ -173,44 +155,65 @@ export default function AdminOrders() {
             </button>
 
             <div className="order-overlay-header">
-              <h2>{selectedOrder.id}</h2>
+              <h2>ORD-2026-{String(selectedOrder.id).padStart(6, '0')}</h2>
               <span className={`px-4 py-1.5 rounded-full text-sm font-semibold ${getStatusStyles(selectedOrder.status)}`}>
                 {selectedOrder.status}
               </span>
             </div>
 
             <div className="order-overlay-content">
+              {updateError && (
+                <div className="bg-red-100 border border-red-500 text-red-700 px-3 py-2 rounded mb-4 text-sm">
+                  {updateError}
+                </div>
+              )}
+
               <div className="order-section">
                 <h3>Customer Information</h3>
-                <p><strong>Name:</strong> {selectedOrder.customer}</p>
+                <p><strong>Name:</strong> {`${selectedOrder.firstName} ${selectedOrder.lastName}`}</p>
                 <p><strong>Email:</strong> {selectedOrder.email}</p>
                 <p><strong>Phone:</strong> {selectedOrder.phone}</p>
               </div>
 
               <div className="order-section">
                 <h3>Shipping Address</h3>
-                <p>{selectedOrder.address}</p>
+                <p>{selectedOrder.address}, {selectedOrder.city}, {selectedOrder.postalCode}</p>
                 <p><strong>Method:</strong> {selectedOrder.shippingMethod}</p>
               </div>
 
               <div className="order-section">
                 <h3>Order Items</h3>
                 <div className="order-items">
-                  {selectedOrder.items?.map((item, idx) => (
+                  {selectedOrder.orderItems?.map((item, idx) => (
                     <div key={idx} className="order-item">
                       <div>
-                        <p className="font-semibold">{item.name}</p>
-                        <p className="text-sm text-gray-600">Qty: {item.qty}</p>
+                        <p className="font-semibold">{item.product?.name || 'Product'}</p>
+                        <p className="text-sm text-gray-600">Qty: {item.quantity}</p>
                       </div>
-                      <p className="font-bold">₨{(item.price * item.qty).toLocaleString()}</p>
+                      <p className="font-bold">₨{(item.price * item.quantity).toLocaleString('en-PK')}</p>
                     </div>
                   ))}
                 </div>
               </div>
 
+              <div className="order-section">
+                <h3>Update Status</h3>
+                <select
+                  value={selectedOrder.status}
+                  onChange={(e) => handleStatusChange(selectedOrder.id, e.target.value)}
+                  className="w-full p-2 border border-gray-300 rounded bg-white"
+                >
+                  <option value="PENDING">PENDING</option>
+                  <option value="CONFIRMED">CONFIRMED</option>
+                  <option value="SHIPPED">SHIPPED</option>
+                  <option value="DELIVERED">DELIVERED</option>
+                  <option value="CANCELLED">CANCELLED</option>
+                </select>
+              </div>
+
               <div className="order-section order-total">
-                <p className="font-bold text-lg">Total Amount: <span className="text-yellow-600">₨{selectedOrder.amount.toLocaleString()}</span></p>
-                <p className="text-sm text-gray-600">Order Date: {selectedOrder.date}</p>
+                <p className="font-bold text-lg">Total Amount: <span className="text-yellow-600">₨{(selectedOrder.amount || 0).toLocaleString('en-PK')}</span></p>
+                <p className="text-sm text-gray-600">Order Date: {new Date(selectedOrder.createdAt).toLocaleDateString('en-PK')}</p>
               </div>
 
               <button
@@ -226,3 +229,4 @@ export default function AdminOrders() {
     </AdminLayout>
   );
 }
+

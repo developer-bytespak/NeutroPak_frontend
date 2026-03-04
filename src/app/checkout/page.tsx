@@ -2,9 +2,12 @@
 
 import React, { useState, useContext } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import CartContext from '@/store/CartContext';
+import { orderService, CreateOrderPayload } from '@/services/orderService';
 
 const CheckoutPage = () => {
+  const router = useRouter();
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -13,8 +16,14 @@ const CheckoutPage = () => {
     address: '',
     city: '',
     postalCode: '',
-    paymentMethod: 'cod',
+    country: '',
+    state: '',
+    paymentMethod: 'COD',
   });
+
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+  const [validationErrors, setValidationErrors] = useState<Record<string, string>>({});
 
   const cartContext = useContext(CartContext);
   const cart = cartContext?.cart || [];
@@ -30,13 +39,101 @@ const CheckoutPage = () => {
       ...prev,
       [name]: value,
     }));
+    // Clear validation error for this field
+    setValidationErrors((prev) => ({
+      ...prev,
+      [name]: '',
+    }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Checkout submitted:', formData);
-    // Redirect to order success page
-    window.location.href = '/order-success';
+    setError('');
+    setValidationErrors({});
+    setLoading(true);
+
+    try {
+      if (cart.length === 0) {
+        setError('Your cart is empty. Please add items before checking out.');
+        setLoading(false);
+        return;
+      }
+
+      // Debug: Log cart items
+      console.log('Cart items:', JSON.stringify(cart, null, 2));
+
+      // Prepare order payload
+      const orderPayload: any = {
+        firstName: formData.firstName.trim() || 'N/A',
+        lastName: formData.lastName.trim() || 'N/A',
+        email: formData.email.trim(),
+        phone: formData.phone.trim() || '+92',
+        address: formData.address.trim() || 'N/A',
+        city: formData.city.trim() || 'N/A',
+        postalCode: formData.postalCode.trim() || '00000',
+        shippingMethod: 'standard',
+        shippingCost: Number(shippingCost) || 0,
+        subtotal: Number(subtotal) || 0,
+        tax: Number(tax) || 0,
+        total: Number(total) || 0,
+        orderItems: cart.map((item: any) => {
+          // Handle both string and number IDs
+          let productId = 0;
+          if (typeof item.id === 'string') {
+            productId = parseInt(item.id, 10);
+          } else if (typeof item.id === 'number') {
+            productId = item.id;
+          }
+          
+          if (isNaN(productId) || productId <= 0) {
+            throw new Error(`Invalid product ID for item: ${item.name}`);
+          }
+
+          return {
+            productId,
+            quantity: Number(item.quantity) || 1,
+            price: Number(item.price) || 0,
+          };
+        }),
+        paymentMethod: formData.paymentMethod || 'COD',
+      };
+
+      // Only add country and state if they have values
+      if (formData.country?.trim()) {
+        orderPayload.country = formData.country.trim();
+      }
+      if (formData.state?.trim()) {
+        orderPayload.state = formData.state.trim();
+      }
+
+      console.log('Order payload:', JSON.stringify(orderPayload, null, 2));
+
+      // Call API to create order
+      const response = await orderService.createOrder(orderPayload);
+
+      if (response.data.success) {
+        // Clear cart and redirect to success page
+        cartContext?.clearCart();
+        router.push(
+          `/order-success?orderId=${response.data.data.id}&orderNo=${response.data.data.orderNo}`
+        );
+      } else {
+        setError(response.data.message || 'Failed to create order');
+      }
+    } catch (err: any) {
+      console.error('Checkout error:', err);
+      if (err.response?.data?.details) {
+        // Handle validation errors from backend
+        setValidationErrors(err.response.data.details);
+        setError('Please fix the errors below:\n' + Object.values(err.response.data.details).join('\n'));
+      } else if (err.response?.data?.message) {
+        setError(err.response.data.message);
+      } else {
+        setError('An error occurred while processing your order. Please try again.');
+      }
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -59,6 +156,12 @@ const CheckoutPage = () => {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Checkout Form */}
           <section className="lg:col-span-2">
+            {error && (
+              <div className="bg-red-100 border-2 border-red-500 text-red-700 px-4 py-3 rounded-lg mb-6">
+                {error}
+              </div>
+            )}
+
             <form onSubmit={handleSubmit}>
               {/* Shipping Information */}
               <fieldset className="pb-8 border-b border-gray-200 mb-8">
@@ -77,8 +180,11 @@ const CheckoutPage = () => {
                       onChange={handleChange}
                       required
                       placeholder="John"
-                      className="input-field"
+                      className={`input-field ${validationErrors.firstName ? 'border-red-500' : ''}`}
                     />
+                    {validationErrors.firstName && (
+                      <p className="text-red-600 text-sm mt-1">{validationErrors.firstName}</p>
+                    )}
                   </div>
                   <div>
                     <label htmlFor="lastName" className="block text-sm font-medium text-gray-900 mb-2">
@@ -92,8 +198,11 @@ const CheckoutPage = () => {
                       onChange={handleChange}
                       required
                       placeholder="Doe"
-                      className="input-field"
+                      className={`input-field ${validationErrors.lastName ? 'border-red-500' : ''}`}
                     />
+                    {validationErrors.lastName && (
+                      <p className="text-red-600 text-sm mt-1">{validationErrors.lastName}</p>
+                    )}
                   </div>
                 </div>
 
@@ -107,8 +216,11 @@ const CheckoutPage = () => {
                     onChange={handleChange}
                     required
                     placeholder="john@example.com"
-                    className="input-field"
+                    className={`input-field ${validationErrors.email ? 'border-red-500' : ''}`}
                   />
+                  {validationErrors.email && (
+                    <p className="text-red-600 text-sm mt-1">{validationErrors.email}</p>
+                  )}
                 </div>
 
                 <div className="mb-4">
@@ -123,8 +235,11 @@ const CheckoutPage = () => {
                     onChange={handleChange}
                     required
                     placeholder="+92 320 1234567"
-                    className="input-field"
+                    className={`input-field ${validationErrors.phone ? 'border-red-500' : ''}`}
                   />
+                  {validationErrors.phone && (
+                    <p className="text-red-600 text-sm mt-1">{validationErrors.phone}</p>
+                  )}
                 </div>
 
                 <div className="mb-4">
@@ -139,11 +254,14 @@ const CheckoutPage = () => {
                     onChange={handleChange}
                     required
                     placeholder="123 Main Street"
-                    className="input-field"
+                    className={`input-field ${validationErrors.address ? 'border-red-500' : ''}`}
                   />
+                  {validationErrors.address && (
+                    <p className="text-red-600 text-sm mt-1">{validationErrors.address}</p>
+                  )}
                 </div>
 
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-2 gap-4 mb-4">
                   <div>
                     <label htmlFor="city" className="block text-sm font-medium text-gray-900 mb-2">City *</label>
                     <input
@@ -154,8 +272,11 @@ const CheckoutPage = () => {
                       onChange={handleChange}
                       required
                       placeholder="Lahore"
-                      className="input-field"
+                      className={`input-field ${validationErrors.city ? 'border-red-500' : ''}`}
                     />
+                    {validationErrors.city && (
+                      <p className="text-red-600 text-sm mt-1">{validationErrors.city}</p>
+                    )}
                   </div>
                   <div>
                     <label htmlFor="postalCode" className="block text-sm font-medium text-gray-900 mb-2">
@@ -169,6 +290,40 @@ const CheckoutPage = () => {
                       onChange={handleChange}
                       required
                       placeholder="54000"
+                      className={`input-field ${validationErrors.postalCode ? 'border-red-500' : ''}`}
+                    />
+                    {validationErrors.postalCode && (
+                      <p className="text-red-600 text-sm mt-1">{validationErrors.postalCode}</p>
+                    )}
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label htmlFor="country" className="block text-sm font-medium text-gray-900 mb-2">
+                      Country
+                    </label>
+                    <input
+                      type="text"
+                      id="country"
+                      name="country"
+                      value={formData.country}
+                      onChange={handleChange}
+                      placeholder="Pakistan (Optional)"
+                      className="input-field"
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="state" className="block text-sm font-medium text-gray-900 mb-2">
+                      State/Province
+                    </label>
+                    <input
+                      type="text"
+                      id="state"
+                      name="state"
+                      value={formData.state}
+                      onChange={handleChange}
+                      placeholder="Punjab (Optional)"
                       className="input-field"
                     />
                   </div>
@@ -184,11 +339,8 @@ const CheckoutPage = () => {
                     <input
                       type="radio"
                       name="paymentMethod"
-                      value="cod"
-                      checked={
-                        formData.paymentMethod ===
-                        'cod'
-                      }
+                      value="COD"
+                      checked={formData.paymentMethod === 'COD'}
                       onChange={handleChange}
                       className="w-4 h-4 accent-gold-600"
                     />
@@ -199,11 +351,8 @@ const CheckoutPage = () => {
                     <input
                       type="radio"
                       name="paymentMethod"
-                      value="bank"
-                      checked={
-                        formData.paymentMethod ===
-                        'bank'
-                      }
+                      value="CARD"
+                      checked={formData.paymentMethod === 'CARD'}
                       onChange={handleChange}
                       className="w-4 h-4 accent-gold-600"
                     />
@@ -219,9 +368,10 @@ const CheckoutPage = () => {
               {/* Submit Button */}
               <button
                 type="submit"
-                className="btn-primary block w-full text-center py-4 mb-4"
+                disabled={loading}
+                className="btn-primary block w-full text-center py-4 mb-4 disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                Complete Purchase
+                {loading ? 'Processing Order...' : 'Complete Purchase'}
               </button>
 
               <p className="text-sm text-gray-600 text-center">

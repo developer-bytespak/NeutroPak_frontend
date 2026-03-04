@@ -1,14 +1,55 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import HeroBanner from '@/components/HeroBanner';
 import ProductCard from '@/components/ProductCard';
 import ReviewCard from '@/components/ReviewCard';
 import FeaturesSlider from '@/components/FeaturesSlider';
+import { productService } from '@/services/productService';
+
+interface Product {
+  id: string | number;
+  name: string;
+  price: number;
+  description: string;
+  category: string;
+  stock: number;
+  imageUrl?: string;
+}
 
 const HomePage = () => {
+  const [topProducts, setTopProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  // Fetch products from backend API
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await productService.getAllProducts(1, 100);
+        console.log('Home page - API Response:', response);
+        
+        // Extract products from response (axios wraps in response.data, API wraps in data field)
+        const productsFromResponse = response?.data?.data?.products as unknown;
+        let productsData: Product[] = [];
+        
+        if (Array.isArray(productsFromResponse)) {
+          productsData = productsFromResponse;
+        }
+        
+        if (productsData.length > 0) {
+          setTopProducts(productsData);
+        }
+      } catch (err) {
+        console.error('Error fetching products:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProducts();
+  }, []);
   // Sample data
   const valueProps = [
     {
@@ -203,58 +244,6 @@ const HomePage = () => {
     },
   ];
 
-  const topProducts = [
-    {
-      slug: 'cinnamon-infused-honey-500g',
-      name: 'Cinnamon Infused Honey (500g)',
-      price: 1450,
-      image: '/cinamin(500g).JPG',
-      reviews: 150,
-    },
-    {
-      slug: 'chilli-infused-honey-500g',
-      name: 'Chilli Infused Honey (500g)',
-      price: 1450,
-      image: '/chilli(500g).JPG',
-      reviews: 200,
-    },
-    {
-      slug: 'acacia-honey-500g',
-      name: 'Acacia Honey (500g)',
-      price: 1380,
-      image: '/acacia(500g).JPG',
-      reviews: 180,
-    },
-    {
-      slug: 'acacia-honey-250g',
-      name: 'Acacia Honey (250g)',
-      price: 850,
-      image: '/acaciaa(250g).png',
-      reviews: 220,
-    },
-    {
-      slug: 'chilli-infused-honey-250g',
-      name: 'Chilli Infused Honey (250g)',
-      price: 930,
-      image: '/chilli(250g).png',
-      reviews: 160,
-    },
-    {
-      slug: 'cinnamon-infused-honey-250g',
-      name: 'Cinnamon Infused Honey (250g)',
-      price: 930,
-      image: '/cinamin_infused(250g).png',
-      reviews: 190,
-    },
-    {
-      slug: 'gift-box-250g',
-      name: 'Gift Box (250g)',
-      price: 2450,
-      image: '/giftbox.jpeg',
-      reviews: 210,
-    },
-  ];
-
   return (
     <main className="bg-white">
       {/* Hero Banner */}
@@ -319,9 +308,25 @@ const HomePage = () => {
             <p className="section-subtitle">Best Sellers From Our Collection</p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {topProducts.map((product) => (
-              <ProductCard key={product.slug} {...product} />
-            ))}
+            {loading ? (
+              <p className="text-center col-span-full">Loading products...</p>
+            ) : topProducts.length > 0 ? (
+              topProducts.map((product) => (
+                <ProductCard
+                  key={product.id}
+                  id={String(product.id)}
+                  name={product.name}
+                  price={product.price}
+                  image={product.imageUrl || '/product-placeholder.jpg'}
+                  slug={`product-${product.id}`}
+                  category={product.category}
+                  description={product.description}
+                  inStock={product.stock > 0}
+                />
+              ))
+            ) : (
+              <p className="text-center col-span-full">No products available</p>
+            )}
           </div>
         </div>
       </section>

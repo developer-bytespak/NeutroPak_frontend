@@ -13,7 +13,7 @@ const axiosInstance: AxiosInstance = axios.create({
 axiosInstance.interceptors.request.use(
   (config) => {
     // Add authentication token if available
-    const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
+    const token = typeof window !== 'undefined' ? localStorage.getItem('nutreopak_jwt') : null;
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }

@@ -1,9 +1,23 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ProductCard from '@/components/ProductCard';
+import { productService } from '@/services/productService';
+
+interface Product {
+  id: string | number;
+  name: string;
+  price: number;
+  description: string;
+  category: string;
+  stock: number;
+  imageUrl?: string;
+}
 
 const ShopPage = () => {
+  const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
   const [priceRange, setPriceRange] = useState([790, 6000]);
   const [appliedFilters, setAppliedFilters] = useState({
     priceRange: [790, 6000],
@@ -12,65 +26,40 @@ const ShopPage = () => {
   const [tempStockStatus, setTempStockStatus] = useState<'onSale' | 'inStock' | 'onBackorder' | null>(null);
   const [sortBy, setSortBy] = useState('popularity');
 
-  // Sample products data
-  const allProducts = [
-    {
-      slug: 'cinnamon-infused-honey-500g',
-      name: 'Cinnamon Infused Honey (500g)',
-      price: 1450,
-      image: '/cinamin(500g).JPG',
-      reviews: 150,
-      category: 'infused-honey',
-    },
-    {
-      slug: 'chilli-infused-honey-500g',
-      name: 'Chilli Infused Honey (500g)',
-      price: 1450,
-      image: '/chilli(500g).JPG',
-      reviews: 200,
-      category: 'infused-honey',
-    },
-    {
-      slug: 'acacia-honey-500g',
-      name: 'Acacia Honey (500g)',
-      price: 1380,
-      image: '/acacia(500g).JPG',
-      reviews: 180,
-      category: 'farm-honey',
-    },
-    {
-      slug: 'acacia-honey-250g',
-      name: 'Acacia Honey (250g)',
-      price: 850,
-      image: '/acaciaa(250g).png',
-      reviews: 220,
-      category: 'farm-honey',
-    },
-    {
-      slug: 'chilli-infused-honey-250g',
-      name: 'Chilli Infused Honey (250g)',
-      price: 930,
-      image: '/chilli(250g).png',
-      reviews: 160,
-      category: 'infused-honey',
-    },
-    {
-      slug: 'cinnamon-infused-honey-250g',
-      name: 'Cinnamon Infused Honey (250g)',
-      price: 930,
-      image: '/cinamin_infused(250g).png',
-      reviews: 190,
-      category: 'infused-honey',
-    },
-    {
-      slug: 'gift-box-250g',
-      name: 'Gift Box (250g)',
-      price: 2450,
-      image: '/giftbox.jpeg',
-      reviews: 210,
-      category: 'gift-sets',
-    },
-  ];
+  // Fetch products from backend API
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        setLoading(true);
+        const response = await productService.getAllProducts(1, 100);
+        console.log('API Response:', response);
+        
+        // Extract products from response (axios wraps in response.data, API wraps in data field)
+        const productsFromResponse = response?.data?.data?.products as unknown;
+        let productsData: Product[] = [];
+        
+        if (Array.isArray(productsFromResponse)) {
+          productsData = productsFromResponse;
+        }
+        
+        if (productsData.length > 0) {
+          setProducts(productsData);
+        } else {
+          console.error('No products found in response:', response);
+          setError('Failed to load products');
+        }
+      } catch (err) {
+        console.error('Error fetching products:', err);
+        setError(`Failed to load products: ${err instanceof Error ? err.message : 'Unknown error'}`);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProducts();
+  }, []);
+
+  const allProducts = products;
 
   const filteredProducts = allProducts.filter((product) => {
     const priceMatch =
@@ -198,12 +187,27 @@ const ShopPage = () => {
             </div>
 
             {/* Products Grid */}
-            {filteredProducts.length > 0 ? (
+            {loading ? (
+              <div className="text-center py-12">
+                <p className="text-lg text-gray-600">Loading products...</p>
+              </div>
+            ) : error ? (
+              <div className="text-center py-12">
+                <p className="text-lg text-red-600">{error}</p>
+              </div>
+            ) : filteredProducts.length > 0 ? (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {filteredProducts.map((product) => (
                   <ProductCard
-                    key={product.slug}
-                    {...product}
+                    key={product.id}
+                    id={String(product.id)}
+                    name={product.name}
+                    price={product.price}
+                    image={product.imageUrl || '/product-placeholder.jpg'}
+                    slug={`product-${product.id}`}
+                    category={product.category}
+                    description={product.description}
+                    inStock={product.stock > 0}
                   />
                 ))}
               </div>

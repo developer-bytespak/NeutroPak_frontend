@@ -3,8 +3,11 @@
 import { NextPage } from 'next';
 import { useState } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { authService } from '@/services/authService';
 
 const AdminLogin: NextPage = () => {
+  const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [remember, setRemember] = useState(false);
@@ -17,17 +20,22 @@ const AdminLogin: NextPage = () => {
     setLoading(true);
 
     try {
-      // TODO: Implement actual authentication with backend
-      if (email && password) {
-        // Simulate login
-        console.log('Login attempt:', { email, password, remember });
-        // For now, redirect to dashboard
-        window.location.href = '/admin/dashboard';
-      } else {
+      if (!email || !password) {
         setError('Please fill in all fields');
+        setLoading(false);
+        return;
       }
-    } catch (err) {
-      setError('Invalid credentials');
+
+      const response = await authService.login(email, password);
+
+      if (response.success) {
+        // Redirect to dashboard on successful login
+        router.push('/admin/dashboard');
+      } else {
+        setError(response.message || 'Login failed. Please try again.');
+      }
+    } catch (err: any) {
+      setError(err.response?.data?.message || 'Invalid credentials');
     } finally {
       setLoading(false);
     }

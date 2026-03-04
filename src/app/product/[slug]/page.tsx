@@ -4,6 +4,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import ProductCard from '@/components/ProductCard';
 import Image from 'next/image';
 import CartContext from '@/store/CartContext';
+import { productService } from '@/services/productService';
 
 interface ProductDetailPageProps {
   params: {
@@ -11,300 +12,97 @@ interface ProductDetailPageProps {
   };
 }
 
+interface Product {
+  id: string | number;
+  name: string;
+  description: string;
+  price: number;
+  category: string;
+  stock: number;
+  imageUrl?: string;
+}
+
 const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ params }) => {
   const [quantity, setQuantity] = useState(1);
-  const [selectedVariant, setSelectedVariant] = useState<string>('');
+  const [product, setProduct] = useState<Product | null>(null);
+  const [allProducts, setAllProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
   const cartContext = useContext(CartContext);
 
+  // Fetch all products from API
   useEffect(() => {
-    // Set initial variant after component mounts
-    const productsDatabase: { [key: string]: any } = {
-      'cinnamon-infused-honey-500g': {
-        variants: [{ size: 'Standard', price: 1450 }]
-      },
-      'chilli-infused-honey-500g': {
-        variants: [{ size: 'Standard', price: 1450 }]
-      },
-      'acacia-honey-500g': {
-        variants: [{ size: 'Standard', price: 1380 }]
-      },
-      'acacia-honey-250g': {
-        variants: [{ size: 'Standard', price: 850 }]
-      },
-      'chilli-infused-honey-250g': {
-        variants: [{ size: 'Standard', price: 930 }]
-      },
-      'cinnamon-infused-honey-250g': {
-        variants: [{ size: 'Standard', price: 930 }]
-      },
-      'gift-box-250g': {
-        variants: [{ size: 'Standard', price: 2450 }]
-      },
+    const fetchProductData = async () => {
+      try {
+        setLoading(true);
+        const response = await productService.getAllProducts(1, 100);
+        console.log('Product detail - API Response:', response);
+        
+        // Extract products from response (axios wraps in response.data, API wraps in data field)
+        const productsFromResponse = response?.data?.data?.products as unknown;
+        let products: Product[] = [];
+        
+        if (Array.isArray(productsFromResponse)) {
+          products = productsFromResponse;
+        }
+        
+        if (products.length > 0) {
+          setAllProducts(products);
+          
+          // Extract product ID from slug (format: product-{id})
+          const idFromSlug = params.slug.split('-').pop();
+          const foundProduct = products.find(p => String(p.id) === idFromSlug);
+          
+          if (foundProduct) {
+            setProduct(foundProduct);
+          } else {
+            setError('Product not found');
+          }
+        }
+      } catch (err) {
+        console.error('Error fetching product:', err);
+        setError(`Failed to load product: ${err instanceof Error ? err.message : 'Unknown error'}`);
+      } finally {
+        setLoading(false);
+      }
     };
-    
-    const product = productsDatabase[params.slug];
-    if (product && product.variants.length > 0) {
-      setSelectedVariant(product.variants[0].size);
-    }
+
+    fetchProductData();
   }, [params.slug]);
 
-  // All products database
-  const productsDatabase: { [key: string]: any } = {
-    'cinnamon-infused-honey-500g': {
-      id: '1',
-      name: 'Cinnamon Infused Honey (500g)',
-      slug: 'cinnamon-infused-honey-500g',
-      price: 1450,
-      originalPrice: 1599,
-      rating: 4.9,
-      reviews: 150,
-      category: 'Infused Honey',
-      description: 'Premium cinnamon-infused honey combining the warmth of cinnamon with pure raw honey. Perfect for health-conscious consumers looking for natural flavor and medicinal benefits.',
-      fullDescription: `Our Cinnamon Infused Honey is a perfect blend of premium raw honey and premium-grade cinnamon powder. This natural infusion provides all the benefits of raw honey combined with cinnamon's warming properties.
+  // Get related products (exclude current product)
+  const relatedProducts = allProducts
+    .filter(p => String(p.id) !== (product?.id ? String(product.id) : ''))
+    .slice(0, 3);
 
-Key Benefits:
-• Boosts metabolism and energy
-• Rich in antioxidants and cinnamon's natural healing properties
-• Supports healthy blood sugar levels
-• Natural anti-inflammatory properties
-• Perfect for tea, warm milk, or direct consumption
+  if (loading) {
+    return (
+      <main className="bg-white">
+        <section className="py-16 bg-white">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <p className="text-lg text-gray-600">Loading product...</p>
+          </div>
+        </section>
+      </main>
+    );
+  }
 
-Our Process:
-We carefully infuse premium cinnamon powder into cold-extracted honey, maintaining all natural enzymes and nutrients. No artificial flavoring or additives—just pure honey and pure cinnamon.`,
-      images: [
-        '/cinamin(500g).JPG',
-        '/cinamin(500g).JPG',
-        '/cinamin(500g).JPG',
-      ],
-      variants: [
-        { size: 'Standard', price: 1450 }
-      ],
-      inStock: true,
-      sku: 'CINNAMON-500G-001',
-    },
-    'chilli-infused-honey-500g': {
-      id: '2',
-      name: 'Chilli Infused Honey (500g)',
-      slug: 'chilli-infused-honey-500g',
-      price: 1450,
-      originalPrice: 1599,
-      rating: 4.8,
-      reviews: 200,
-      category: 'Infused Honey',
-      description: 'Fiery chilli-infused honey that brings heat and wellness together. Ideal for those seeking a unique taste with thermogenic benefits.',
-      fullDescription: `Our Chilli Infused Honey combines the smoothness of raw honey with the warming kick of premium chilli peppers. This bold infusion is perfect for those who want natural spice with health benefits.
-
-Key Benefits:
-• Boosts metabolism and thermogenesis
-• Rich in capsaicin for circulation and energy
-• Natural antibacterial properties
-• Supports respiratory and digestive health
-• Adds unique flavor to food and beverages
-
-Our Process:
-Premium chilli is carefully infused into our cold-extracted honey, preserving all beneficial compounds. No artificial heat or additives—purely natural ingredients.`,
-      images: [
-        '/chilli(500g).JPG',
-        '/chilli(500g).JPG',
-        '/chilli(500g).JPG',
-      ],
-      variants: [
-        { size: 'Standard', price: 1450 }
-      ],
-      inStock: true,
-      sku: 'CHILLI-500G-001',
-    },
-    'acacia-honey-500g': {
-      id: '3',
-      name: 'Acacia Honey (500g)',
-      slug: 'acacia-honey-500g',
-      price: 1380,
-      originalPrice: 1599,
-      rating: 4.9,
-      reviews: 180,
-      category: 'Farm Honey',
-      description: 'Pure acacia honey known for its light flavor and rapid crystallization. One of the finest honey varieties for direct consumption and health benefits.',
-      fullDescription: `Acacia honey is among the most sought-after varieties due to its light color, mild taste, and exceptional health benefits. Our acacia honey is sourced from pristine acacia forests.
-
-Key Benefits:
-• Gentle on stomach and digestive system
-• High in antioxidants and minerals
-• Ideal for allergy management
-• Natural energy boost
-• Excellent for skin health
-
-Our Process:
-Collected from acacia flowers in untouched regions, our honey undergoes cold extraction and gentle filtration to preserve all nutrients. Lab-tested for purity and quality.`,
-      images: [
-        '/acacia(500g).JPG',
-        '/acacia(500g).JPG',
-        '/acacia(500g).JPG',
-      ],
-      variants: [
-        { size: 'Standard', price: 1380 }
-      ],
-      inStock: true,
-      sku: 'ACACIA-500G-001',
-    },
-    'acacia-honey-250g': {
-      id: '4',
-      name: 'Acacia Honey (250g)',
-      slug: 'acacia-honey-250g',
-      price: 850,
-      originalPrice: 999,
-      rating: 4.9,
-      reviews: 220,
-      category: 'Farm Honey',
-      description: 'Premium acacia honey in a convenient 250g size. Perfect for sampling premium quality or gifting.',
-      fullDescription: `Our Acacia Honey (250g) is the perfect introduction to premium honey. Same quality as our larger sizes, packaged for convenience and value.
-
-Key Benefits:
-• Light, pure taste perfect for all ages
-• Health-promoting minerals and enzymes
-• Smaller size for experimentation
-• Great gift option
-• Lab-tested for purity
-
-Our Process:
-Same cold-extraction and rigorous testing as all our products, just in a smaller convenient size.`,
-      images: [
-        '/acaciaa(250g).png',
-        '/acaciaa(250g).png',
-        '/acaciaa(250g).png',
-      ],
-      variants: [
-        { size: 'Standard', price: 850 }
-      ],
-      inStock: true,
-      sku: 'ACACIA-250G-001',
-    },
-    'chilli-infused-honey-250g': {
-      id: '5',
-      name: 'Chilli Infused Honey (250g)',
-      slug: 'chilli-infused-honey-250g',
-      price: 930,
-      originalPrice: 1099,
-      rating: 4.8,
-      reviews: 160,
-      category: 'Infused Honey',
-      description: 'Compact size of our signature chilli-infused honey. Experience the heat without commitment.',
-      fullDescription: `Try our Chilli Infused Honey in a smaller 250g size. Perfect for testing or use as a flavorful gift.
-
-Key Benefits:
-• Premium infused honey in compact size
-• Perfect for trying before investing in larger quantity
-• Great for gifting
-• Full nutritional benefits of chilli-infused honey
-
-Our Process:
-Same premium infusion process as our standard size with rigorous quality control.`,
-      images: [
-        '/chilli(250g).png',
-        '/chilli(250g).png',
-        '/chilli(250g).png',
-      ],
-      variants: [
-        { size: 'Standard', price: 930 }
-      ],
-      inStock: true,
-      sku: 'CHILLI-250G-001',
-    },
-    'cinnamon-infused-honey-250g': {
-      id: '6',
-      name: 'Cinnamon Infused Honey (250g)',
-      slug: 'cinnamon-infused-honey-250g',
-      price: 930,
-      originalPrice: 1099,
-      rating: 4.9,
-      reviews: 190,
-      category: 'Infused Honey',
-      description: 'Cinnamon-infused honey in 250g. Perfect for warming beverages and natural health benefits.',
-      fullDescription: `Our Cinnamon Infused Honey (250g) brings warmth and wellness to your daily routine in a convenient size.
-
-Key Benefits:
-• Smaller size for experimentation
-• Full cinnamon and honey benefits
-• Perfect for tea and warm beverages
-• Great gift option
-• Maintains all natural properties
-
-Our Process:
-Premium infusion maintained in this smaller size with same rigorous quality standards.`,
-      images: [
-        '/cinamin_infused(250g).png',
-        '/cinamin_infused(250g).png',
-        '/cinamin_infused(250g).png',
-      ],
-      variants: [
-        { size: 'Standard', price: 930 }
-      ],
-      inStock: true,
-      sku: 'CINNAMON-250G-001',
-    },
-    'gift-box-250g': {
-      id: '7',
-      name: 'Gift Box (250g)',
-      slug: 'gift-box-250g',
-      price: 2450,
-      originalPrice: 2999,
-      rating: 5.0,
-      reviews: 210,
-      category: 'Gift Sets',
-      description: 'Premium gift-packaged honey set. Perfect for special occasions and corporate gifting.',
-      fullDescription: `Our Gift Box is the perfect present for honey lovers. Beautifully packaged with premium protection for safe delivery.
-
-Contents:
-• Premium 250g honey selection
-• Elegant gift packaging
-• Perfect presentation
-• Ideal for corporate gifts and special occasions
-
-Our Process:
-Same premium honey quality with added gift packaging for that special touch. Carefully packaged to ensure safe delivery.`,
-      images: [
-        '/giftbox.jpeg',
-        '/giftbox.jpeg',
-        '/giftbox.jpeg',
-      ],
-      variants: [
-        { size: 'Standard', price: 2450 }
-      ],
-      inStock: true,
-      sku: 'GIFTBOX-250G-001',
-    },
-  };
-
-  // Get product from database based on slug
-  const product = productsDatabase[params.slug] || productsDatabase['cinnamon-infused-honey-500g'];
-
-  const relatedProducts = [
-    {
-      slug: 'cinnamon-infused-honey-500g',
-      name: 'Cinnamon Infused Honey (500g)',
-      price: 1450,
-      image: '/cinamin(500g).JPG',
-      reviews: 150,
-    },
-    {
-      slug: 'chilli-infused-honey-500g',
-      name: 'Chilli Infused Honey (500g)',
-      price: 1450,
-      image: '/chilli(500g).JPG',
-      reviews: 200,
-    },
-    {
-      slug: 'gift-box-250g',
-      name: 'Gift Box (250g)',
-      price: 2450,
-      image: '/giftbox.jpeg',
-      reviews: 210,
-    },
-  ];
+  if (error || !product) {
+    return (
+      <main className="bg-white">
+        <section className="py-16 bg-white">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <p className="text-lg text-red-600">{error || 'Product not found'}</p>
+          </div>
+        </section>
+      </main>
+    );
+  }
 
   return (
     <main className="bg-white">
       {/* Preload main image */}
-      <link rel="preload" as="image" href={product.images[0]} />
+      <link rel="preload" as="image" href={product.imageUrl || '/product-placeholder.jpg'} />
       
       {/* Product Section */}
       <section className="py-16 bg-white">
@@ -314,7 +112,7 @@ Same premium honey quality with added gift packaging for that special touch. Car
             <div className="flex flex-col gap-6">
               <div className="bg-gray-100 rounded-lg overflow-hidden flex items-center justify-center h-96">
                 <Image
-                  src={product.images[0]}
+                  src={product.imageUrl || '/product-placeholder.jpg'}
                   alt={product.name}
                   width={400}
                   height={400}
@@ -324,22 +122,6 @@ Same premium honey quality with added gift packaging for that special touch. Car
                   loading="eager"
                   className="w-full h-full object-contain"
                 />
-              </div>
-              <div className="flex gap-3">
-                {product.images.map((img: string, idx: number) => (
-                  <div key={idx} className="bg-gray-100 rounded-lg overflow-hidden w-20 h-20 flex items-center justify-center cursor-pointer hover:border-2 hover:border-gold-600">
-                    <Image
-                      src={img}
-                      alt={`${product.name} ${idx + 1}`}
-                      width={80}
-                      height={80}
-                      quality={100}
-                      unoptimized
-                      loading="eager"
-                      className="w-full h-full object-contain"
-                    />
-                  </div>
-                ))}
               </div>
             </div>
 
@@ -354,51 +136,17 @@ Same premium honey quality with added gift packaging for that special touch. Car
               <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">{product.name}</h1>
 
               <div className="flex items-center gap-4 mb-6">
-                <span className="text-gold-400 text-lg">
-                  {'★'.repeat(Math.floor(product.rating))}
-                  {'☆'.repeat(5 - Math.floor(product.rating))}
-                </span>
-                <span className="text-gray-600 text-sm">
-                  {product.rating}/5 ({product.reviews} reviews)
-                </span>
+                <span className="text-gold-400 text-lg">★★★★★</span>
+                <span className="text-gray-600 text-sm">(Based on customer reviews)</span>
               </div>
 
               <div className="flex items-center gap-4 mb-6">
                 <span className="text-3xl font-bold text-gold-600">
                   ₨{product.price.toLocaleString()}
                 </span>
-                {product.originalPrice && (
-                  <span className="text-xl text-gray-400 line-through">
-                    ₨{product.originalPrice.toLocaleString()}
-                  </span>
-                )}
               </div>
 
               <p className="text-gray-700 mb-8">{product.description}</p>
-
-              {/* Variants */}
-              {product.variants.length > 1 && (
-                <div className="mb-8">
-                  <h3 className="text-lg font-bold text-gray-900 mb-4">Select Size</h3>
-                  <div className="grid grid-cols-2 gap-3">
-                    {product.variants.map((variant: any) => (
-                      <button
-                        key={variant.size}
-                        className={`py-3 px-4 rounded-lg font-bold transition-all ${
-                          selectedVariant === variant.size
-                            ? 'bg-gold-600 text-white'
-                            : 'bg-gray-100 text-gray-900 hover:bg-gray-200'
-                        }`}
-                        onClick={() =>
-                          setSelectedVariant(variant.size)
-                        }
-                      >
-                        {variant.size} - ₨{variant.price.toLocaleString()}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              )}
 
               {/* Quantity */}
               <div className="mb-8">
@@ -431,14 +179,32 @@ Same premium honey quality with added gift packaging for that special touch. Car
               <div className="flex gap-4 mb-8">
                 <button
                   onClick={() => {
-                    if (cartContext) {
-                      cartContext.addToCart(product, quantity);
+                    if (cartContext && product) {
+                      // Map API Product to Cart Product type
+                      const cartProduct = {
+                        id: String(product.id),
+                        name: product.name,
+                        slug: `product-${product.id}`,
+                        description: product.description,
+                        fullDescription: product.description,
+                        price: product.price,
+                        originalPrice: product.price,
+                        category: product.category,
+                        rating: 0,
+                        reviews: 0,
+                        images: product.imageUrl ? [product.imageUrl] : [],
+                        variants: [],
+                        inStock: product.stock > 0,
+                        sku: `SKU-${product.id}`,
+                        imageUrl: product.imageUrl,
+                      };
+                      cartContext.addToCart(cartProduct, quantity);
                     } else {
                       alert('Cart is not available. Please refresh the page.');
                     }
                   }}
                   className="flex-1 bg-gold-600 hover:bg-gold-700 text-white font-bold py-4 rounded-lg transition-colors disabled:opacity-50"
-                  disabled={!product.inStock}
+                  disabled={product?.stock <= 0}
                 >
                   Add to Cart
                 </button>
@@ -450,8 +216,8 @@ Same premium honey quality with added gift packaging for that special touch. Car
               {/* Product Info */}
               <div className="bg-gray-50 p-6 rounded-lg space-y-3">
                 <div className="flex justify-between">
-                  <strong className="text-gray-700">SKU:</strong>
-                  <span className="text-gray-600">{product.sku}</span>
+                  <strong className="text-gray-700">Product ID:</strong>
+                  <span className="text-gray-600">{product.id}</span>
                 </div>
                 <div className="flex justify-between">
                   <strong className="text-gray-700">Category:</strong>
@@ -459,8 +225,8 @@ Same premium honey quality with added gift packaging for that special touch. Car
                 </div>
                 <div className="flex justify-between">
                   <strong className="text-gray-700">Stock Status:</strong>
-                  <span className={product.inStock ? 'text-green-600' : 'text-red-600'}>
-                    {product.inStock ? 'In Stock' : 'Out of Stock'}
+                  <span className={product.stock > 0 ? 'text-green-600' : 'text-red-600'}>
+                    {product.stock > 0 ? `In Stock (${product.stock})` : 'Out of Stock'}
                   </span>
                 </div>
               </div>
@@ -474,27 +240,11 @@ Same premium honey quality with added gift packaging for that special touch. Car
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="bg-gradient-to-br from-yellow-50 to-amber-50 rounded-2xl shadow-lg p-12 lg:p-16 border-2 border-yellow-200">
             <h2 className="text-4xl lg:text-5xl font-bold text-red-900 mb-4 pb-4 border-b-4 border-gold-600">
-              Product Details
+              About {product.name}
             </h2>
             
             <div className="mt-12 space-y-8 text-lg text-gray-800 leading-relaxed">
-              <div
-                className="whitespace-pre-wrap"
-                dangerouslySetInnerHTML={{
-                  __html: product.fullDescription
-                    .replace(/Key Benefits:/g, '<h3 class="text-2xl font-bold text-red-900 mt-8 mb-4">Key Benefits:</h3>')
-                    .replace(/Our Process:/g, '<h3 class="text-2xl font-bold text-red-900 mt-8 mb-4">Our Process:</h3>')
-                    .replace(/• /g, '<div class="flex items-start gap-4 ml-4 my-3"><span class="text-gold-600 text-2xl font-bold flex-shrink-0">✓</span><span>')
-                    .replace(/\n/g, '\n')
-                    .split('\n')
-                    .map((line: string) => {
-                      if (line.includes('text-2xl')) return line;
-                      if (line.includes('✓')) return line + '</span></div>';
-                      return line;
-                    })
-                    .join('\n')
-                }}
-              />
+              <p>{product.description}</p>
             </div>
 
             {/* Key Info Cards */}
@@ -532,8 +282,18 @@ Same premium honey quality with added gift packaging for that special touch. Car
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl font-bold text-gray-900 mb-12">Related Products</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {relatedProducts.map((product) => (
-              <ProductCard key={product.slug} {...product} />
+            {relatedProducts.map((relatedProduct) => (
+              <ProductCard
+                key={relatedProduct.id}
+                id={String(relatedProduct.id)}
+                name={relatedProduct.name}
+                price={relatedProduct.price}
+                image={relatedProduct.imageUrl || '/product-placeholder.jpg'}
+                slug={`product-${relatedProduct.id}`}
+                category={relatedProduct.category}
+                description={relatedProduct.description}
+                inStock={relatedProduct.stock > 0}
+              />
             ))}
           </div>
         </div>

@@ -1,18 +1,25 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import AdminLayout from '@/components/AdminLayout';
+import { productService } from '@/services/productService';
 
 export default function AddProduct() {
+  const router = useRouter();
+
   const [formData, setFormData] = useState({
     name: '',
-    sku: '',
+    description: '',
     price: '',
     stock: '',
-    description: '',
     category: '',
   });
+
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -22,10 +29,41 @@ export default function AddProduct() {
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Product data:', formData);
-    // Add your API call here
+    try {
+      setSubmitting(true);
+      setError('');
+      setSuccess('');
+
+      // Validate form data
+      if (!formData.name || !formData.category || !formData.price || formData.stock === '') {
+        setError('Please fill in all required fields');
+        return;
+      }
+
+      const response = await productService.createProduct({
+        name: formData.name,
+        description: formData.description,
+        price: parseFloat(formData.price),
+        category: formData.category,
+        stock: parseInt(formData.stock),
+      });
+
+      if (response.data.success) {
+        setSuccess('Product created successfully!');
+        setTimeout(() => {
+          router.push('/admin/products');
+        }, 1500);
+      } else {
+        setError(response.data.message || 'Failed to create product');
+      }
+    } catch (err: any) {
+      setError('Error creating product: ' + (err.response?.data?.message || err.message));
+      console.error(err);
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -36,6 +74,18 @@ export default function AddProduct() {
             <h1 className="text-3xl font-bold text-gray-900">Add New Product</h1>
             <p className="text-gray-600 mt-2">Fill in the details to add a new product to your catalog</p>
           </div>
+
+          {error && (
+            <div className="bg-red-100 border-2 border-red-500 text-red-700 px-4 py-3 rounded-lg mb-6">
+              {error}
+            </div>
+          )}
+
+          {success && (
+            <div className="bg-green-100 border-2 border-green-500 text-green-700 px-4 py-3 rounded-lg mb-6">
+              {success}
+            </div>
+          )}
 
           <div className="bg-white rounded-xl shadow-lg border-t-4 border-yellow-500 p-8">
             <form onSubmit={handleSubmit} className="product-form">
@@ -51,22 +101,28 @@ export default function AddProduct() {
                   className="form-input"
                   placeholder="Enter product name (e.g., Sidr Honey - 250g)"
                   required
+                  disabled={submitting}
                 />
               </div>
 
-              {/* SKU */}
+              {/* Category */}
               <div className="form-group">
-                <label htmlFor="sku" className="form-label">SKU (Stock Keeping Unit) *</label>
-                <input
-                  type="text"
-                  id="sku"
-                  name="sku"
-                  value={formData.sku}
+                <label htmlFor="category" className="form-label">Category *</label>
+                <select
+                  id="category"
+                  name="category"
+                  value={formData.category}
                   onChange={handleChange}
                   className="form-input"
-                  placeholder="Enter SKU (e.g., SIDR-250)"
                   required
-                />
+                  disabled={submitting}
+                >
+                  <option value="">Select a category</option>
+                  <option value="Honey">Honey</option>
+                  <option value="Dates">Dates</option>
+                  <option value="Supplements">Supplements</option>
+                  <option value="Other">Other</option>
+                </select>
               </div>
 
               {/* Price and Stock - Grid */}
@@ -84,6 +140,7 @@ export default function AddProduct() {
                     step="0.01"
                     min="0"
                     required
+                    disabled={submitting}
                   />
                 </div>
 
@@ -99,6 +156,7 @@ export default function AddProduct() {
                     placeholder="0"
                     min="0"
                     required
+                    disabled={submitting}
                   />
                 </div>
               </div>
@@ -114,6 +172,7 @@ export default function AddProduct() {
                   className="form-textarea"
                   placeholder="Enter detailed product description..."
                   rows={5}
+                  disabled={submitting}
                 />
                 <p className="text-xs text-gray-500 mt-1">{formData.description.length}/500 characters</p>
               </div>
@@ -123,8 +182,9 @@ export default function AddProduct() {
                 <button
                   type="submit"
                   className="btn-submit"
+                  disabled={submitting}
                 >
-                  ✓ Save Product
+                  {submitting ? '⏳ Creating...' : '✓ Save Product'}
                 </button>
                 <Link
                   href="/admin/products"

@@ -1,31 +1,51 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import AdminLayout from '@/components/AdminLayout';
+import { productService } from '@/services/productService';
 
 interface Product {
   id: number;
   name: string;
-  sku: string;
+  description: string;
   price: number;
   stock: number;
-  status: string;
+  category: string;
 }
 
 export default function AdminProducts() {
-  const [products, setProducts] = useState<Product[]>([
-    { id: 1, name: 'Sidr (Beri) Honey - 125g', sku: 'SIDR-125', price: 799, stock: 50, status: 'Active' },
-    { id: 2, name: 'Sidr (Beri) Honey - 250g', sku: 'SIDR-250', price: 1599, stock: 30, status: 'Active' },
-    { id: 3, name: 'Wild Forest Honey - 500g', sku: 'WILD-500', price: 3299, stock: 15, status: 'Active' },
-    { id: 4, name: 'Raw Honey Multi-Pack', sku: 'RAW-MULTI', price: 4999, stock: 0, status: 'Out of Stock' },
-  ]);
-
+  const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
   const [deleteModal, setDeleteModal] = useState<{ isOpen: boolean; productId: number | null; productName: string }>({
     isOpen: false,
     productId: null,
     productName: '',
   });
+
+  useEffect(() => {
+    loadProducts();
+  }, []);
+
+  const loadProducts = async () => {
+    try {
+      setLoading(true);
+      const response = await productService.getAllProducts(1, 100);
+      if (response.data.success && response.data.data?.products) {
+        setProducts(response.data.data.products);
+      } else {
+        setError('Failed to load products');
+        setProducts([]);
+      }
+    } catch (err: any) {
+      setError('Error loading products');
+      setProducts([]);
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleDeleteClick = (id: number, name: string) => {
     setDeleteModal({
@@ -35,11 +55,19 @@ export default function AdminProducts() {
     });
   };
 
-  const handleDeleteConfirm = () => {
+  const handleDeleteConfirm = async () => {
     if (deleteModal.productId !== null) {
-      setProducts(products.filter(p => p.id !== deleteModal.productId));
-      console.log(`Product ${deleteModal.productId} deleted`);
-      // Add your API call here
+      try {
+        const response = await productService.deleteProduct(deleteModal.productId);
+        if (response.data.success) {
+          setProducts(products.filter((p) => p.id !== deleteModal.productId));
+          setError('');
+        } else {
+          setError(response.data.message || 'Failed to delete product');
+        }
+      } catch (err: any) {
+        setError(err.response?.data?.message || 'Error deleting product');
+      }
     }
     setDeleteModal({ isOpen: false, productId: null, productName: '' });
   };
@@ -54,48 +82,46 @@ export default function AdminProducts() {
           </Link>
         </div>
 
+        {error && (
+          <div className="bg-red-100 border-2 border-red-500 text-red-700 px-4 py-3 rounded-lg">
+            {error}
+          </div>
+        )}
+
         <div className="bg-white rounded-lg shadow-md overflow-hidden">
-          <table className="admin-table">
-            <thead>
-              <tr>
-                <th>Product Name</th>
-                <th>SKU</th>
-                <th>Price</th>
-                <th>Stock</th>
-                <th>Status</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {products.length > 0 ? (
-                products.map((product) => (
+          {loading ? (
+            <p className="p-8 text-center text-gray-500">Loading products...</p>
+          ) : products.length > 0 ? (
+            <table className="admin-table">
+              <thead>
+                <tr>
+                  <th>Product Name</th>
+                  <th>Category</th>
+                  <th>Price</th>
+                  <th>Stock</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {products.map((product) => (
                   <tr key={product.id}>
                     <td className="font-semibold text-gray-900">{product.name}</td>
-                    <td className="text-gray-600">{product.sku}</td>
-                    <td className="font-bold text-gold-600">₨{product.price.toLocaleString()}</td>
+                    <td className="text-gray-600">{product.category}</td>
+                    <td className="font-bold text-gold-600">₨{product.price.toLocaleString('en-PK')}</td>
                     <td>
                       <span className={`font-semibold ${product.stock > 0 ? 'text-green-600' : 'text-red-600'}`}>
                         {product.stock}
                       </span>
                     </td>
                     <td>
-                      <span className={`px-3 py-1 rounded-full text-sm font-semibold ${
-                        product.status === 'Active' 
-                          ? 'bg-green-100 text-green-700' 
-                          : 'bg-red-100 text-red-700'
-                      }`}>
-                        {product.status}
-                      </span>
-                    </td>
-                    <td>
                       <div className="flex gap-2">
-                        <Link 
+                        <Link
                           href={`/admin/products/${product.id}/edit`}
                           className="btn-edit"
                         >
                           Edit
                         </Link>
-                        <button 
+                        <button
                           onClick={() => handleDeleteClick(product.id, product.name)}
                           className="btn-delete"
                         >
@@ -104,16 +130,12 @@ export default function AdminProducts() {
                       </div>
                     </td>
                   </tr>
-                ))
-              ) : (
-                <tr>
-                  <td colSpan={6} className="text-center py-8 text-gray-500">
-                    No products found
-                  </td>
-                </tr>
-              )}
-            </tbody>
-          </table>
+                ))}
+              </tbody>
+            </table>
+          ) : (
+            <p className="p-8 text-center text-gray-500">No products found</p>
+          )}
         </div>
       </main>
 
