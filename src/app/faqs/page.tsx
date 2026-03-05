@@ -156,30 +156,30 @@ const FAQPage = () => {
   ];
 
   return (
-    <main>
+    <main className="overflow-x-hidden">
       {/* Header with Background Image */}
       <section 
-        className="relative bg-cover bg-center py-32"
+        className="relative bg-cover bg-center py-12 sm:py-20 md:py-32"
         style={{
           backgroundImage: 'url(/faq_sec.png)',
         }}
       >
         <div className="absolute inset-0 bg-black bg-opacity-20"></div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
-          <h1 className="text-5xl md:text-6xl font-bold text-white mb-2">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-2">
             Frequently Asked Questions
           </h1>
-          <p className="text-lg text-yellow-50">Find answers to all your honey questions</p>
+          <p className="text-sm sm:text-base md:text-lg text-yellow-50">Find answers to all your honey questions</p>
         </div>
       </section>
 
       {/* Main Content - Two Column Layout */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 md:py-16">
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 sm:gap-8 md:gap-8">
           {/* Left Sidebar - Table of Contents */}
           <div className="lg:col-span-1">
-            <div className="sticky top-20 bg-white border border-gray-300 rounded-lg p-5">
-              <h3 className="text-lg font-bold text-amber-900 mb-4 flex justify-between items-center">
+            <div className="sticky top-20 bg-white border border-gray-300 rounded-lg p-3 sm:p-5">
+              <h3 className="text-base sm:text-lg font-bold text-amber-900 mb-4 flex justify-between items-center">
                 Table of Contents
                 <span className="text-2xl">−</span>
               </h3>
@@ -193,7 +193,7 @@ const FAQPage = () => {
                       setExpandedCategory(idx);
                       document.getElementById(category.id)?.scrollIntoView({ behavior: 'smooth' });
                     }}
-                    className="block text-sm text-amber-800 hover:text-amber-900 font-medium py-1 px-2 rounded hover:bg-gold-50 transition"
+                    className="block text-xs sm:text-sm text-amber-800 hover:text-amber-900 font-medium py-1 px-2 rounded hover:bg-gold-50 transition"
                   >
                     {idx + 1}. {category.title}
                   </a>
@@ -203,21 +203,21 @@ const FAQPage = () => {
           </div>
 
           {/* Right Content - FAQ Items */}
-          <div className="lg:col-span-3 space-y-8">
+          <div className="lg:col-span-3 space-y-6 sm:space-y-8">
             {faqCategories.map((category, idx) => (
-              <section key={idx} id={category.id} className="bg-white rounded-lg p-6 border border-gray-200">
-                <h2 className="text-2xl font-bold text-amber-900 mb-6">{category.title}</h2>
+              <section key={idx} id={category.id} className="bg-white rounded-lg p-4 sm:p-6 border border-gray-200">
+                <h2 className="text-xl sm:text-2xl font-bold text-amber-900 mb-4 sm:mb-6">{category.title}</h2>
                 <div className="space-y-3">
                   {category.items.map((item) => (
                     <details
                       key={item.id}
                       className="border border-gray-200 rounded-lg transition"
                     >
-                      <summary className="cursor-pointer px-5 py-4 font-semibold text-amber-900 hover:bg-gold-50 transition flex justify-between items-center list-none">
+                      <summary className="cursor-pointer px-3 sm:px-5 py-3 sm:py-4 font-semibold text-sm sm:text-base text-amber-900 hover:bg-gold-50 transition flex justify-between items-center list-none">
                         <span>— {item.question}</span>
                         <span className="text-amber-600 transition group-open:rotate-180">+</span>
                       </summary>
-                      <div className="px-5 py-4 bg-gold-50 border-t border-gray-200 text-gray-700 leading-relaxed">
+                      <div className="px-3 sm:px-5 py-3 sm:py-4 bg-gold-50 border-t border-gray-200 text-gray-700 text-sm sm:text-base leading-relaxed">
                         {item.answer}
                       </div>
                     </details>
@@ -234,10 +234,10 @@ const FAQPage = () => {
         href="https://wa.me/923379788677"
         target="_blank"
         rel="noopener noreferrer"
-        className="fixed bottom-8 right-8 z-40 w-16 h-16 bg-gradient-to-br from-orange-500 to-orange-700 rounded-full flex items-center justify-center shadow-lg hover:shadow-xl hover:scale-110 transition transform"
+        className="fixed bottom-4 sm:bottom-8 right-4 sm:right-8 z-40 w-14 sm:w-16 h-14 sm:h-16 bg-gradient-to-br from-orange-500 to-orange-700 rounded-full flex items-center justify-center shadow-lg hover:shadow-xl hover:scale-110 transition transform"
         title="Chat on WhatsApp"
       >
-        <span className="text-2xl">💬</span>
+        <span className="text-xl sm:text-2xl">💬</span>
       </a>
     </main>
   );
