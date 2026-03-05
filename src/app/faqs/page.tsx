@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 
 const FAQPage = () => {
   const [expandedCategory, setExpandedCategory] = useState<number | null>(0);
+  const [expandedCategoryHeading, setExpandedCategoryHeading] = useState<Set<number>>(new Set([0]));
 
   const faqCategories = [
     {
@@ -191,6 +192,9 @@ const FAQPage = () => {
                     onClick={(e) => {
                       e.preventDefault();
                       setExpandedCategory(idx);
+                      const newExpanded = new Set(expandedCategoryHeading);
+                      newExpanded.add(idx);
+                      setExpandedCategoryHeading(newExpanded);
                       document.getElementById(category.id)?.scrollIntoView({ behavior: 'smooth' });
                     }}
                     className="block text-xs sm:text-sm text-amber-800 hover:text-amber-900 font-medium py-1 px-2 rounded hover:bg-gold-50 transition"
@@ -205,24 +209,43 @@ const FAQPage = () => {
           {/* Right Content - FAQ Items */}
           <div className="lg:col-span-3 space-y-6 sm:space-y-8">
             {faqCategories.map((category, idx) => (
-              <section key={idx} id={category.id} className="bg-white rounded-lg p-4 sm:p-6 border border-gray-200">
-                <h2 className="text-xl sm:text-2xl font-bold text-amber-900 mb-4 sm:mb-6">{category.title}</h2>
-                <div className="space-y-3">
-                  {category.items.map((item) => (
-                    <details
-                      key={item.id}
-                      className="border border-gray-200 rounded-lg transition"
-                    >
-                      <summary className="cursor-pointer px-3 sm:px-5 py-3 sm:py-4 font-semibold text-sm sm:text-base text-amber-900 hover:bg-gold-50 transition flex justify-between items-center list-none">
-                        <span>— {item.question}</span>
-                        <span className="text-amber-600 transition group-open:rotate-180">+</span>
-                      </summary>
-                      <div className="px-3 sm:px-5 py-3 sm:py-4 bg-gold-50 border-t border-gray-200 text-gray-700 text-sm sm:text-base leading-relaxed">
-                        {item.answer}
-                      </div>
-                    </details>
-                  ))}
-                </div>
+              <section key={idx} id={category.id} className="bg-white rounded-lg border border-gray-200">
+                <details
+                  open={expandedCategoryHeading.has(idx)}
+                  onToggle={(e) => {
+                    const newExpanded = new Set(expandedCategoryHeading);
+                    if ((e.target as HTMLDetailsElement).open) {
+                      newExpanded.add(idx);
+                    } else {
+                      newExpanded.delete(idx);
+                    }
+                    setExpandedCategoryHeading(newExpanded);
+                  }}
+                  className="w-full group"
+                >
+                  <summary className="cursor-pointer px-4 sm:px-6 py-4 sm:py-6 font-bold text-lg sm:text-xl text-amber-900 hover:bg-gold-50 transition flex justify-between items-center list-none marker:content-none">
+                    <span>{category.title}</span>
+                    <span className="text-amber-600 font-bold text-2xl transition-transform duration-300 flex-shrink-0 ml-4 group-open:rotate-45 select-none">+</span>
+                  </summary>
+                  <div className="px-4 sm:px-6 py-0 border-t border-gray-200">
+                    <div className="space-y-3 py-4">
+                      {category.items.map((item) => (
+                        <details
+                          key={item.id}
+                          className="border border-gray-200 rounded-lg transition"
+                        >
+                          <summary className="cursor-pointer px-3 sm:px-5 py-3 sm:py-4 font-semibold text-sm sm:text-base text-amber-900 hover:bg-gold-50 transition flex justify-between items-center list-none">
+                            <span>— {item.question}</span>
+                            <span className="text-amber-600 transition">+</span>
+                          </summary>
+                          <div className="px-3 sm:px-5 py-3 sm:py-4 bg-gold-50 border-t border-gray-200 text-gray-700 text-sm sm:text-base leading-relaxed">
+                            {item.answer}
+                          </div>
+                        </details>
+                      ))}
+                    </div>
+                  </div>
+                </details>
               </section>
             ))}
           </div>
