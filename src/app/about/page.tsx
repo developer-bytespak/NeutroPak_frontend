@@ -85,7 +85,7 @@ const AboutPage = () => {
                   Who We Are?
                 </h1>
                 <p className="text-gray-700 text-sm sm:text-base md:text-lg mb-6 sm:mb-8 leading-relaxed">
-                  NutreoPak is a premium honey brand dedicated to delivering honey in its purest, most natural form. NutreoPak is built on a simple belief — purity should never be compromised. We focus on ethical harvesting, honest ingredients, and transparent practices so you always know exactly what you're bringing home. Our commitment begins at the hive and ends in your jar — with nothing added, nothing taken away.
+                  At NutreoPak, we believe that true quality begins with purity. As a premium honey brand, our mission is to provide honey in its most natural and unaltered state. We work closely with ethical beekeepers and maintain transparent practices to ensure every jar reflects honesty, care, and authenticity. From the hive to your home, NutreoPak delivers honey just as nature created it pure, simple, and uncompromised.
                 </p>
                 <div className="flex justify-center lg:justify-start">
                   <Link
@@ -112,19 +112,19 @@ const AboutPage = () => {
                 Our Story
               </h2>
               <p className="text-gray-700 text-sm sm:text-base md:text-lg mb-3 sm:mb-4 leading-relaxed text-center lg:text-left">
-                NutreoPak's journey began in 2018 when Jawed, inspired by local beekeepers, started his own beekeeping practice. For two years he worked hands-on with hives, learning every detail of natural honey production. As demand grew, he entered the market full-time — connecting directly with seasoned beekeepers, studying different honey varieties across Pakistan, and supplying large dealers and wholesalers.
+                NutreoPak's journey began with a deep interest in traditional beekeeping and the natural process of honey production. What started as hands-on work with beehives gradually turned into valuable experience in understanding how pure honey is produced and harvested.
               </p>
               <p className="text-gray-700 text-sm sm:text-base md:text-lg mb-3 sm:mb-4 leading-relaxed text-center lg:text-left">
-                Over the years, he developed a rare skill: the ability to identify real and fake honey instantly, even when many experienced sellers couldn't. Later, I (Irfan Ullah) joined him with a shared vision — to bring this expertise and honesty online. Together, we built NutreoPak to offer pure honey in both retail and wholesale, sourced only from the regions where each specific honey naturally grows.
+                As knowledge and demand grew, the work expanded into the broader honey market by building relationships with experienced beekeepers across Pakistan and studying different regional honey varieties. This exposure developed a strong ability to identify authentic honey and maintain consistent quality while supplying dealers and wholesalers.
               </p>
               <p className="text-gray-700 text-sm sm:text-base md:text-lg leading-relaxed text-center lg:text-left">
-                With Jawed's experience and our commitment to purity, we are confident in delivering both unmatched quality and reliable quantity to every customer.
+                NutreoPak was later established to bring this expertise directly to customers through an online platform. The brand offers natural honey for both retail and wholesale buyers, carefully sourced from the regions where each variety naturally grows, with a strong commitment to purity, quality, and reliability.
               </p>
             </div>
 
             {/* Right - Image */}
-            <div>
-              <div className="bg-gold-100 rounded-lg overflow-hidden h-64 sm:h-80 md:h-96 flex items-center justify-center">
+            <div className="flex items-center justify-center h-full">
+              <div className="bg-gold-100 rounded-lg overflow-hidden h-64 sm:h-80 md:h-96 w-full flex items-center justify-center mt-16 sm:mt-24">
                 <Image
                   src="/aboutsec.jpeg"
                   alt="NutreoPak - Our Story"
