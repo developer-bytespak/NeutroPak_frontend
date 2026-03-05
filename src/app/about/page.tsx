@@ -39,7 +39,7 @@ const AboutPage = () => {
   ];
 
   return (
-    <main className="bg-white">
+    <main className="bg-white overflow-x-hidden">
       {/* Page Header */}
       <section
         className="relative bg-center bg-cover py-32"
@@ -52,7 +52,7 @@ const AboutPage = () => {
           <h1 className="text-5xl md:text-6xl font-bold text-white mb-2">
             About NutreoPak
           </h1>
-          <p className="text-lg text-yellow-50">Our Story, Our Mission, Our Commitment to Purity</p>
+          <p className="text-base sm:text-lg md:text-xl text-yellow-50 drop-shadow-lg">Our Story, Our Mission, Our Commitment to Purity</p>
         </div>
       </section>
 

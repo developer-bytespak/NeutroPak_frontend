@@ -145,83 +145,83 @@ const Navbar: React.FC = () => {
           isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
       >
-        <div className="p-6">
+        <div className="p-6 flex flex-col items-center">
           <button
             onClick={() => setIsMobileMenuOpen(false)}
             className="absolute top-4 right-4 text-2xl text-gray-700 hover:text-gold-600"
           >
             ✕
           </button>
-          <div className="mt-12 space-y-6 flex flex-col items-center">
+          <div className="mt-12 space-y-6 flex flex-col items-center w-full">
             <Link
               href="/about"
-              className="text-base font-semibold text-gray-800 hover:text-gold-600 transition-colors"
+              className="text-base font-semibold text-gray-800 hover:text-gold-600 transition-colors text-center"
               onClick={() => setIsMobileMenuOpen(false)}
             >
               ABOUT
             </Link>
             <Link
               href="/contact"
-              className="text-base font-semibold text-gray-800 hover:text-gold-600 transition-colors"
+              className="text-base font-semibold text-gray-800 hover:text-gold-600 transition-colors text-center"
               onClick={() => setIsMobileMenuOpen(false)}
             >
               CONTACT
             </Link>
             <Link
               href="/shop"
-              className="text-base font-semibold text-gray-800 hover:text-gold-600 transition-colors"
+              className="text-base font-semibold text-gray-800 hover:text-gold-600 transition-colors text-center"
               onClick={() => setIsMobileMenuOpen(false)}
             >
               SHOP
             </Link>
             <Link
               href="/faqs"
-              className="text-base font-semibold text-gray-800 hover:text-gold-600 transition-colors"
+              className="text-base font-semibold text-gray-800 hover:text-gold-600 transition-colors text-center"
               onClick={() => setIsMobileMenuOpen(false)}
             >
               FAQS
             </Link>
             <Link
               href="/blog"
-              className="text-base font-semibold text-gray-800 hover:text-gold-600 transition-colors"
+              className="text-base font-semibold text-gray-800 hover:text-gold-600 transition-colors text-center"
               onClick={() => setIsMobileMenuOpen(false)}
             >
               BLOG
             </Link>
             <div className="pt-6 border-t border-gray-300 w-full text-center">
               <p className="text-xs font-bold text-gray-600 mb-6 tracking-wide">LEGAL PAGES</p>
-              <div className="space-y-4 flex flex-col items-center">
+              <div className="space-y-4 flex flex-col items-center w-full">
                 <Link
                   href="/privacy-policy"
-                  className="text-sm text-gray-700 hover:text-gold-600 transition-colors"
+                  className="text-sm text-gray-700 hover:text-gold-600 transition-colors text-center"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
                   Privacy Policy
                 </Link>
                 <Link
                   href="/terms-and-conditions"
-                  className="text-sm text-gray-700 hover:text-gold-600 transition-colors"
+                  className="text-sm text-gray-700 hover:text-gold-600 transition-colors text-center"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
                   Terms & Conditions
                 </Link>
                 <Link
                   href="/shipping-policy"
-                  className="text-sm text-gray-700 hover:text-gold-600 transition-colors"
+                  className="text-sm text-gray-700 hover:text-gold-600 transition-colors text-center"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
                   Shipping Policy
                 </Link>
                 <Link
                   href="/refund-return-policy"
-                  className="text-sm text-gray-700 hover:text-gold-600 transition-colors"
+                  className="text-sm text-gray-700 hover:text-gold-600 transition-colors text-center"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
                   Refund & Return Policy
                 </Link>
                 <Link
                   href="/disclaimer"
-                  className="text-sm text-gray-700 hover:text-gold-600 transition-colors"
+                  className="text-sm text-gray-700 hover:text-gold-600 transition-colors text-center"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
                   Disclaimer
