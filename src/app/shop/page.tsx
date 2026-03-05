@@ -61,12 +61,36 @@ const ShopPage = () => {
 
   const allProducts = products;
 
-  const filteredProducts = allProducts.filter((product) => {
-    const priceMatch =
-      product.price >= appliedFilters.priceRange[0] &&
-      product.price <= appliedFilters.priceRange[1];
-    return priceMatch;
-  });
+  const maxPrice = Math.max(...allProducts.map(p => p.price), 6000);
+
+  const filteredProducts = allProducts
+    .filter((product) => {
+      const priceMatch =
+        product.price >= appliedFilters.priceRange[0] &&
+        product.price <= appliedFilters.priceRange[1];
+      
+      let stockMatch = true;
+      if (appliedFilters.stockStatus === 'inStock') {
+        stockMatch = product.stock > 0;
+      } else if (appliedFilters.stockStatus === 'onBackorder') {
+        stockMatch = product.stock === 0;
+      }
+      
+      return priceMatch && stockMatch;
+    })
+    .sort((a, b) => {
+      switch (sortBy) {
+        case 'price-low':
+          return a.price - b.price;
+        case 'price-high':
+          return b.price - a.price;
+        case 'newest':
+          return (b.id as number) - (a.id as number);
+        case 'popularity':
+        default:
+          return 0;
+      }
+    });
 
   const handleFilterClick = () => {
     setAppliedFilters({
@@ -76,33 +100,33 @@ const ShopPage = () => {
   };
 
   return (
-    <main>
+    <main className="overflow-x-hidden">
       {/* Page Header */}
       <section
-        className="relative bg-center bg-cover py-32"
+        className="relative bg-center bg-cover py-12 sm:py-20 md:py-32"
         style={{
           backgroundImage: 'url(/shop_sec.png)',
         }}
       >
         <div className="absolute inset-0 bg-black bg-opacity-20" />
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-5xl md:text-6xl font-bold text-white mb-2">Shop</h1>
-          <p className="text-lg text-yellow-50">Browse our collection of pure, raw honey</p>
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-2">Shop</h1>
+          <p className="text-sm sm:text-base md:text-lg text-yellow-50">Browse our collection of pure, raw honey</p>
         </div>
       </section>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 md:py-16">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 sm:gap-8 md:gap-8">
           {/* Sidebar */}
           <aside className="md:col-span-1">
             {/* Price Filter */}
-            <div className="py-6 border-b border-gray-200">
-              <h3 className="text-sm font-bold text-gray-900 mb-4 uppercase tracking-wider">Filter by Price</h3>
+            <div className="py-4 sm:py-6 border-b border-gray-200">
+              <h3 className="text-xs sm:text-sm font-bold text-gray-900 mb-4 uppercase tracking-wider">Filter by Price</h3>
               <div className="space-y-4">
                 <input
                   type="range"
                   min="0"
-                  max="5000"
+                  max={maxPrice}
                   value={priceRange[1]}
                   onChange={(e) =>
                     setPriceRange([
@@ -113,22 +137,35 @@ const ShopPage = () => {
                   className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-red-900"
                 />
                 <div className="flex justify-between items-center pt-2">
-                  <p className="text-gray-700 font-medium text-sm">
+                  <p className="text-gray-700 font-medium text-xs sm:text-sm">
                     Price: ₨ {priceRange[0]} — ₨ {priceRange[1]}
                   </p>
                 </div>
                 <button 
                   onClick={handleFilterClick}
-                  className="text-xs font-bold text-gray-700 hover:text-red-900 transition-colors uppercase tracking-wider w-full text-center py-2"
+                  className="text-xs font-bold text-white bg-red-900 hover:bg-red-800 transition-colors uppercase tracking-wider w-full text-center py-2 rounded"
                 >
-                  Filter
+                  Apply Filters
+                </button>
+                <button 
+                  onClick={() => {
+                    setPriceRange([790, maxPrice]);
+                    setTempStockStatus(null);
+                    setAppliedFilters({
+                      priceRange: [790, maxPrice],
+                      stockStatus: null,
+                    });
+                  }}
+                  className="text-xs font-bold text-gray-700 hover:text-red-900 transition-colors uppercase tracking-wider w-full text-center py-2 border border-gray-300 rounded"
+                >
+                  Reset Filters
                 </button>
               </div>
             </div>
 
             {/* Stock Status Filter */}
-            <div className="py-6">
-              <h3 className="text-sm font-bold text-gray-900 mb-4 uppercase tracking-wider">Stock Status</h3>
+            <div className="py-4 sm:py-6">
+              <h3 className="text-xs sm:text-sm font-bold text-gray-900 mb-4 uppercase tracking-wider">Stock Status</h3>
               <div className="space-y-3">
                 <label className="flex items-center gap-3 cursor-pointer hover:text-red-900 transition-colors">
                   <input 
@@ -137,7 +174,7 @@ const ShopPage = () => {
                     onChange={() => setTempStockStatus(tempStockStatus === 'onSale' ? null : 'onSale')}
                     className="w-5 h-5 rounded border-2 border-gray-300 cursor-pointer accent-red-900" 
                   />
-                  <span className="text-gray-700 text-sm">On sale</span>
+                  <span className="text-gray-700 text-xs sm:text-sm">On sale</span>
                 </label>
                 <label className="flex items-center gap-3 cursor-pointer hover:text-red-900 transition-colors">
                   <input 
@@ -146,7 +183,7 @@ const ShopPage = () => {
                     onChange={() => setTempStockStatus(tempStockStatus === 'inStock' ? null : 'inStock')}
                     className="w-5 h-5 rounded border-2 border-gray-300 cursor-pointer accent-red-900" 
                   />
-                  <span className="text-gray-700 text-sm">In stock</span>
+                  <span className="text-gray-700 text-xs sm:text-sm">In stock</span>
                 </label>
                 <label className="flex items-center gap-3 cursor-pointer hover:text-red-900 transition-colors">
                   <input 
@@ -155,7 +192,7 @@ const ShopPage = () => {
                     onChange={() => setTempStockStatus(tempStockStatus === 'onBackorder' ? null : 'onBackorder')}
                     className="w-5 h-5 rounded border-2 border-gray-300 cursor-pointer accent-red-900" 
                   />
-                  <span className="text-gray-700 text-sm">On backorder</span>
+                  <span className="text-gray-700 text-xs sm:text-sm">On backorder</span>
                 </label>
               </div>
             </div>
@@ -164,14 +201,14 @@ const ShopPage = () => {
           {/* Main Content */}
           <section className="md:col-span-3">
             {/* Sorting */}
-            <div className="flex justify-between items-center mb-8">
-              <div className="text-gray-700 font-medium">
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 sm:mb-8 gap-4">
+              <div className="text-gray-700 font-medium text-sm sm:text-base">
                 Showing {filteredProducts.length} products
               </div>
               <select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value)}
-                className="select-field"
+                className="px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 rounded text-xs sm:text-sm text-gray-900 bg-white hover:border-gray-400 focus:outline-none focus:border-red-900 focus:ring-1 focus:ring-red-900 transition-colors"
               >
                 <option value="popularity">
                   Sort by Popularity
@@ -188,15 +225,15 @@ const ShopPage = () => {
 
             {/* Products Grid */}
             {loading ? (
-              <div className="text-center py-12">
-                <p className="text-lg text-gray-600">Loading products...</p>
+              <div className="text-center py-8 sm:py-12">
+                <p className="text-base sm:text-lg text-gray-600">Loading products...</p>
               </div>
             ) : error ? (
-              <div className="text-center py-12">
-                <p className="text-lg text-red-600">{error}</p>
+              <div className="text-center py-8 sm:py-12">
+                <p className="text-base sm:text-lg text-red-600">{error}</p>
               </div>
             ) : filteredProducts.length > 0 ? (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
                 {filteredProducts.map((product) => (
                   <ProductCard
                     key={product.id}
@@ -212,8 +249,8 @@ const ShopPage = () => {
                 ))}
               </div>
             ) : (
-              <div className="text-center py-12">
-                <p className="text-lg text-gray-600">No products found matching your criteria.</p>
+              <div className="text-center py-8 sm:py-12">
+                <p className="text-base sm:text-lg text-gray-600">No products found matching your criteria.</p>
               </div>
             )}
           </section>
