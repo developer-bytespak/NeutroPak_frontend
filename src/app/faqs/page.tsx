@@ -176,6 +176,9 @@ const FAQPage = () => {
 
       {/* Main Content - Two Column Layout */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 md:py-16">
+        <div className="text-center mb-8 sm:mb-12 md:mb-16">
+          <p className="text-sm sm:text-base md:text-lg text-gray-600">Your guide to understanding pure honey and NutreoPak's commitment to quality</p>
+        </div>
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 sm:gap-8 md:gap-8">
           {/* Left Sidebar - Table of Contents */}
           <div className="lg:col-span-1">

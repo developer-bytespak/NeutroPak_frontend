@@ -357,12 +357,15 @@ const HomePage = () => {
 
             {/* Right - Content */}
             <div className="order-1 lg:order-2">
-              <p className="text-xs sm:text-sm font-semibold text-gray-700 italic mb-2 md:mb-3 text-center md:text-left">The Story Behind Every Drop</p>
-              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-red-900 mb-4 md:mb-6 leading-tight text-center md:text-left">
+              <p className="text-sm sm:text-base md:text-lg font-semibold text-gray-700 italic mb-2 sm:mb-3 text-center lg:text-left">The Story Behind Every Drop</p>
+              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-red-900 mb-4 sm:mb-6 leading-tight text-center lg:text-left">
                 Our Process
               </h2>
-              <p className="text-sm sm:text-base md:text-lg text-gray-700 leading-relaxed">
-                At NutreoPak, purity isn't just a claim — it's a process. Every jar begins in the untouched floral regions of Pakistan, where our partner beekeepers use ethical, traditional methods passed down for generations. From hive to bottle, every step is controlled, tested, and protected so you receive honey exactly as nature created it: raw, unheated, enzyme-rich, and completely free from additives or adulteration.
+              <p className="text-gray-700 text-sm sm:text-base md:text-lg mb-3 sm:mb-4 leading-relaxed text-center lg:text-left">
+                At NutreoPak, purity is not merely a claim but a standard maintained throughout the entire process. Each jar of honey originates from the natural floral regions of Pakistan, where experienced beekeepers follow responsible and traditional beekeeping practices that have been preserved over generations.
+              </p>
+              <p className="text-gray-700 text-sm sm:text-base md:text-lg leading-relaxed text-center lg:text-left">
+                From the collection of honey at the hive to its final packaging, every stage is carefully handled and monitored to maintain its natural quality. The honey is kept in its raw form, without excessive heating or unnecessary processing, preserving its natural enzymes and nutritional value while ensuring it remains completely free from additives or adulteration.
               </p>
             </div>
           </div>
@@ -439,7 +442,10 @@ const HomePage = () => {
       {/* FAQ Section */}
       <section className="py-8 sm:py-12 md:py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-center mb-8 sm:mb-12 md:mb-16 text-red-900">FAQs</h2>
+          <div className="text-center mb-8 sm:mb-12 md:mb-16">
+            <h2 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-red-900 mb-2 sm:mb-4">FAQs</h2>
+            <p className="text-sm sm:text-base md:text-lg text-gray-600">Everything you need to know about NutreoPak honey</p>
+          </div>
           
           {/* Main Content - Responsive Layout */}
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6 md:gap-8">
