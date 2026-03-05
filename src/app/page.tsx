@@ -245,7 +245,7 @@ const HomePage = () => {
   ];
 
   return (
-    <main className="bg-white">
+    <main className="bg-white overflow-x-hidden">
       {/* Hero Banner */}
       <HeroBanner
         title="Raw Honey, As Nature Made It."
@@ -259,39 +259,41 @@ const HomePage = () => {
       <FeaturesSlider />
 
       {/* Why Choose Section */}
-      <section className="py-16 bg-yellow-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+      <section className="py-8 sm:py-12 md:py-16 bg-yellow-200 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-12 items-center">
             {/* Left Side */}
             <div>
-              <p className="text-sm font-semibold text-gray-700 mb-2">Why Choose NutreoPak?</p>
-              <h2 className="text-4xl md:text-5xl font-bold text-red-900 mb-6 leading-tight">
+              <p className="text-xs sm:text-sm font-semibold text-gray-700 mb-2 text-center md:text-left">Why Choose NutreoPak?</p>
+              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-red-900 mb-4 md:mb-6 leading-tight text-center md:text-left">
                 Where Sweetness Meets Health
               </h2>
-              <p className="text-gray-800 text-lg mb-8 leading-relaxed">
+              <p className="text-sm sm:text-base md:text-lg text-gray-800 mb-6 md:mb-8 leading-relaxed">
                 NutreoPak source honey from ethical, small-scale beekeepers across Pakistan 
                 and tested for purity before it reaches you. No heating, no additives, 
                 no industrial processing — just real honey with all its natural enzymes, 
                 pollen, flavor, and health benefits intact.
               </p>
-              <Link 
-                href="/about" 
-                className="inline-block bg-white text-red-900 font-bold px-8 py-3 rounded-lg hover:bg-yellow-400 hover:text-white transition-colors"
-              >
-                Know More About Us
-              </Link>
+              <div className="flex justify-center md:justify-start">
+                <Link 
+                  href="/about" 
+                  className="inline-flex items-center justify-center bg-white text-red-900 font-bold px-6 sm:px-8 py-2 sm:py-3 rounded-lg hover:bg-yellow-400 hover:text-white transition-colors text-sm sm:text-base"
+                >
+                  Know More About Us
+                </Link>
+              </div>
             </div>
 
             {/* Right Side - Cards */}
-            <div className="space-y-4">
+            <div className="space-y-3 md:space-y-4">
               {valueProps.map((prop, idx) => (
-                <div key={idx} className="group bg-yellow-200 rounded-lg p-6 flex gap-6 items-start border-2 border-yellow-300 hover:shadow-lg transition-shadow">
-                  <div className="bg-yellow-300 rounded-full w-24 h-24 flex items-center justify-center flex-shrink-0 text-4xl group-hover:bg-red-800 transition-colors duration-300">
+                <div key={idx} className="group bg-yellow-200 rounded-lg p-3 sm:p-4 md:p-6 flex gap-3 md:gap-6 items-start border-2 border-yellow-300 hover:shadow-lg transition-shadow">
+                  <div className="bg-yellow-300 rounded-full w-16 sm:w-20 md:w-24 h-16 sm:h-20 md:h-24 flex items-center justify-center flex-shrink-0 text-2xl sm:text-3xl md:text-4xl group-hover:bg-red-800 transition-colors duration-300">
                     {prop.icon}
                   </div>
                   <div>
-                    <h3 className="text-xl font-bold text-red-900 mb-2">{prop.title}</h3>
-                    <p className="text-gray-800 text-sm leading-relaxed">{prop.description}</p>
+                    <h3 className="text-base sm:text-lg md:text-xl font-bold text-red-900 mb-1 md:mb-2">{prop.title}</h3>
+                    <p className="text-xs sm:text-sm md:text-sm text-gray-800 leading-relaxed">{prop.description}</p>
                   </div>
                 </div>
               ))}
@@ -301,13 +303,13 @@ const HomePage = () => {
       </section>
 
       {/* Top Selling Products */}
-      <section className="py-16 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-5xl md:text-6xl font-bold text-red-900 mb-4">Top Selling Honey</h2>
-            <p className="section-subtitle">Best Sellers From Our Collection</p>
+      <section className="py-8 sm:py-12 md:py-16 bg-white px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-8 md:mb-12">
+            <h2 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-red-900 mb-2 md:mb-4">Top Selling Honey</h2>
+            <p className="section-subtitle text-sm sm:text-base md:text-lg">Best Sellers From Our Collection</p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
             {loading ? (
               <p className="text-center col-span-full">Loading products...</p>
             ) : topProducts.length > 0 ? (
@@ -332,12 +334,12 @@ const HomePage = () => {
       </section>
 
       {/* Process Section */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8">
+      <section className="py-8 sm:py-12 md:py-16 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-12 items-center">
             {/* Left - Image */}
             <div className="order-2 lg:order-1">
-              <div className="bg-gold-100 rounded-lg overflow-hidden h-96 flex items-center justify-center">
+              <div className="bg-gold-100 rounded-lg overflow-hidden h-64 sm:h-80 md:h-96 flex items-center justify-center">
                 <Image
                   src="/abouttri.jpg"
                   alt="NutreoPak - Process"
@@ -354,11 +356,11 @@ const HomePage = () => {
 
             {/* Right - Content */}
             <div className="order-1 lg:order-2">
-              <p className="text-sm font-semibold text-gray-700 italic mb-3">The Story Behind Every Drop</p>
-              <h2 className="text-5xl font-bold text-red-900 mb-6 leading-tight">
+              <p className="text-xs sm:text-sm font-semibold text-gray-700 italic mb-2 md:mb-3 text-center md:text-left">The Story Behind Every Drop</p>
+              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-red-900 mb-4 md:mb-6 leading-tight text-center md:text-left">
                 Our Process
               </h2>
-              <p className="text-gray-700 text-lg leading-relaxed">
+              <p className="text-sm sm:text-base md:text-lg text-gray-700 leading-relaxed">
                 At NutreoPak, purity isn't just a claim — it's a process. Every jar begins in the untouched floral regions of Pakistan, where our partner beekeepers use ethical, traditional methods passed down for generations. From hive to bottle, every step is controlled, tested, and protected so you receive honey exactly as nature created it: raw, unheated, enzyme-rich, and completely free from additives or adulteration.
               </p>
             </div>
@@ -367,28 +369,29 @@ const HomePage = () => {
       </section>
 
       {/* Process Steps Timeline */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-pink-50">
+      <section className="py-8 sm:py-12 md:py-16 px-4 sm:px-6 lg:px-8 bg-pink-50">
         <div className="max-w-7xl mx-auto">
-          {/* Timeline Icons Header */}
-          <div className="flex justify-between items-center mb-16 gap-2">
+          {/* Timeline Icons Header - Hidden on mobile, shown on lg+ */}
+          <div className="hidden lg:flex justify-between items-center mb-8 md:mb-16 gap-2">
             {processSteps.map((step, idx) => (
               <React.Fragment key={idx}>
                 <div className="flex flex-col items-center flex-shrink-0 flex-1">
-                  <div className="text-5xl text-yellow-500 mb-4">{step.icon}</div>
+                  <div className="text-3xl md:text-4xl lg:text-5xl text-yellow-500 mb-2 md:mb-4">{step.icon}</div>
                 </div>
                 {idx < processSteps.length - 1 && (
-                  <div className="w-16 h-1 bg-yellow-500 flex-shrink-0 -mx-8" />
+                  <div className="w-8 md:w-16 h-1 bg-yellow-500 flex-shrink-0 -mx-4 md:-mx-8" />
                 )}
               </React.Fragment>
             ))}
           </div>
 
-          {/* Process Details Grid - 6 columns */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
+          {/* Process Details Grid - Responsive */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-3 sm:gap-4 md:gap-6">
             {processSteps.map((step, idx) => (
-              <div key={idx} className="text-center px-2">
-                <h3 className="text-lg font-bold text-red-900 mb-2">{step.title}</h3>
-                <p className="text-gray-700 text-sm leading-relaxed">{step.description}</p>
+              <div key={idx} className="text-center px-2 sm:px-3">
+                <div className="lg:hidden text-2xl sm:text-3xl text-yellow-500 mb-2">{step.icon}</div>
+                <h3 className="text-sm sm:text-base font-bold text-red-900 mb-2 md:mb-3 line-clamp-2">{step.title}</h3>
+                <p className="text-xs sm:text-sm text-gray-700 leading-relaxed line-clamp-4">{step.description}</p>
               </div>
             ))}
           </div>
@@ -396,63 +399,72 @@ const HomePage = () => {
       </section>
 
       {/* Reviews Section */}
-      <section className="py-16 bg-gray-50">
+      <section className="py-8 sm:py-12 md:py-16 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-5xl md:text-6xl font-bold text-red-900 mb-4">Customer Reviews</h2>
-            <p className="section-subtitle">4.9/5 ⭐ Based on 800+ verified customer reviews</p>
+          <div className="text-center mb-8 sm:mb-12">
+            <h2 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-red-900 mb-2 sm:mb-4">Customer Reviews</h2>
+            <p className="text-xs sm:text-sm md:text-base text-gray-600">4.9/5 ⭐ Based on 800+ verified customer reviews</p>
           </div>
           
-          {/* Sliding Reviews Container */}
-          <div className="overflow-hidden">
-            <div className="flex gap-8 animate-slide-left hover:[animation-play-state:paused]">
+          {/* Sliding Reviews Container - Responsive */}
+          <div className="hidden md:block overflow-hidden">
+            <div className="flex gap-4 md:gap-6 lg:gap-8 animate-slide-left hover:[animation-play-state:paused]">
               {/* First set of reviews */}
               {reviews.map((review, idx) => (
-                <div key={`review-${idx}`} className="flex-shrink-0 w-96">
+                <div key={`review-${idx}`} className="flex-shrink-0 w-72 sm:w-80 md:w-96">
                   <ReviewCard {...review} />
                 </div>
               ))}
               {/* Duplicate set for seamless loop */}
               {reviews.map((review, idx) => (
-                <div key={`review-dup-${idx}`} className="flex-shrink-0 w-96">
+                <div key={`review-dup-${idx}`} className="flex-shrink-0 w-72 sm:w-80 md:w-96">
                   <ReviewCard {...review} />
                 </div>
               ))}
             </div>
           </div>
+
+          {/* Mobile Grid - Shows on mobile */}
+          <div className="md:hidden grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {reviews.map((review, idx) => (
+              <div key={`mobile-review-${idx}`}>
+                <ReviewCard {...review} />
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
       {/* FAQ Section */}
-      <section className="py-16 bg-white">
+      <section className="py-8 sm:py-12 md:py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-5xl md:text-6xl font-bold text-center mb-16 text-red-900">FAQs</h2>
+          <h2 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-center mb-8 sm:mb-12 md:mb-16 text-red-900">FAQs</h2>
           
-          {/* Main Content - Two Column Layout */}
-          <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-            {/* Left Sidebar - Image */}
-            <div className="lg:col-span-1">
-              <div className="sticky top-20 rounded-lg overflow-hidden h-96">
+          {/* Main Content - Responsive Layout */}
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-6 md:gap-8">
+            {/* Left Sidebar - Image - Hidden on mobile, shown on md+ */}
+            <div className="hidden md:block">
+              <div className="sticky top-20 rounded-lg overflow-hidden h-64 md:h-80 lg:h-96">
                 <img src="/home_faq.jpg" alt="FAQ" className="w-full h-full object-cover" />
               </div>
             </div>
 
             {/* Right Content - FAQ Items */}
-            <div className="lg:col-span-3 space-y-8">
+            <div className="md:col-span-3 space-y-4 md:space-y-6 lg:space-y-8">
               {faqCategories.map((category, idx) => (
-                <section key={idx} id={category.id} className="bg-white rounded-lg p-6 border border-gray-200">
-                  <h2 className="text-2xl font-bold text-amber-900 mb-6">{category.title}</h2>
-                  <div className="space-y-3">
+                <section key={idx} id={category.id} className="bg-white rounded-lg p-4 sm:p-6 border border-gray-200">
+                  <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-amber-900 mb-4 md:mb-6">{category.title}</h2>
+                  <div className="space-y-2 md:space-y-3">
                     {category.items.map((item) => (
                       <details
                         key={item.id}
                         className="border border-gray-200 rounded-lg transition"
                       >
-                        <summary className="cursor-pointer px-5 py-4 font-semibold text-amber-900 hover:bg-gold-50 transition flex justify-between items-center list-none">
+                        <summary className="cursor-pointer px-3 sm:px-5 py-3 sm:py-4 font-semibold text-amber-900 hover:bg-gold-50 transition flex justify-between items-center list-none text-sm sm:text-base">
                           <span>— {item.question}</span>
-                          <span className="text-amber-600 transition group-open:rotate-180">+</span>
+                          <span className="text-amber-600 transition group-open:rotate-180 flex-shrink-0 ml-2">+</span>
                         </summary>
-                        <div className="px-5 py-4 bg-gold-50 border-t border-gray-200 text-gray-700 leading-relaxed">
+                        <div className="px-3 sm:px-5 py-3 sm:py-4 bg-gold-50 border-t border-gray-200 text-gray-700 leading-relaxed text-xs sm:text-sm md:text-base">
                           {item.answer}
                         </div>
                       </details>
@@ -463,8 +475,8 @@ const HomePage = () => {
             </div>
           </div>
 
-          <div className="text-center mt-8">
-            <Link href="/faqs" className="btn-primary">
+          <div className="text-center mt-8 sm:mt-12">
+            <Link href="/faqs" className="btn-primary text-sm sm:text-base">
               View All FAQs
             </Link>
           </div>

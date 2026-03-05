@@ -22,7 +22,7 @@ const FeaturesSlider: React.FC<FeaturesSliderProps> = ({
   ],
 }) => {
   return (
-    <section className="bg-white py-12 overflow-hidden">
+    <section className="bg-white py-4 xs:py-5 sm:py-6 md:py-8 lg:py-12 overflow-hidden">
       <style>{`
         @keyframes slide {
           0% {
@@ -34,7 +34,13 @@ const FeaturesSlider: React.FC<FeaturesSliderProps> = ({
         }
         
         .slider-track {
-          animation: slide 15s linear infinite;
+          animation: slide 20s linear infinite;
+        }
+
+        @media (max-width: 640px) {
+          .slider-track {
+            animation: slide 15s linear infinite;
+          }
         }
       `}</style>
       
@@ -45,20 +51,20 @@ const FeaturesSlider: React.FC<FeaturesSliderProps> = ({
             {features.map((feature, idx) => (
               <div
                 key={idx}
-                className="flex items-center gap-3 px-8 py-4 flex-shrink-0 text-gray-800 hover:text-red-800 transition-colors duration-300"
+                className="flex items-center gap-1.5 xs:gap-2 sm:gap-3 px-3 xs:px-4 sm:px-6 md:px-8 py-2 xs:py-3 sm:py-4 flex-shrink-0 text-gray-800 hover:text-red-800 transition-colors duration-300 active:text-red-900"
               >
-                <span className="text-2xl">{feature.icon}</span>
-                <span className="text-sm md:text-base font-semibold">{feature.text}</span>
+                <span className="text-lg xs:text-xl sm:text-2xl md:text-2xl flex-shrink-0">{feature.icon}</span>
+                <span className="text-xs xs:text-xs sm:text-sm md:text-base font-semibold whitespace-nowrap">{feature.text}</span>
               </div>
             ))}
             {/* Duplicate items for seamless loop */}
             {features.map((feature, idx) => (
               <div
                 key={`duplicate-${idx}`}
-                className="flex items-center gap-3 px-8 py-4 flex-shrink-0 text-gray-800 hover:text-red-800 transition-colors duration-300"
+                className="flex items-center gap-1.5 xs:gap-2 sm:gap-3 px-3 xs:px-4 sm:px-6 md:px-8 py-2 xs:py-3 sm:py-4 flex-shrink-0 text-gray-800 hover:text-red-800 transition-colors duration-300 active:text-red-900"
               >
-                <span className="text-2xl">{feature.icon}</span>
-                <span className="text-sm md:text-base font-semibold">{feature.text}</span>
+                <span className="text-lg xs:text-xl sm:text-2xl md:text-2xl flex-shrink-0">{feature.icon}</span>
+                <span className="text-xs xs:text-xs sm:text-sm md:text-base font-semibold whitespace-nowrap">{feature.text}</span>
               </div>
             ))}
           </div>

@@ -1,10 +1,12 @@
 'use client';
 
 import React, { useState, useEffect, useContext } from 'react';
+import Link from 'next/link';
 import ProductCard from '@/components/ProductCard';
 import Image from 'next/image';
 import CartContext from '@/store/CartContext';
 import { productService } from '@/services/productService';
+import { getOptimizedImageUrl } from '@/utils/cloudinaryImage';
 
 interface ProductDetailPageProps {
   params: {
@@ -28,6 +30,8 @@ const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ params }) => {
   const [allProducts, setAllProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [imageLoading, setImageLoading] = useState(true);
+  const [imageError, setImageError] = useState(false);
   const cartContext = useContext(CartContext);
 
   // Fetch all products from API
@@ -102,7 +106,9 @@ const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ params }) => {
   return (
     <main className="bg-white">
       {/* Preload main image */}
-      <link rel="preload" as="image" href={product.imageUrl || '/product-placeholder.jpg'} />
+      {product?.imageUrl && (
+        <link rel="preload" as="image" href={getOptimizedImageUrl(product.imageUrl, 'large')} />
+      )}
       
       {/* Product Section */}
       <section className="py-16 bg-white">
@@ -110,16 +116,24 @@ const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ params }) => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
             {/* Product Images */}
             <div className="flex flex-col gap-6">
-              <div className="bg-gray-100 rounded-lg overflow-hidden flex items-center justify-center h-96">
+              <div className="bg-gray-100 rounded-lg overflow-hidden flex items-center justify-center h-96 relative">
+                {imageLoading && (
+                  <div className="absolute inset-0 bg-gray-200 animate-pulse flex items-center justify-center">
+                    <span className="text-gray-400">Loading image...</span>
+                  </div>
+                )}
                 <Image
-                  src={product.imageUrl || '/product-placeholder.jpg'}
-                  alt={product.name}
-                  width={400}
-                  height={400}
+                  src={imageError ? '/product-placeholder.jpg' : getOptimizedImageUrl(product?.imageUrl || '', 'large')}
+                  alt={product?.name || 'Product'}
+                  width={500}
+                  height={500}
                   priority
-                  quality={100}
-                  unoptimized
-                  loading="eager"
+                  quality={90}
+                  onLoadingComplete={() => setImageLoading(false)}
+                  onError={() => {
+                    setImageError(true);
+                    setImageLoading(false);
+                  }}
                   className="w-full h-full object-contain"
                 />
               </div>
@@ -128,8 +142,8 @@ const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ params }) => {
             {/* Product Details */}
             <div>
               <div className="mb-6">
-                <a href="/" className="text-gray-600 hover:text-gray-800 text-sm">Home</a> / 
-                <a href="/shop" className="text-gray-600 hover:text-gray-800 text-sm"> Shop</a> / 
+                <Link href="/" className="text-gray-600 hover:text-gray-800 text-sm">Home</Link> / 
+                <Link href="/shop" className="text-gray-600 hover:text-gray-800 text-sm"> Shop</Link> / 
                 <span className="text-gray-800 text-sm"> {product.category}</span>
               </div>
 
