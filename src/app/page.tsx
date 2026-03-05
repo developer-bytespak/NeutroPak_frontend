@@ -259,9 +259,9 @@ const HomePage = () => {
       <FeaturesSlider />
 
       {/* Why Choose Section */}
-      <section className="py-8 sm:py-12 md:py-16 bg-yellow-200 px-4 sm:px-6 lg:px-8">
+      <section className="py-12 sm:py-16 md:py-20 bg-yellow-200 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-12 items-center">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 items-center">
             {/* Left Side */}
             <div>
               <p className="text-xs sm:text-sm font-semibold text-gray-700 mb-2 text-center md:text-left">Why Choose NutreoPak?</p>
@@ -285,14 +285,14 @@ const HomePage = () => {
             </div>
 
             {/* Right Side - Cards */}
-            <div className="space-y-3 md:space-y-4">
+            <div className="space-y-3">
               {valueProps.map((prop, idx) => (
-                <div key={idx} className="group bg-yellow-200 rounded-lg p-3 sm:p-4 md:p-6 flex gap-3 md:gap-6 items-start border-2 border-yellow-300 hover:shadow-lg transition-shadow">
-                  <div className="bg-yellow-300 rounded-full w-16 sm:w-20 md:w-24 h-16 sm:h-20 md:h-24 flex items-center justify-center flex-shrink-0 text-2xl sm:text-3xl md:text-4xl group-hover:bg-red-800 transition-colors duration-300">
+                <div key={idx} className="group bg-yellow-200 rounded-lg p-3 sm:p-3 md:p-5 flex gap-3 items-start border-2 border-yellow-300 hover:shadow-lg transition-shadow">
+                  <div className="bg-yellow-300 rounded-full w-14 sm:w-16 md:w-18 h-14 sm:h-16 md:h-18 flex items-center justify-center flex-shrink-0 text-lg sm:text-xl md:text-2xl group-hover:bg-red-800 transition-colors duration-300">
                     {prop.icon}
                   </div>
                   <div>
-                    <h3 className="text-base sm:text-lg md:text-xl font-bold text-red-900 mb-1 md:mb-2">{prop.title}</h3>
+                    <h3 className="text-sm sm:text-base md:text-lg font-bold text-red-900 mb-0.5 md:mb-1">{prop.title}</h3>
                     <p className="text-xs sm:text-sm md:text-sm text-gray-800 leading-relaxed">{prop.description}</p>
                   </div>
                 </div>
