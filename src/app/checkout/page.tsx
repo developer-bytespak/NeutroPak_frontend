@@ -137,25 +137,22 @@ const CheckoutPage = () => {
   };
 
   return (
-    <main>
+    <main className="overflow-x-hidden">
       {/* Page Header */}
       <section
-        className="relative bg-center bg-cover py-32"
-        style={{
-          backgroundImage: 'url(/checkout.webp)',
-        }}
+        className="relative bg-gradient-to-r from-yellow-500 to-yellow-600 py-12 sm:py-20 md:py-32"
       >
         <div className="absolute inset-0 bg-black bg-opacity-20" />
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-5xl md:text-6xl font-bold text-white mb-2">Checkout</h1>
-          <p className="text-lg text-yellow-50">Complete your order</p>
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-2">Checkout</h1>
+          <p className="text-sm sm:text-base md:text-lg text-yellow-50">Complete your order</p>
         </div>
       </section>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 md:py-16">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8 md:gap-8">
           {/* Checkout Form */}
-          <section className="lg:col-span-2">
+          <section className="lg:col-span-2 order-2 lg:order-1">
             {error && (
               <div className="bg-red-100 border-2 border-red-500 text-red-700 px-4 py-3 rounded-lg mb-6">
                 {error}
@@ -164,12 +161,12 @@ const CheckoutPage = () => {
 
             <form onSubmit={handleSubmit}>
               {/* Shipping Information */}
-              <fieldset className="pb-8 border-b border-gray-200 mb-8">
-                <h2 className="text-2xl font-bold text-gray-900 mb-6">Shipping Information</h2>
+              <fieldset className="pb-6 sm:pb-8 border-b border-gray-200 mb-6 sm:mb-8">
+                <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-4 sm:mb-6">Shipping Information</h2>
 
                 <div className="grid grid-cols-2 gap-4 mb-4">
                   <div>
-                    <label htmlFor="firstName" className="block text-sm font-medium text-gray-900 mb-2">
+                    <label htmlFor="firstName" className="block text-xs sm:text-sm font-medium text-gray-900 mb-2">
                       First Name *
                     </label>
                     <input
@@ -187,7 +184,7 @@ const CheckoutPage = () => {
                     )}
                   </div>
                   <div>
-                    <label htmlFor="lastName" className="block text-sm font-medium text-gray-900 mb-2">
+                    <label htmlFor="lastName" className="block text-xs sm:text-sm font-medium text-gray-900 mb-2">
                       Last Name *
                     </label>
                     <input
@@ -207,7 +204,7 @@ const CheckoutPage = () => {
                 </div>
 
                 <div className="mb-4">
-                  <label htmlFor="email" className="block text-sm font-medium text-gray-900 mb-2">Email *</label>
+                  <label htmlFor="email" className="block text-xs sm:text-sm font-medium text-gray-900 mb-2">Email *</label>
                   <input
                     type="email"
                     id="email"
@@ -224,7 +221,7 @@ const CheckoutPage = () => {
                 </div>
 
                 <div className="mb-4">
-                  <label htmlFor="phone" className="block text-sm font-medium text-gray-900 mb-2">
+                  <label htmlFor="phone" className="block text-xs sm:text-sm font-medium text-gray-900 mb-2">
                     Phone Number *
                   </label>
                   <input
@@ -243,7 +240,7 @@ const CheckoutPage = () => {
                 </div>
 
                 <div className="mb-4">
-                  <label htmlFor="address" className="block text-sm font-medium text-gray-900 mb-2">
+                  <label htmlFor="address" className="block text-xs sm:text-sm font-medium text-gray-900 mb-2">
                     Street Address *
                   </label>
                   <input
@@ -331,11 +328,11 @@ const CheckoutPage = () => {
               </fieldset>
 
               {/* Payment Method */}
-              <fieldset className="py-8 border-b border-gray-200 mb-8">
-                <h2 className="text-2xl font-bold text-gray-900 mb-6">Payment Method</h2>
+              <fieldset className="py-6 sm:py-8 border-b border-gray-200 mb-6 sm:mb-8">
+                <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-4 sm:mb-6">Payment Method</h2>
 
-                <div className="space-y-4">
-                  <label className="flex items-center gap-3 p-4 border-2 border-gray-200 rounded-lg hover:border-gold-600 hover:bg-gold-50 cursor-pointer transition-all">
+                <div className="space-y-3 sm:space-y-4">
+                  <label className="flex items-center gap-3 p-3 sm:p-4 border-2 border-gray-200 rounded-lg hover:border-gold-600 hover:bg-gold-50 cursor-pointer transition-all">
                     <input
                       type="radio"
                       name="paymentMethod"
@@ -344,10 +341,10 @@ const CheckoutPage = () => {
                       onChange={handleChange}
                       className="w-4 h-4 accent-gold-600"
                     />
-                    <span className="font-medium text-gray-900">Cash on Delivery (COD)</span>
+                    <span className="font-medium text-xs sm:text-base text-gray-900">Cash on Delivery (COD)</span>
                   </label>
 
-                  <label className="flex items-center gap-3 p-4 border-2 border-gray-200 rounded-lg hover:border-gold-600 hover:bg-gold-50 cursor-pointer transition-all">
+                  <label className="flex items-center gap-3 p-3 sm:p-4 border-2 border-gray-200 rounded-lg hover:border-gold-600 hover:bg-gold-50 cursor-pointer transition-all">
                     <input
                       type="radio"
                       name="paymentMethod"
@@ -356,11 +353,11 @@ const CheckoutPage = () => {
                       onChange={handleChange}
                       className="w-4 h-4 accent-gold-600"
                     />
-                    <span className="font-medium text-gray-900">Bank Transfer</span>
+                    <span className="font-medium text-xs sm:text-base text-gray-900">Bank Transfer</span>
                   </label>
                 </div>
 
-                <p className="text-sm text-gray-600 mt-4 bg-gold-50 p-3 rounded-lg border-l-4 border-gold-600">
+                <p className="text-xs sm:text-sm text-gray-600 mt-4 bg-gold-50 p-3 rounded-lg border-l-4 border-gold-600">
                   We offer free COD delivery throughout Pakistan!
                 </p>
               </fieldset>
@@ -369,12 +366,12 @@ const CheckoutPage = () => {
               <button
                 type="submit"
                 disabled={loading}
-                className="btn-primary block w-full text-center py-4 mb-4 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="btn-primary block w-full text-center py-3 sm:py-4 mb-4 disabled:opacity-50 disabled:cursor-not-allowed text-sm sm:text-base"
               >
                 {loading ? 'Processing Order...' : 'Complete Purchase'}
               </button>
 
-              <p className="text-sm text-gray-600 text-center">
+              <p className="text-xs sm:text-sm text-gray-600 text-center">
                 By clicking "Complete Purchase", you agree to our{' '}
                 <Link href="/terms-and-conditions" className="text-gold-600 hover:text-gold-700 font-semibold">
                   Terms & Conditions
@@ -388,15 +385,15 @@ const CheckoutPage = () => {
           </section>
 
           {/* Order Summary */}
-          <aside className="lg:col-span-1">
-            <div className="card p-8 h-fit sticky top-20">
-              <h2 className="text-2xl font-bold text-gray-900 mb-6">Order Summary</h2>
+          <aside className="lg:col-span-1 order-1 lg:order-2">
+            <div className="card p-4 sm:p-8 h-fit sticky top-20">
+              <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-4 sm:mb-6">Order Summary</h2>
 
               {cart.length > 0 ? (
                 <>
                   <div className="space-y-3 mb-6 pb-6 border-b border-gray-200">
                     {cart.map((item) => (
-                      <div key={item.id} className="flex justify-between">
+                      <div key={item.id} className="flex justify-between text-sm sm:text-base">
                         <span className="text-gray-700">{item.name} x{item.quantity}</span>
                         <span className="font-semibold text-gray-900">
                           ₨ {(item.price * item.quantity).toLocaleString('en-PK')}
@@ -406,17 +403,17 @@ const CheckoutPage = () => {
                   </div>
 
                   <div className="space-y-3 mb-6 pb-6 border-b border-gray-200">
-                    <div className="flex justify-between">
+                    <div className="flex justify-between text-xs sm:text-sm">
                       <span className="text-gray-700">Subtotal:</span>
                       <span className="font-semibold text-gray-900">₨ {subtotal.toLocaleString('en-PK')}</span>
                     </div>
 
-                    <div className="flex justify-between">
+                    <div className="flex justify-between text-xs sm:text-sm">
                       <span className="text-gray-700">Shipping:</span>
                       <span className="text-green-600 font-bold">FREE</span>
                     </div>
 
-                    <div className="flex justify-between">
+                    <div className="flex justify-between text-xs sm:text-sm">
                       <span className="text-gray-700">Tax:</span>
                       <span className="font-semibold text-gray-900">₨ {tax.toLocaleString('en-PK')}</span>
                     </div>
@@ -424,18 +421,18 @@ const CheckoutPage = () => {
 
                   <div className="flex justify-between py-3 border-b-2 border-gray-300 mb-6">
                     <span className="font-bold text-gray-900">Total:</span>
-                    <span className="text-xl font-bold text-gold-600">₨ {total.toLocaleString('en-PK')}</span>
+                    <span className="text-lg sm:text-xl font-bold text-gold-600">₨ {total.toLocaleString('en-PK')}</span>
                   </div>
 
-                  <div className="space-y-2 text-sm text-gray-600">
+                  <div className="space-y-2 text-xs sm:text-sm text-gray-600">
                     <p className="flex items-center gap-2"><span className="text-green-600">✓</span> Secure Checkout</p>
                     <p className="flex items-center gap-2"><span className="text-green-600">✓</span> SSL Encrypted</p>
                     <p className="flex items-center gap-2"><span className="text-green-600">✓</span> Money Back Guarantee</p>
                   </div>
                 </>
               ) : (
-                <div className="py-12 text-center">
-                  <p className="text-gray-500 mb-4">Your cart is empty</p>
+                <div className="py-8 sm:py-12 text-center">
+                  <p className="text-gray-500 mb-4 text-sm sm:text-base">Your cart is empty</p>
                   <Link href="/shop" className="btn-primary inline-block">
                     Continue Shopping
                   </Link>
