@@ -42,14 +42,14 @@ const AboutPage = () => {
     <main className="bg-white overflow-x-hidden">
       {/* Page Header */}
       <section
-        className="relative bg-center bg-cover py-32"
+        className="relative bg-center bg-cover py-12 sm:py-20 md:py-32"
         style={{
           backgroundImage: 'url(/about_sec.png)',
         }}
       >
         <div className="absolute inset-0 bg-black bg-opacity-20"></div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
-          <h1 className="text-5xl md:text-6xl font-bold text-white mb-2">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-2">
             About NutreoPak
           </h1>
           <p className="text-base sm:text-lg md:text-xl text-yellow-50 drop-shadow-lg">Our Story, Our Mission, Our Commitment to Purity</p>
@@ -57,13 +57,13 @@ const AboutPage = () => {
       </section>
 
       {/* Who We Are Section */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8">
+      <section className="py-8 sm:py-12 md:py-16 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
-          <div className="bg-pink-50 rounded-2xl p-8 lg:p-12">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          <div className="bg-pink-50 rounded-2xl p-4 sm:p-6 md:p-8 lg:p-12">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 md:gap-12 items-center">
               {/* Left - Image */}
               <div className="order-2 lg:order-1">
-                <div className="bg-yellow-100 rounded-lg overflow-hidden h-96 flex items-center justify-center">
+                <div className="bg-yellow-100 rounded-lg overflow-hidden h-64 sm:h-80 md:h-96 flex items-center justify-center">
                   <Image
                     src="/aboutfirst.jpeg"
                     alt="NutreoPak - Who We Are"
@@ -80,19 +80,21 @@ const AboutPage = () => {
 
               {/* Right - Content */}
               <div className="order-1 lg:order-2">
-                <p className="text-sm font-semibold text-gray-700 italic mb-3">About NutreoPak - Pakistan's Trusted Honey Brand</p>
-                <h1 className="text-5xl lg:text-6xl font-bold text-red-900 mb-6 leading-tight">
+                <p className="text-xs sm:text-sm font-semibold text-gray-700 italic mb-2 sm:mb-3 text-center lg:text-left">About NutreoPak - Pakistan's Trusted Honey Brand</p>
+                <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-red-900 mb-4 sm:mb-6 leading-tight text-center lg:text-left">
                   Who We Are?
                 </h1>
-                <p className="text-gray-700 text-lg mb-8 leading-relaxed">
+                <p className="text-gray-700 text-sm sm:text-base md:text-lg mb-6 sm:mb-8 leading-relaxed">
                   NutreoPak is a premium honey brand dedicated to delivering honey in its purest, most natural form. NutreoPak is built on a simple belief — purity should never be compromised. We focus on ethical harvesting, honest ingredients, and transparent practices so you always know exactly what you're bringing home. Our commitment begins at the hive and ends in your jar — with nothing added, nothing taken away.
                 </p>
-                <Link
-                  href="/shop"
-                  className="inline-block bg-yellow-500 hover:bg-yellow-600 text-white font-bold px-8 py-3 rounded-lg transition-colors"
-                >
-                  Shop Pure Honey
-                </Link>
+                <div className="flex justify-center lg:justify-start">
+                  <Link
+                    href="/shop"
+                    className="inline-flex items-center justify-center bg-yellow-500 hover:bg-yellow-600 text-white font-bold px-6 sm:px-8 py-2 sm:py-3 rounded-lg transition-colors text-sm sm:text-base"
+                  >
+                    Shop Pure Honey
+                  </Link>
+                </div>
               </div>
             </div>
           </div>
@@ -100,29 +102,29 @@ const AboutPage = () => {
       </section>
 
       {/* Our Story Section */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-gray-50">
+      <section className="py-8 sm:py-12 md:py-16 px-4 sm:px-6 lg:px-8 bg-gray-50">
         <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 md:gap-12 items-center">
             {/* Left - Content */}
             <div>
-              <p className="text-sm font-semibold text-gray-700 italic mb-3">How It All Started</p>
-              <h2 className="text-5xl font-bold text-red-900 mb-6 leading-tight">
+              <p className="text-sm sm:text-base md:text-lg font-semibold text-gray-700 italic mb-2 sm:mb-3 text-center lg:text-left">How It All Started</p>
+              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-red-900 mb-4 sm:mb-6 leading-tight text-center lg:text-left">
                 Our Story
               </h2>
-              <p className="text-gray-700 text-lg mb-4 leading-relaxed">
+              <p className="text-gray-700 text-sm sm:text-base md:text-lg mb-3 sm:mb-4 leading-relaxed text-center lg:text-left">
                 NutreoPak's journey began in 2018 when Jawed, inspired by local beekeepers, started his own beekeeping practice. For two years he worked hands-on with hives, learning every detail of natural honey production. As demand grew, he entered the market full-time — connecting directly with seasoned beekeepers, studying different honey varieties across Pakistan, and supplying large dealers and wholesalers.
               </p>
-              <p className="text-gray-700 text-lg mb-4 leading-relaxed">
+              <p className="text-gray-700 text-sm sm:text-base md:text-lg mb-3 sm:mb-4 leading-relaxed text-center lg:text-left">
                 Over the years, he developed a rare skill: the ability to identify real and fake honey instantly, even when many experienced sellers couldn't. Later, I (Irfan Ullah) joined him with a shared vision — to bring this expertise and honesty online. Together, we built NutreoPak to offer pure honey in both retail and wholesale, sourced only from the regions where each specific honey naturally grows.
               </p>
-              <p className="text-gray-700 text-lg leading-relaxed">
+              <p className="text-gray-700 text-sm sm:text-base md:text-lg leading-relaxed text-center lg:text-left">
                 With Jawed's experience and our commitment to purity, we are confident in delivering both unmatched quality and reliable quantity to every customer.
               </p>
             </div>
 
             {/* Right - Image */}
             <div>
-              <div className="bg-gold-100 rounded-lg overflow-hidden h-96 flex items-center justify-center">
+              <div className="bg-gold-100 rounded-lg overflow-hidden h-64 sm:h-80 md:h-96 flex items-center justify-center">
                 <Image
                   src="/aboutsec.jpeg"
                   alt="NutreoPak - Our Story"
@@ -141,12 +143,12 @@ const AboutPage = () => {
       </section>
 
       {/* Our Process Section */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8">
+      <section className="py-8 sm:py-12 md:py-16 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 md:gap-12 items-center">
             {/* Left - Image */}
             <div className="order-2 lg:order-1">
-              <div className="bg-gold-100 rounded-lg overflow-hidden h-96 flex items-center justify-center">
+              <div className="bg-gold-100 rounded-lg overflow-hidden h-64 sm:h-80 md:h-96 flex items-center justify-center">
                 <Image
                   src="/abouttri.jpg"
                   alt="NutreoPak - Our Process"
@@ -163,11 +165,11 @@ const AboutPage = () => {
 
             {/* Right - Content */}
             <div className="order-1 lg:order-2">
-              <p className="text-sm font-semibold text-gray-700 italic mb-3">The Story Behind Every Drop</p>
-              <h2 className="text-5xl font-bold text-red-900 mb-6 leading-tight">
+              <p className="text-sm sm:text-base md:text-lg font-semibold text-gray-700 italic mb-2 sm:mb-3 text-center lg:text-left">The Story Behind Every Drop</p>
+              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-red-900 mb-4 sm:mb-6 leading-tight text-center lg:text-left">
                 Our Process
               </h2>
-              <p className="text-gray-700 text-lg leading-relaxed">
+              <p className="text-gray-700 text-sm sm:text-base md:text-lg leading-relaxed text-center lg:text-left">
                 At NutreoPak, purity isn't just a claim — it's a process. Every jar begins in the untouched floral regions of Pakistan, where our partner beekeepers use ethical, traditional methods passed down for generations. From hive to bottle, every step is controlled, tested, and protected so you receive honey exactly as nature created it: raw, unheated, enzyme-rich, and completely free from additives or adulteration.
               </p>
             </div>
@@ -176,28 +178,29 @@ const AboutPage = () => {
       </section>
 
       {/* Process Steps Timeline */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-pink-50">
+      <section className="py-8 sm:py-12 md:py-16 px-4 sm:px-6 lg:px-8 bg-pink-50">
         <div className="max-w-7xl mx-auto">
-          {/* Timeline Icons Header */}
-          <div className="flex justify-between items-center mb-16 gap-2">
+          {/* Timeline Icons Header - Hidden on mobile, shown on md and up */}
+          <div className="hidden md:flex justify-between items-center mb-12 gap-2">
             {processSteps.map((step, idx) => (
               <React.Fragment key={idx}>
                 <div className="flex flex-col items-center flex-shrink-0 flex-1">
-                  <div className="text-5xl text-yellow-500 mb-4">{step.icon}</div>
+                  <div className="text-4xl md:text-5xl text-yellow-500 mb-3 md:mb-4">{step.icon}</div>
                 </div>
                 {idx < processSteps.length - 1 && (
-                  <div className="w-16 h-1 bg-yellow-500 flex-shrink-0 -mx-8" />
+                  <div className="w-12 md:w-16 h-1 bg-yellow-500 flex-shrink-0 -mx-6 md:-mx-8" />
                 )}
               </React.Fragment>
             ))}
           </div>
 
-          {/* Process Details Grid - 6 columns */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
+          {/* Process Details Grid - 6 columns on large, 2 on mobile */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 sm:gap-6">
             {processSteps.map((step, idx) => (
               <div key={idx} className="text-center px-2">
-                <h3 className="text-lg font-bold text-red-900 mb-2">{step.title}</h3>
-                <p className="text-gray-700 text-sm leading-relaxed">{step.description}</p>
+                <div className="text-3xl md:text-4xl lg:text-5xl text-yellow-500 mb-2 md:hidden">{step.icon}</div>
+                <h3 className="text-base sm:text-lg font-bold text-red-900 mb-2">{step.title}</h3>
+                <p className="text-gray-700 text-xs sm:text-sm leading-relaxed">{step.description}</p>
               </div>
             ))}
           </div>
@@ -205,13 +208,13 @@ const AboutPage = () => {
       </section>
 
       {/* Contact CTA */}
-      <section className="py-16 bg-gradient-to-r from-yellow-500 to-yellow-600 text-white">
+      <section className="py-8 sm:py-12 md:py-16 bg-gradient-to-r from-yellow-500 to-yellow-600 text-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">Questions About Our Honey?</h2>
-          <p className="text-lg mb-8 opacity-95">We're here to help. Contact us anytime.</p>
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 sm:mb-4">Questions About Our Honey?</h2>
+          <p className="text-sm sm:text-base md:text-lg mb-6 sm:mb-8 opacity-95">We're here to help. Contact us anytime.</p>
           <Link
             href="/contact"
-            className="inline-block bg-white text-yellow-600 px-8 py-3 rounded-lg font-bold hover:bg-gray-100 transition-colors"
+            className="inline-block bg-white text-yellow-600 px-6 sm:px-8 py-2 sm:py-3 rounded-lg font-bold hover:bg-gray-100 transition-colors text-sm sm:text-base"
           >
             Get in Touch
           </Link>
