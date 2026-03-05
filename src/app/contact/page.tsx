@@ -1,6 +1,8 @@
 'use client';
 
 import React, { useState } from 'react';
+import { contactService } from '@/services/contactService';
+import { useToast } from '@/components/Toast';
 
 const ContactPage = () => {
   const [formData, setFormData] = useState({
@@ -9,6 +11,8 @@ const ContactPage = () => {
     phone: '',
     message: '',
   });
+  const [isLoading, setIsLoading] = useState(false);
+  const toast = useToast();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -18,16 +22,28 @@ const ContactPage = () => {
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Form submitted:', formData);
-    alert('Thank you for your message. We will contact you soon!');
-    setFormData({
-      name: '',
-      email: '',
-      phone: '',
-      message: '',
-    });
+    setIsLoading(true);
+
+    try {
+      const response = await contactService.submitContact(formData);
+      
+      if (response.success) {
+        toast.success('Thank you! Your message has been sent successfully. We will contact you soon.', 5000);
+        setFormData({
+          name: '',
+          email: '',
+          phone: '',
+          message: '',
+        });
+      }
+    } catch (err: any) {
+      const errorMessage = err.response?.data?.message || 'Failed to submit contact form. Please try again.';
+      toast.error(errorMessage, 5000);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -147,9 +163,12 @@ const ContactPage = () => {
 
                 <button
                   type="submit"
-                  className="w-full bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-3 rounded-full transition-colors duration-300 text-lg"
+                  disabled={isLoading}
+                  className={`w-full bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-3 rounded-full transition-colors duration-300 text-lg ${
+                    isLoading ? 'opacity-50 cursor-not-allowed' : ''
+                  }`}
                 >
-                  Get In Touch
+                  {isLoading ? 'Submitting...' : 'Get In Touch'}
                 </button>
               </form>
             </div>

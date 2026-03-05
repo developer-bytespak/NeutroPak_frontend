@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next';
 import NavbarWrapper from '@/components/NavbarWrapper';
 import FooterWrapper from '@/components/FooterWrapper';
+import { Toast } from '@/components/Toast';
 import { CartProvider } from '@/store/CartContext';
 import '../styles/globals.css';
 
@@ -21,6 +22,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en">
       <body className="bg-white">
         <CartProvider>
+          <Toast />
           <NavbarWrapper />
           <main>{children}</main>
           <FooterWrapper />
