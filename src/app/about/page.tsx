@@ -169,8 +169,11 @@ const AboutPage = () => {
               <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-red-900 mb-4 sm:mb-6 leading-tight text-center lg:text-left">
                 Our Process
               </h2>
+              <p className="text-gray-700 text-sm sm:text-base md:text-lg mb-3 sm:mb-4 leading-relaxed text-center lg:text-left">
+                At NutreoPak, purity is not merely a claim but a standard maintained throughout the entire process. Each jar of honey originates from the natural floral regions of Pakistan, where experienced beekeepers follow responsible and traditional beekeeping practices that have been preserved over generations.
+              </p>
               <p className="text-gray-700 text-sm sm:text-base md:text-lg leading-relaxed text-center lg:text-left">
-                At NutreoPak, purity isn't just a claim — it's a process. Every jar begins in the untouched floral regions of Pakistan, where our partner beekeepers use ethical, traditional methods passed down for generations. From hive to bottle, every step is controlled, tested, and protected so you receive honey exactly as nature created it: raw, unheated, enzyme-rich, and completely free from additives or adulteration.
+                From the collection of honey at the hive to its final packaging, every stage is carefully handled and monitored to maintain its natural quality. The honey is kept in its raw form, without excessive heating or unnecessary processing, preserving its natural enzymes and nutritional value while ensuring it remains completely free from additives or adulteration.
               </p>
             </div>
           </div>

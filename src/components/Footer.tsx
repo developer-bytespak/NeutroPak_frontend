@@ -68,7 +68,6 @@ const Footer: React.FC = () => {
             <div className="space-y-2 text-sm text-gray-400">
               <p><span className="font-semibold">Email:</span> nutreopak@gmail.com</p>
               <p><span className="font-semibold">Hours:</span> Daily 10:00 AM — 5:00 PM</p>
-              <p><span className="font-semibold">Location:</span> Swabi, KPK</p>
             </div>
           </div>
         </div>
