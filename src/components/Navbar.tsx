@@ -41,7 +41,7 @@ const Navbar: React.FC = () => {
         <div className="max-w-7xl mx-auto px-3 xs:px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-14 xs:h-16">
             <div className="flex-1 md:flex-none flex justify-start">
-              <Link href="/" className="text-xl xs:text-2xl font-bold text-gold-600 hover:text-gold-700 transition-colors truncate">
+              <Link href="/" className="text-base xs:text-lg sm:text-xl lg:text-2xl font-bold text-gold-600 hover:text-gold-700 transition-colors truncate">
                 NutreoPak
               </Link>
             </div>
@@ -180,13 +180,6 @@ const Navbar: React.FC = () => {
               onClick={() => setIsMobileMenuOpen(false)}
             >
               FAQS
-            </Link>
-            <Link
-              href="/blog"
-              className="text-base font-semibold text-gray-800 hover:text-gold-600 transition-colors text-center"
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
-              BLOG
             </Link>
             <div className="pt-6 border-t border-gray-300 w-full text-center">
               <p className="text-xs font-bold text-gray-600 mb-6 tracking-wide">LEGAL PAGES</p>

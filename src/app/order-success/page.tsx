@@ -116,20 +116,20 @@ const OrderSuccessPage = () => {
 
         {/* Action Buttons */}
         <div className="flex flex-col xs:flex-row gap-2 sm:gap-3 md:gap-4 justify-center mb-6 sm:mb-8 md:mb-12">
-          <Link href="/shop" className="inline-flex items-center justify-center bg-green-600 hover:bg-green-700 text-white font-semibold py-2.5 sm:py-3 md:py-4 px-6 sm:px-8 rounded-lg transition-colors text-xs sm:text-sm md:text-base">
+          <Link href="/shop" className="inline-flex items-center justify-center bg-yellow-500 hover:bg-yellow-600 text-white font-semibold py-2.5 sm:py-3 md:py-4 px-6 sm:px-8 rounded-lg transition-colors text-xs sm:text-sm md:text-base">
             Continue Shopping
           </Link>
-          <Link href="/" className="inline-flex items-center justify-center bg-gray-100 hover:bg-gray-200 text-gray-900 font-semibold py-2.5 sm:py-3 md:py-4 px-6 sm:px-8 rounded-lg transition-colors text-xs sm:text-sm md:text-base">
+          <Link href="/" className="inline-flex items-center justify-center bg-amber-100 hover:bg-amber-200 text-amber-900 font-semibold py-2.5 sm:py-3 md:py-4 px-6 sm:px-8 rounded-lg transition-colors text-xs sm:text-sm md:text-base">
             Back to Home
           </Link>
         </div>
 
         {/* Support Section */}
-        <div className="border border-gray-200 rounded-lg p-4 sm:p-6 md:p-8 bg-gray-50">
-          <h3 className="font-semibold text-gray-900 mb-2 sm:mb-3 text-sm sm:text-base">Questions?</h3>
-          <p className="text-xs sm:text-sm md:text-base text-gray-600">
+        <div className="border-2 border-yellow-200 rounded-lg p-4 sm:p-6 md:p-8 bg-gradient-to-r from-yellow-50 to-amber-50">
+          <h3 className="font-semibold text-amber-900 mb-2 sm:mb-3 text-sm sm:text-base">Questions?</h3>
+          <p className="text-xs sm:text-sm md:text-base text-amber-700">
             Contact us at{' '}
-            <a href="mailto:nutreopak@gmail.com" className="text-green-600 hover:text-green-700 font-semibold">
+            <a href="mailto:nutreopak@gmail.com" className="text-yellow-600 hover:text-yellow-700 font-semibold">
               nutreopak@gmail.com
             </a>
           </p>
