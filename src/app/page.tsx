@@ -246,12 +246,12 @@ const HomePage = () => {
   ];
 
   return (
-    <main className="bg-white overflow-x-hidden">
+    <main className="overflow-x-hidden">
       {/* Hero Banner */}
       <HeroBanner
         title="Raw Honey, As Nature Made It."
         subtitle="100% Organic Raw Honey"
-        backgroundImage="/hero_sec.png"
+        backgroundImage="/heroo_sec.png"
         ctaText="Shop Pure Honey Now"
         ctaLink="/shop"
       />

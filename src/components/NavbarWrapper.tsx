@@ -17,7 +17,7 @@ function NavbarContent() {
 
 export default function NavbarWrapper() {
   return (
-    <Suspense fallback={<div className="h-16 bg-white shadow-md" />}>
+    <Suspense fallback={<div className="h-14 xs:h-16 bg-transparent" />}>
       <NavbarContent />
     </Suspense>
   );
