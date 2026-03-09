@@ -10,7 +10,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
     <div className="layout">
       <header className="header">
         <nav className="navbar">
-          <div className="nav-brand">NeutroPak</div>
+          <div className="nav-brand">NutreoPak</div>
           <ul className="nav-menu">
             <li><Link href="/">Home</Link></li>
           </ul>
@@ -22,7 +22,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
       </main>
 
       <footer className="footer">
-        <p>&copy; 2026 NeutroPak. All rights reserved.</p>
+        <p>&copy; 2026 NutreoPak. All rights reserved.</p>
       </footer>
     </div>
   );

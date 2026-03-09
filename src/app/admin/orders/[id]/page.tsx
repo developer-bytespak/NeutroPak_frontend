@@ -7,11 +7,11 @@ interface OrderDetailProps {
   };
 }
 export const metadata = {
-  title: 'Order Details - Admin | NeutroPak',
+  title: 'Order Details - Admin | NutreoPak',
   description: 'Order details',
 };
 
-export default function OrderDetail({ params }: OrderDetailProps) {
+export default function OrderDetail({ params: _params }: OrderDetailProps) {
   return (
     <AdminLayout>
         <main className="admin-order-detail">

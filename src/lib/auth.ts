@@ -1,7 +1,7 @@
 import { JwtPayload } from '@/types';
 
-const JWT_KEY = 'neutropak_jwt';
-const REFRESH_TOKEN_KEY = 'neutropak_refresh_token';
+const JWT_KEY = 'nutreopak_jwt';
+const REFRESH_TOKEN_KEY = 'nutreopak_refresh_token';
 
 export const authService = {
   // Store tokens

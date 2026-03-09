@@ -1,81 +1,117 @@
 'use client';
 
-import React, { ReactNode } from 'react';
+import React, { ReactNode, useState, useEffect } from 'react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 interface AdminLayoutProps {
   children: ReactNode;
 }
 
 const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
-  const [sidebarOpen, setSidebarOpen] = React.useState(true);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [isLargeScreen, setIsLargeScreen] = useState(false);
+  const pathname = usePathname();
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsLargeScreen(window.innerWidth >= 1024);
+      if (window.innerWidth >= 1024) {
+        setSidebarOpen(true);
+      }
+    };
+
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  const isActive = (href: string) => {
+    return pathname === href || pathname.startsWith(href + '/');
+  };
 
   return (
     <div className="admin-layout">
-      <aside className={`admin-sidebar ${sidebarOpen ? 'open' : 'closed'}`}>
+      {/* Mobile Overlay */}
+      {sidebarOpen && !isLargeScreen && (
+        <div
+          className="fixed inset-0 bg-black bg-opacity-50 z-40"
+          onClick={() => setSidebarOpen(false)}
+        />
+      )}
+
+      {/* Sidebar */}
+      <aside className="admin-sidebar">
         <div className="sidebar-header">
-          <h2>Admin Panel</h2>
-          <button
-            className="toggle-btn"
-            onClick={() => setSidebarOpen(!sidebarOpen)}
-          >
-            {sidebarOpen ? '✕' : '☰'}
-          </button>
+          <span className="collapse-icon">☰</span>
+          <h2>NutreoPak Admin</h2>
         </div>
 
         <nav className="sidebar-nav">
-          <Link href="/admin/dashboard" className="nav-link">
-            Dashboard
+          <Link 
+            href="/admin/dashboard" 
+            className={`nav-link ${isActive('/admin/dashboard') ? 'active' : ''}`}
+          >
+            <span className="icon">📊</span>
+            <span className="text">Dashboard</span>
           </Link>
-          <Link href="/admin/products" className="nav-link">
-            Products
+          <Link 
+            href="/admin/products" 
+            className={`nav-link ${isActive('/admin/products') ? 'active' : ''}`}
+          >
+            <span className="icon">🛍️</span>
+            <span className="text">Products</span>
           </Link>
-          <Link href="/admin/orders" className="nav-link">
-            Orders
+          <Link 
+            href="/admin/orders" 
+            className={`nav-link ${isActive('/admin/orders') ? 'active' : ''}`}
+          >
+            <span className="icon">📦</span>
+            <span className="text">Orders</span>
           </Link>
-          <Link href="/admin/payments" className="nav-link">
-            Payments
+          <Link 
+            href="/admin/payments" 
+            className={`nav-link ${isActive('/admin/payments') ? 'active' : ''}`}
+          >
+            <span className="icon">💳</span>
+            <span className="text">Payments</span>
           </Link>
-          <Link href="/admin/blog" className="nav-link">
-            Blog
-          </Link>
-          <Link href="/admin/pages" className="nav-link">
-            Pages
+          <Link 
+            href="/admin/blog" 
+            className={`nav-link ${isActive('/admin/blog') ? 'active' : ''}`}
+          >
+            <span className="icon">📝</span>
+            <span className="text">Blog</span>
           </Link>
         </nav>
 
         <div className="sidebar-footer">
-          <Link href="#settings" className="nav-link">
-            Settings
+          <Link 
+            href="/" 
+            className="nav-link"
+          >
+            <span className="icon">👁️</span>
+            <span className="text">View Store</span>
           </Link>
-          <Link href="/" className="nav-link">
-            View Store
-          </Link>
-          <button className="logout-btn">Logout</button>
+          <button 
+            className="logout-btn"
+            onClick={() => {
+              setTimeout(() => {
+                window.location.href = '/admin/login';
+              }, 300);
+            }}
+          >
+            <span className="icon">🚪</span>
+            <span className="text">Logout</span>
+          </button>
         </div>
       </aside>
 
+      {/* Main Content */}
       <div className="admin-main">
-        <header className="admin-header">
-          <button
-            className="menu-toggle"
-            onClick={() => setSidebarOpen(!sidebarOpen)}
-          >
-            ☰
-          </button>
-          <div className="header-actions">
-            <input type="text" placeholder="Search..." className="search-input" />
-            <button className="user-menu">👤 Admin</button>
-          </div>
-        </header>
-
         <div className="admin-content">
           {children}
         </div>
-
-        <footer className="admin-footer">
-          <p>&copy; 2025 NeutroPak Admin Panel. All rights reserved.</p>
-        </footer>
       </div>
     </div>
   );

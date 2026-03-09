@@ -4,7 +4,7 @@ export interface CartItem extends Product {
   quantity: number;
 }
 
-const CART_KEY = 'neutropak_cart';
+const CART_KEY = 'nutreopak_cart';
 
 export const cartService = {
   // Get all cart items

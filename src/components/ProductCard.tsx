@@ -1,8 +1,13 @@
-import React from 'react';
+'use client';
+
+import React, { useContext, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import CartContext from '@/store/CartContext';
+import { Product } from '@/types';
+import { getOptimizedImageUrl } from '@/utils/cloudinaryImage';
 
-interface ProductCardProps {
+interface ProductCardProps extends Partial<Product> {
   id?: string;
   name?: string;
   price?: number;
@@ -13,42 +18,95 @@ interface ProductCardProps {
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({
+  id = '',
   name = 'Product Name',
   price = 99.99,
   image = '/product-placeholder.jpg',
   reviews = 120,
   slug = 'product-slug',
+  ...rest
 }) => {
+  const [isImageLoading, setIsImageLoading] = useState(true);
+  const [imageError, setImageError] = useState(false);
+  const cartContext = useContext(CartContext);
+  
+  const optimizedImage = getOptimizedImageUrl(image, 'medium');
+
+  const handleAddToCart = () => {
+    if (!cartContext) {
+      alert('Cart is not available. Please refresh the page.');
+      return;
+    }
+    const product: Product = {
+      id: id || slug || '',
+      name: name || '',
+      price: price as number,
+      originalPrice: price as number,
+      slug: slug || '',
+      category: rest.category || '',
+      description: rest.description || '',
+      fullDescription: rest.fullDescription || '',
+      rating: rest.rating || 5,
+      reviews: reviews || 0,
+      images: image ? [image] : [],
+      variants: rest.variants || [],
+      inStock: rest.inStock !== false,
+      sku: rest.sku || '',
+    };
+    cartContext.addToCart(product, 1);
+  };
   return (
-    <div className="product-card">
-      <div className="product-image">
-        <Link href={`/product/${slug}`}>
+    <div className="card overflow-hidden group hover:shadow-2xl active:shadow-xl transition-all duration-300 flex flex-col h-full">
+      <div className="relative h-32 xs:h-40 sm:h-48 md:h-56 bg-gray-200 overflow-hidden">
+        <Link href={`/product/${slug}`} className="block w-full h-full">
+          {isImageLoading && (
+            <div className="absolute inset-0 bg-gray-200 animate-pulse flex items-center justify-center">
+              <span className="text-gray-400 text-xs sm:text-sm">Loading...</span>
+            </div>
+          )}
           <Image
-            src={image}
+            src={imageError ? '/product-placeholder.jpg' : optimizedImage}
             alt={name}
-            width={200}
-            height={200}
-            priority={false}
+            width={500}
+            height={500}
+            quality={80}
+            priority
+            onLoadingComplete={() => setIsImageLoading(false)}
+            onError={() => {
+              setImageError(true);
+              setIsImageLoading(false);
+            }}
+            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+            style={{ imageRendering: 'crisp-edges' }}
           />
         </Link>
-        <div className="product-badge">New</div>
+        <div className="absolute top-1.5 xs:top-2 right-1.5 xs:right-2 sm:top-3 sm:right-3 bg-gold-600 text-white px-2 xs:px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-full text-xs font-semibold">
+          Sale
+        </div>
       </div>
 
-      <div className="product-content">
-        <h3>
+      <div className="p-2.5 xs:p-3 sm:p-4 flex flex-col flex-grow">
+        <h3 className="text-xs xs:text-sm sm:text-base md:text-lg font-bold text-gray-900 mb-2 line-clamp-2 group-hover:text-gold-600 transition-colors">
           <Link href={`/product/${slug}`}>{name}</Link>
         </h3>
 
-        <div className="product-rating">
-          <div className="stars">★★★★☆</div>
-          <span className="reviews">({reviews} reviews)</span>
+        <div className="flex items-center gap-1.5 xs:gap-2 mb-2 xs:mb-3">
+          <span className="text-gold-400 text-xs xs:text-sm">★★★★★</span>
+          <span className="text-gray-500 text-xs">({reviews})</span>
         </div>
 
-        <p className="product-price">${price.toFixed(2)}</p>
+        <p className="text-base xs:text-lg sm:text-xl md:text-2xl font-bold text-gold-600 mb-2.5 xs:mb-3 sm:mb-4">
+          ₨{(price as number).toLocaleString()}
+        </p>
 
-        <div className="product-actions">
-          <button className="btn-add-cart">Add to Cart</button>
-          <button className="btn-wishlist">♡</button>
+        <div className="flex gap-1.5 xs:gap-2 mt-auto">
+          <button 
+            onClick={handleAddToCart}
+            className="flex-1 btn-primary text-xs xs:text-xs sm:text-sm px-2 xs:px-3 py-2 xs:py-2.5 sm:py-3 hover:bg-gold-700 transition-colors min-h-[44px]"
+          >
+            Add to Cart
+          </button>
+          <button className="btn-sm border border-gray-300 text-gray-600 hover:text-amber-600 transition-colors px-2 xs:px-3 min-h-[44px] w-12">♡</button>
         </div>
       </div>
     </div>
