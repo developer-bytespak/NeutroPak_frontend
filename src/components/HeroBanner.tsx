@@ -47,13 +47,13 @@ const HeroBanner: React.FC<HeroBannerProps> = ({
         <h1 className="text-xl xs:text-2xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold mb-2 xs:mb-3 sm:mb-4 leading-tight max-w-xs xs:max-w-sm sm:max-w-2xl text-red-950 drop-shadow-lg">
           {title}
         </h1>
-        <div className="ml-0 sm:ml-12 md:ml-20">
+        <div className="ml-4 sm:ml-16 md:ml-24">
           <p className="text-base xs:text-lg sm:text-xl md:text-2xl lg:text-3xl mb-4 xs:mb-6 sm:mb-8 opacity-95">
             {subtitle}
           </p>
           <Link 
             href={ctaLink} 
-            className="inline-flex items-center justify-center bg-yellow-500 text-white font-bold px-2 xs:px-3 sm:px-8 py-1 xs:py-2 sm:py-3 rounded-lg hover:bg-red-900 hover:text-yellow-300 transition-colors text-xs xs:text-sm md:text-base active:scale-95 transform transition-transform -mt-4 md:-mt-6 ml-0 sm:ml-8 md:ml-12"
+            className="inline-flex items-center justify-center bg-yellow-500 text-white font-bold px-2 xs:px-3 sm:px-8 py-1 xs:py-2 sm:py-3 rounded-lg hover:bg-red-900 hover:text-yellow-300 transition-colors text-xs xs:text-sm md:text-base active:scale-95 transform transition-transform -mt-4 md:-mt-6 ml-4 sm:ml-12 md:ml-16"
           >
             {ctaText}
           </Link>
