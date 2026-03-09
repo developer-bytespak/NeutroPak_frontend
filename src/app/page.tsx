@@ -244,6 +244,11 @@ const HomePage = () => {
       id: 'about',
       items: faqItems.slice(5, 8),
     },
+    {
+      title: 'Ordering, Delivery & Support',
+      id: 'ordering',
+      items: faqItems.slice(15, 18),
+    },
   ];
 
   return (
