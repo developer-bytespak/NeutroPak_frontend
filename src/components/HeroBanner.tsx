@@ -10,7 +10,7 @@ interface HeroBannerProps {
 }
 
 const HeroBanner: React.FC<HeroBannerProps> = ({
-  title = 'Raw Honey, As Nature Made It.',
+  title = "Nature's Purest Honey",
   subtitle = '100% Organic Raw Honey',
   backgroundImage = '/hero_sec.png',
   ctaText = 'Shop Now',
@@ -23,9 +23,9 @@ const HeroBanner: React.FC<HeroBannerProps> = ({
         alt="Hero Banner" 
         className="absolute inset-0 w-full h-full object-cover"
       />
-      <div className="absolute inset-0 bg-black bg-opacity-40" />
-      <div className="absolute top-0 left-0 z-10 text-left text-white px-3 xs:px-4 sm:px-6 md:px-12 pt-20 md:pt-24 max-w-2xl w-full h-full flex flex-col justify-start">
-        <h1 className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold mb-2 xs:mb-3 sm:mb-4 leading-tight max-w-xs xs:max-w-sm sm:max-w-none">
+      <div className="absolute inset-0 bg-black bg-opacity-20" />
+      <div className="absolute inset-0 z-10 text-center text-red-900 px-3 xs:px-4 sm:px-6 md:px-12 pt-32 md:pt-40 w-full h-full flex flex-col justify-start items-center ml-6 md:ml-8">
+        <h1 className="text-lg xs:text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold mb-2 xs:mb-3 sm:mb-4 leading-tight max-w-xs xs:max-w-sm sm:max-w-none">
           {title}
         </h1>
         <p className="text-xs xs:text-sm sm:text-lg md:text-xl lg:text-2xl mb-4 xs:mb-6 sm:mb-8 opacity-95">
@@ -36,7 +36,7 @@ const HeroBanner: React.FC<HeroBannerProps> = ({
         </p>
         <Link 
           href={ctaLink} 
-          className="inline-flex items-center justify-center bg-yellow-500 text-white font-bold px-4 xs:px-6 sm:px-8 py-2 sm:py-3 rounded-lg hover:bg-red-900 hover:text-yellow-300 transition-colors text-xs xs:text-sm sm:text-base active:scale-95 transform transition-transform"
+          className="inline-flex items-center justify-center bg-yellow-500 text-white font-bold px-4 xs:px-6 sm:px-8 py-2 sm:py-3 rounded-lg hover:bg-red-900 hover:text-yellow-300 transition-colors text-sm md:text-base active:scale-95 transform transition-transform -mt-4 md:-mt-6"
         >
           {ctaText}
         </Link>
