@@ -257,7 +257,8 @@ const HomePage = () => {
       <HeroBanner
         title="Nature's Purest Honey"
         subtitle="100% Organic Raw Honey"
-        backgroundImage="/heroo_sec.png"
+        backgroundImage="/hero.png"
+        mobileBackgroundImage="/hero_mobile.png"
         ctaText="Shop Pure Honey Now"
         ctaLink="/shop"
       />
