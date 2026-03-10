@@ -47,8 +47,8 @@ const HeroBanner: React.FC<HeroBannerProps> = ({
         <h1 className="text-xl xs:text-2xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold mb-2 xs:mb-3 sm:mb-4 leading-tight max-w-xs xs:max-w-sm sm:max-w-2xl text-red-950 drop-shadow-lg">
           {title}
         </h1>
-        <div className="ml-4 sm:ml-16 md:ml-24">
-          <p className="text-base xs:text-lg sm:text-xl md:text-2xl lg:text-3xl mb-4 xs:mb-6 sm:mb-8 opacity-95">
+        <div className="w-full flex justify-center">
+          <p className="text-base xs:text-lg sm:text-xl md:text-2xl lg:text-3xl mb-4 xs:mb-6 sm:mb-8 opacity-95 text-center">
             {subtitle}
           </p>
           <Link 
