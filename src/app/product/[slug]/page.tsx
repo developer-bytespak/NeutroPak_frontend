@@ -116,9 +116,9 @@ const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ params }) => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
             {/* Product Images */}
             <div className="flex flex-col gap-6">
-              <div className="bg-gray-100 rounded-lg overflow-hidden flex items-center justify-center h-96 relative">
+              <div className="rounded-lg overflow-hidden flex items-center justify-center h-96 relative">
                 {imageLoading && (
-                  <div className="absolute inset-0 bg-gray-200 animate-pulse flex items-center justify-center">
+                  <div className="absolute inset-0 bg-white animate-pulse flex items-center justify-center">
                     <span className="text-gray-400">Loading image...</span>
                   </div>
                 )}

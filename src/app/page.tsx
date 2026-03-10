@@ -349,7 +349,7 @@ const HomePage = () => {
             <div className="order-2 lg:order-1">
               <div className="bg-gold-100 rounded-lg overflow-hidden h-64 sm:h-80 md:h-96 flex items-center justify-center">
                 <Image
-                  src="/abouttri.jpg"
+                  src="/process.png"
                   alt="NutreoPak - Process"
                   width={500}
                   height={400}

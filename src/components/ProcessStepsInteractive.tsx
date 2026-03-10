@@ -70,22 +70,7 @@ const ProcessStepsInteractive: React.FC<ProcessStepsInteractiveProps> = ({ steps
           ))}
         </div>
 
-        {/* Full width content for selected step - Mobile and tablet view */}
-        {selectedIndex !== null && (
-          <div className="lg:hidden bg-white rounded-lg p-4 sm:p-6 md:p-8 shadow-lg animate-slideUp">
-            <div className="text-center">
-              <div className="text-4xl sm:text-5xl mb-4">
-                {steps[selectedIndex].icon}
-              </div>
-              <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-red-900 mb-3 sm:mb-4">
-                {steps[selectedIndex].title}
-              </h2>
-              <p className="text-sm sm:text-base md:text-lg text-gray-700 leading-relaxed">
-                {steps[selectedIndex].description}
-              </p>
-            </div>
-          </div>
-        )}
+        {/* Full width content for selected step - Hidden on all devices */}
 
       </div>
 

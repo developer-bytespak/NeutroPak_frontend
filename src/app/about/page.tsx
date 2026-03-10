@@ -66,7 +66,7 @@ const AboutPage = () => {
               <div className="order-2 lg:order-1">
                 <div className="bg-yellow-100 rounded-lg overflow-hidden h-64 sm:h-80 md:h-96 flex items-center justify-center">
                   <Image
-                    src="/aboutfirst.jpeg"
+                    src="/whoweare.png"
                     alt="NutreoPak - Who We Are"
                     width={500}
                     height={400}
@@ -127,7 +127,7 @@ const AboutPage = () => {
             <div className="flex items-center justify-center h-full">
               <div className="bg-gold-100 rounded-lg overflow-hidden h-64 sm:h-80 md:h-96 w-full flex items-center justify-center mt-16 sm:mt-24">
                 <Image
-                  src="/aboutsec.jpeg"
+                  src="/our_story.png"
                   alt="NutreoPak - Our Story"
                   width={500}
                   height={400}
@@ -151,7 +151,7 @@ const AboutPage = () => {
             <div className="order-2 lg:order-1">
               <div className="bg-gold-100 rounded-lg overflow-hidden h-64 sm:h-80 md:h-96 flex items-center justify-center">
                 <Image
-                  src="/abouttri.jpg"
+                  src="/process.png"
                   alt="NutreoPak - Our Process"
                   width={500}
                   height={400}
