@@ -113,12 +113,12 @@ const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ params }) => {
       {/* Product Section */}
       <section className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
             {/* Product Images */}
-            <div className="flex flex-col gap-6">
-              <div className="bg-gray-100 rounded-lg overflow-hidden flex items-center justify-center h-96 relative">
+            <div className="flex flex-col gap-4 md:gap-6">
+              <div className="rounded-lg overflow-hidden flex items-center justify-center bg-white h-72 xs:h-80 sm:h-96 md:h-96 relative">
                 {imageLoading && (
-                  <div className="absolute inset-0 bg-gray-200 animate-pulse flex items-center justify-center">
+                  <div className="absolute inset-0 bg-white animate-pulse flex items-center justify-center">
                     <span className="text-gray-400">Loading image...</span>
                   </div>
                 )}
@@ -134,7 +134,7 @@ const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ params }) => {
                     setImageError(true);
                     setImageLoading(false);
                   }}
-                  className="w-full h-full object-contain"
+                  className="w-full h-full object-contain p-4"
                 />
               </div>
             </div>

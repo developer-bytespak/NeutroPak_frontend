@@ -7,6 +7,7 @@ import HeroBanner from '@/components/HeroBanner';
 import ProductCard from '@/components/ProductCard';
 import ReviewCard from '@/components/ReviewCard';
 import FeaturesSlider from '@/components/FeaturesSlider';
+import ProcessStepsInteractive from '@/components/ProcessStepsInteractive';
 import { productService } from '@/services/productService';
 
 interface Product {
@@ -79,32 +80,32 @@ const HomePage = () => {
     {
       icon: '🐝',
       title: 'Sourcing',
-      description: 'Our honey comes from Sidr, Acacia, Forest, Wildflower and Himalayan regions — far from pollution and agriculture chemicals. We partner only with beekeepers who follow natural foraging and avoid sugar-feeding, antibiotics, and artificial hives.',
+      description: 'Sourced from pristine regions: Sidr, Acacia, Forest, and Himalayan varieties. Pure, natural, no additives or antibiotics.',
     },
     {
       icon: '🚫',
       title: 'Zero-Sugar Feeding',
-      description: 'We strictly work with beekeepers who never feed sugar syrup to bees during production season. This ensures the honey is produced from flowers only, not sugar. Pure honey from pure sources.',
+      description: 'Bees forage on flowers only. No sugar syrup added during production season. Pure honey from pure sources.',
     },
     {
       icon: '❄️',
       title: 'Cold Extraction',
-      description: 'Our honey is extracted at natural temperatures (below 35°C). We never boil, pasteurize, or over-filter our honey, preserving enzymes, antioxidants, pollen grains, and natural texture.',
+      description: 'Extracted at natural temperatures below 35°C. No boiling or over-filtering. All enzymes and nutrients preserved.',
     },
     {
       icon: '🔍',
       title: 'Triple-Stage Filtration',
-      description: 'We use a gentle triple-filtration process to remove hive debris, wax particles, and impurities — while keeping all natural enzymes, pollen and nutrients intact.',
+      description: 'Gentle filtration removes debris while keeping natural enzymes, pollen, and nutrients intact.',
     },
     {
       icon: '🧪',
       title: 'Lab Test',
-      description: 'Each batch undergoes lab testing for moisture, sucrose ratio, HMF levels, antibiotics, and adulteration. Only the batches that pass every parameter are bottled under the NutreoPak name.',
+      description: 'Every batch tested for purity, moisture, HMF levels, and antibiotics. Only the best gets bottled.',
     },
     {
       icon: '🍯',
       title: 'Careful Packaging',
-      description: 'Each batch is carefully packed without altering its natural state. Every jar is sealed fresh to maintain purity from the moment it leaves the hive.',
+      description: 'Each jar sealed fresh without altering its natural state. Maintains purity from hive to home.',
     },
   ];
 
@@ -243,6 +244,11 @@ const HomePage = () => {
       id: 'about',
       items: faqItems.slice(5, 8),
     },
+    {
+      title: 'Ordering, Delivery & Support',
+      id: 'ordering',
+      items: faqItems.slice(15, 18),
+    },
   ];
 
   return (
@@ -251,7 +257,8 @@ const HomePage = () => {
       <HeroBanner
         title="Nature's Purest Honey"
         subtitle="100% Organic Raw Honey"
-        backgroundImage="/heroo_sec.png"
+        backgroundImage="/hero.png"
+        mobileBackgroundImage="/hero_mobile.png"
         ctaText="Shop Pure Honey Now"
         ctaLink="/shop"
       />
@@ -342,7 +349,7 @@ const HomePage = () => {
             <div className="order-2 lg:order-1">
               <div className="bg-gold-100 rounded-lg overflow-hidden h-64 sm:h-80 md:h-96 flex items-center justify-center">
                 <Image
-                  src="/abouttri.jpg"
+                  src="/process.png"
                   alt="NutreoPak - Process"
                   width={500}
                   height={400}
@@ -372,35 +379,8 @@ const HomePage = () => {
         </div>
       </section>
 
-      {/* Process Steps Timeline */}
-      <section className="py-8 sm:py-12 md:py-16 px-4 sm:px-6 lg:px-8 bg-pink-50">
-        <div className="max-w-7xl mx-auto">
-          {/* Timeline Icons Header - Hidden on mobile, shown on lg+ */}
-          <div className="hidden lg:flex justify-between items-center mb-8 md:mb-16 gap-2">
-            {processSteps.map((step, idx) => (
-              <React.Fragment key={idx}>
-                <div className="flex flex-col items-center flex-shrink-0 flex-1">
-                  <div className="text-3xl md:text-4xl lg:text-5xl text-yellow-500 mb-2 md:mb-4">{step.icon}</div>
-                </div>
-                {idx < processSteps.length - 1 && (
-                  <div className="w-8 md:w-16 h-1 bg-yellow-500 flex-shrink-0 -mx-4 md:-mx-8" />
-                )}
-              </React.Fragment>
-            ))}
-          </div>
-
-          {/* Process Details Grid - Responsive */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-3 sm:gap-4 md:gap-6">
-            {processSteps.map((step, idx) => (
-              <div key={idx} className="text-center px-2 sm:px-3">
-                <div className="lg:hidden text-2xl sm:text-3xl text-yellow-500 mb-2">{step.icon}</div>
-                <h3 className="text-sm sm:text-base font-bold text-red-900 mb-2 md:mb-3 line-clamp-2">{step.title}</h3>
-                <p className="text-xs sm:text-sm text-gray-700 leading-relaxed line-clamp-4">{step.description}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      {/* Process Steps Interactive */}
+      <ProcessStepsInteractive steps={processSteps} />
 
       {/* Reviews Section */}
       <section className="py-8 sm:py-12 md:py-16 bg-gray-50">

@@ -57,10 +57,10 @@ const ProductCard: React.FC<ProductCardProps> = ({
   };
   return (
     <div className="card overflow-hidden group hover:shadow-2xl active:shadow-xl transition-all duration-300 flex flex-col h-full">
-      <div className="relative h-32 xs:h-40 sm:h-48 md:h-56 bg-gray-200 overflow-hidden">
-        <Link href={`/product/${slug}`} className="block w-full h-full">
+      <div className="relative h-40 xs:h-48 sm:h-56 md:h-64 bg-white overflow-hidden flex items-center justify-center">
+        <Link href={`/product/${slug}`} className="block w-full h-full flex items-center justify-center">
           {isImageLoading && (
-            <div className="absolute inset-0 bg-gray-200 animate-pulse flex items-center justify-center">
+            <div className="absolute inset-0 bg-white animate-pulse flex items-center justify-center">
               <span className="text-gray-400 text-xs sm:text-sm">Loading...</span>
             </div>
           )}
@@ -76,7 +76,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
               setImageError(true);
               setIsImageLoading(false);
             }}
-            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+            className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300 p-2"
             style={{ imageRendering: 'crisp-edges' }}
           />
         </Link>

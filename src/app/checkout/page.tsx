@@ -140,12 +140,13 @@ const CheckoutPage = () => {
     <main className="overflow-x-hidden">
       {/* Page Header */}
       <section
-        className="relative bg-gradient-to-r from-yellow-500 to-yellow-600 py-12 sm:py-20 md:py-32"
+        className="relative bg-center bg-contain bg-no-repeat py-12 sm:py-20 md:py-32"
+        style={{ backgroundImage: "url('/checkout_sec.png')" }}
       >
-        <div className="absolute inset-0 bg-black bg-opacity-20" />
+        <div className="absolute inset-0 bg-black bg-opacity-50" />
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-2">Checkout</h1>
-          <p className="text-sm sm:text-base md:text-lg text-yellow-50">Complete your order</p>
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-2 drop-shadow-lg">Checkout</h1>
+          <p className="text-sm sm:text-base md:text-lg text-yellow-50 drop-shadow-md">Complete your order</p>
         </div>
       </section>
 
@@ -424,11 +425,13 @@ const CheckoutPage = () => {
                     <span className="text-lg sm:text-xl font-bold text-gold-600">₨ {total.toLocaleString('en-PK')}</span>
                   </div>
 
-                  <div className="space-y-2 text-xs sm:text-sm text-gray-600">
-                    <p className="flex items-center gap-2"><span className="text-green-600">✓</span> Secure Checkout</p>
-                    <p className="flex items-center gap-2"><span className="text-green-600">✓</span> SSL Encrypted</p>
-                    <p className="flex items-center gap-2"><span className="text-green-600">✓</span> Money Back Guarantee</p>
-                  </div>
+                  {formData.paymentMethod !== 'COD' && (
+                    <div className="space-y-2 text-xs sm:text-sm text-gray-600">
+                      <p className="flex items-center gap-2"><span className="text-green-600">✓</span> Secure Checkout</p>
+                      <p className="flex items-center gap-2"><span className="text-green-600">✓</span> SSL Encrypted</p>
+                      <p className="flex items-center gap-2"><span className="text-green-600">✓</span> Money Back Guarantee</p>
+                    </div>
+                  )}
                 </>
               ) : (
                 <div className="py-8 sm:py-12 text-center">
