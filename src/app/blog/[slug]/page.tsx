@@ -77,7 +77,6 @@ export default function BlogPost({ params }: BlogPostProps) {
         const blogData = {
           _id: blog._id,
           title: blog.title,
-          author: blog.author?.name || 'NutreoPak',
           date: blog.publishedAt ? new Date(blog.publishedAt).toLocaleDateString('en-US', {
             year: 'numeric',
             month: 'long',
@@ -162,14 +161,8 @@ export default function BlogPost({ params }: BlogPostProps) {
 
                 {/* Meta Information */}
                 <div className="flex flex-wrap gap-6 items-center text-gray-600">
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 bg-gradient-to-br from-red-900 to-red-800 rounded-full flex items-center justify-center text-white font-bold text-sm">
-                      {blogContent.author.charAt(0)}
-                    </div>
-                    <div>
-                      <p className="font-semibold text-gray-900">{blogContent.author}</p>
-                      <p className="text-sm text-gray-500">{blogContent.date}</p>
-                    </div>
+                  <div className="flex items-center gap-2 text-gray-600">
+                    <span className="text-gray-900 font-medium">{blogContent.date}</span>
                   </div>
                   <div className="flex items-center gap-2 text-gray-600">
                     <span className="text-lg">⏱️</span>
@@ -220,7 +213,6 @@ export default function BlogPost({ params }: BlogPostProps) {
                     month: 'short',
                     day: 'numeric'
                   }) : 'Unknown'}
-                  author={blog.author?.name || 'NutreoPak'}
                 />
               ))}
             </div>

@@ -9,7 +9,6 @@ interface SanityBlog {
   _id: string;
   title: string;
   slug: { current: string };
-  author?: { _id: string; name: string };
   category?: { _id: string; title: string };
   publishedAt: string;
   mainImage?: { asset?: { url: string } } | string | null;
@@ -64,7 +63,6 @@ const BlogPage = () => {
             day: 'numeric'
           }) : 'Unknown date',
           category: blog.category?.title || 'General',
-          author: blog.author?.name || 'Anonymous',
           image: imageUrl,
           readTime: readTime,
           publishedAt: blog.publishedAt ? new Date(blog.publishedAt) : new Date(),

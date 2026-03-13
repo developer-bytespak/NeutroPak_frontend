@@ -10,7 +10,6 @@ interface BlogCardProps {
   slug: string;
   date?: string;
   category?: string;
-  author?: string;
   readTime?: number;
 }
 
@@ -21,7 +20,6 @@ const BlogCard: React.FC<BlogCardProps> = ({
   slug,
   date,
   category,
-  author,
   readTime,
 }) => {
   return (
@@ -72,12 +70,6 @@ const BlogCard: React.FC<BlogCardProps> = ({
               )}
             </div>
             
-            {author && (
-              <span className="text-xs text-gray-600 flex items-center gap-1">
-                <PenIcon className="w-3.5 h-3.5 text-gold-600" />
-                <span className="font-medium">{author}</span>
-              </span>
-            )}
             
             {/* Read More Link */}
             <div className="text-gold-700 font-bold text-sm group-hover:text-gold-800 transition-all duration-300 inline-flex items-center gap-2 mt-1">
