@@ -1,6 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { CalendarIcon, ClockIcon, PenIcon, ArrowIcon } from './Icons';
 
 interface BlogCardProps {
   title: string;
@@ -65,13 +66,13 @@ const BlogCard: React.FC<BlogCardProps> = ({
             <div className="flex gap-2 text-xs text-gray-600 flex-wrap">
               {date && (
                 <span className="flex items-center gap-1 bg-gold-100 group-hover:bg-gold-200 px-2 py-0.5 rounded transition-colors duration-300 whitespace-nowrap">
-                  <span>📅</span>
+                  <CalendarIcon className="w-3.5 h-3.5 text-gold-600" />
                   <span className="font-medium">{date}</span>
                 </span>
               )}
               {readTime && (
                 <span className="flex items-center gap-1 bg-gold-100 group-hover:bg-gold-200 px-2 py-0.5 rounded transition-colors duration-300 whitespace-nowrap">
-                  <span>⏱️</span>
+                  <ClockIcon className="w-3.5 h-3.5 text-gold-600" />
                   <span className="font-medium">{readTime}m</span>
                 </span>
               )}
@@ -79,7 +80,7 @@ const BlogCard: React.FC<BlogCardProps> = ({
             
             {author && (
               <span className="text-xs text-gray-600 flex items-center gap-1">
-                <span>✍️</span>
+                <PenIcon className="w-3.5 h-3.5 text-gold-600" />
                 <span className="font-medium">{author}</span>
               </span>
             )}
@@ -87,7 +88,7 @@ const BlogCard: React.FC<BlogCardProps> = ({
             {/* Read More Link */}
             <div className="text-gold-700 font-bold text-sm group-hover:text-gold-800 transition-all duration-300 inline-flex items-center gap-2 mt-1">
               <span>Read More</span>
-              <span className="text-base group-hover:translate-x-1 transition-transform duration-300">→</span>
+              <ArrowIcon className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
             </div>
           </div>
         </div>

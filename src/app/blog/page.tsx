@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import BlogCard from '@/components/BlogCard';
+import { SearchIcon } from '@/components/Icons';
 import { fetchBlogs } from '@/lib/sanity';
 
 interface SanityBlog {
@@ -184,7 +185,7 @@ const BlogPage = () => {
                     }}
                     className="w-full px-6 py-4 rounded-full border-2 border-gold-300 focus:outline-none focus:border-gold-600 focus:ring-2 focus:ring-gold-200 transition-all duration-300 text-gray-900 placeholder-gray-500 shadow-sm hover:shadow-md bg-gold-50"
                   />
-                  <span className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gold-600 text-xl">🔍</span>
+                  <SearchIcon className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gold-600 w-5 h-5" />
                 </div>
               </div>
 
