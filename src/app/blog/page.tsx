@@ -145,17 +145,17 @@ const BlogPage = () => {
     <main className="overflow-x-hidden bg-white">
       {/* Page Header */}
       <section
-        className="relative bg-center bg-cover py-16 sm:py-24 md:py-32 lg:py-40 overflow-hidden"
-        style={{ backgroundImage: "url('/blog_sec.png')" }}
+        className="relative bg-center bg-cover py-12 sm:py-20 md:py-32"
+        style={{
+          backgroundImage: 'url(/blogs.png)',
+        }}
       >
-        <div className="absolute inset-0 bg-gradient-to-r from-black/60 to-black/40" />
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-4 drop-shadow-lg leading-tight">
-            Honey Knowledge Base
+        <div className="absolute inset-0 bg-black bg-opacity-40"></div>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-6xl font-bold text-white mb-2 drop-shadow-lg">
+            Blog & Articles
           </h1>
-          <p className="text-base sm:text-lg md:text-xl text-yellow-50 drop-shadow-md max-w-2xl mx-auto font-light">
-            Science-backed articles about honey, health, quality, and wellness
-          </p>
+          <p className="text-sm sm:text-base md:text-lg lg:text-xl text-white drop-shadow-lg font-medium">Science-backed articles about honey, health, quality, and wellness</p>
         </div>
       </section>
 
