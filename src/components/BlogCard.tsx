@@ -70,12 +70,6 @@ const BlogCard: React.FC<BlogCardProps> = ({
                   <span className="font-medium">{date}</span>
                 </span>
               )}
-              {readTime && (
-                <span className="flex items-center gap-1 bg-gold-100 group-hover:bg-gold-200 px-2 py-0.5 rounded transition-colors duration-300 whitespace-nowrap">
-                  <ClockIcon className="w-3.5 h-3.5 text-gold-600" />
-                  <span className="font-medium">{readTime}m</span>
-                </span>
-              )}
             </div>
             
             {author && (
