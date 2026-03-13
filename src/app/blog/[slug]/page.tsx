@@ -133,27 +133,16 @@ export default function BlogPost({ params }: BlogPostProps) {
       </Head>
 
       <main className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
-        {/* Hero Section */}
-        <section className="relative bg-gradient-to-r from-red-900 to-red-800 text-white py-8 sm:py-12">
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <Link href="/blog" className="inline-flex items-center text-red-100 hover:text-white transition-colors mb-6 font-medium">
-              <span className="mr-2">←</span>
-              Back to Blog
-            </Link>
-          </div>
-        </section>
-
         {/* Featured Image */}
         {blogContent.image && (
-          <div className="relative h-64 sm:h-80 md:h-96 lg:h-[500px] bg-gray-200 overflow-hidden">
+          <div className="relative w-full h-48 sm:h-64 md:h-80 lg:h-96 overflow-hidden mt-6 rounded-lg flex items-center justify-center">
             <Image
               src={blogContent.image}
               alt={blogContent.title}
               fill
-              className="object-cover w-full h-full"
+              className="object-contain w-full h-full"
               priority
             />
-            <div className="absolute inset-0 bg-black bg-opacity-10" />
           </div>
         )}
 
@@ -199,58 +188,7 @@ export default function BlogPost({ params }: BlogPostProps) {
 
               {/* Article Content from Sanity */}
               {renderPortableText(blogContent.body)}
-
-              {/* Share Section */}
-              <div className="bg-gradient-to-r from-red-50 to-orange-50 rounded-lg p-6 sm:p-8 mb-12 border border-red-100">
-                <h3 className="text-lg font-bold text-gray-900 mb-4">Share This Article</h3>
-                <div className="flex flex-wrap gap-3">
-                  {shareLinks.map((link) => (
-                    <button
-                      key={link.name}
-                      className="flex items-center gap-2 px-4 py-2 bg-white hover:bg-red-900 hover:text-white text-gray-900 rounded-lg border border-gray-200 transition-all duration-200 font-medium text-sm"
-                    >
-                      <span className="text-lg">{link.icon}</span>
-                      {link.name}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              {/* Tags */}
-              <div className="flex flex-wrap gap-3">
-                {blogContent.tags.map((tag: string) => (
-                  <Link
-                    key={tag}
-                    href={`/blog?tag=${tag}`}
-                    className="inline-block px-4 py-2 bg-gray-100 hover:bg-red-900 hover:text-white text-gray-700 rounded-full text-sm font-medium transition-all duration-200"
-                  >
-                    #{tag.replace(/\s+/g, '')}
-                  </Link>
-                ))}
-              </div>
             </article>
-
-            {/* Sidebar */}
-            <aside className="lg:col-span-1">
-              {/* Information Box */}
-              <div className="bg-white rounded-lg shadow-md p-6 sticky top-20">
-                <h3 className="text-lg font-bold text-gray-900 mb-4">About This Article</h3>
-                <div className="space-y-4">
-                  <div>
-                    <p className="text-sm text-gray-600">Category</p>
-                    <p className="font-semibold text-gray-900">{blogContent.category}</p>
-                  </div>
-                  <div>
-                    <p className="text-sm text-gray-600">Published</p>
-                    <p className="font-semibold text-gray-900">{blogContent.date}</p>
-                  </div>
-                  <div>
-                    <p className="text-sm text-gray-600">Reading Time</p>
-                    <p className="font-semibold text-gray-900">{blogContent.readTime}</p>
-                  </div>
-                </div>
-              </div>
-            </aside>
           </div>
         </div>
       </main>

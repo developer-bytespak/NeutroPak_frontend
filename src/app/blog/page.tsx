@@ -301,25 +301,7 @@ const BlogPage = () => {
         )}
       </div>
 
-      {/* Newsletter Section */}
-      <section className="bg-gradient-to-r from-red-900 to-red-800 text-white py-12 sm:py-16">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl sm:text-4xl font-bold mb-4">📬 Stay Updated</h2>
-          <p className="text-red-100 text-base sm:text-lg mb-8">
-            Subscribe to our newsletter for the latest honey insights and wellness tips.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
-            <input 
-              type="email" 
-              placeholder="Enter your email" 
-              className="flex-1 px-4 py-3 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-yellow-400"
-            />
-            <button className="px-6 py-3 bg-yellow-400 text-red-900 rounded-lg font-bold hover:bg-yellow-300 transition-colors whitespace-nowrap">
-              Subscribe
-            </button>
-          </div>
-        </div>
-      </section>
+
 
       {/* Add animation styles */}
       <style jsx>{`
