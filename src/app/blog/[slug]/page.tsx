@@ -133,24 +133,11 @@ export default function BlogPost({ params }: BlogPostProps) {
       </Head>
 
       <main className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
-        {/* Featured Image */}
-        {blogContent.image && (
-          <div className="relative w-full h-48 sm:h-64 md:h-80 lg:h-96 overflow-hidden mt-6 rounded-lg flex items-center justify-center">
-            <Image
-              src={blogContent.image}
-              alt={blogContent.title}
-              fill
-              className="object-contain w-full h-full"
-              priority
-            />
-          </div>
-        )}
-
-        {/* Post Content */}
+        {/* Post Content with Image */}
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 md:py-16">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12">
-            {/* Main Content */}
-            <article className="lg:col-span-2">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start mb-12">
+            {/* Main Content - Left */}
+            <article>
               {/* Post Header */}
               <div className="mb-10 pb-8 border-b border-gray-200">
                 <div className="flex items-center gap-3 mb-4">
@@ -189,6 +176,19 @@ export default function BlogPost({ params }: BlogPostProps) {
               {/* Article Content from Sanity */}
               {renderPortableText(blogContent.body)}
             </article>
+
+            {/* Featured Image - Right */}
+            {blogContent.image && (
+              <div className="relative h-64 sm:h-80 md:h-96 overflow-hidden rounded-lg flex items-center justify-center">
+                <Image
+                  src={blogContent.image}
+                  alt={blogContent.title}
+                  fill
+                  className="object-contain w-full h-full"
+                  priority
+                />
+              </div>
+            )}
           </div>
         </div>
       </main>
