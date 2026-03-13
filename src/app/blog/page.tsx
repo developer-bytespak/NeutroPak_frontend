@@ -13,6 +13,7 @@ interface SanityBlog {
   publishedAt: string;
   mainImage?: { asset?: { url: string } } | string | null;
   excerpt?: string;
+  body?: any;
 }
 
 const BlogPage = () => {
@@ -20,6 +21,8 @@ const BlogPage = () => {
   const [loading, setLoading] = useState(true);
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [currentPage, setCurrentPage] = useState(1);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [sortBy, setSortBy] = useState('newest');
   const postsPerPage = 6;
 
   // Fetch blogs from Sanity on component mount
@@ -45,6 +48,10 @@ const BlogPage = () => {
         } else if (blog.mainImage?.asset?.url) {
           imageUrl = blog.mainImage.asset.url;
         }
+
+        // Calculate read time (roughly 200 words per minute)
+        const wordCount = (blog.excerpt || '').split(/\s+/).length + (blog.body ? 500 : 0);
+        const readTime = Math.max(1, Math.round(wordCount / 200));
         
         return {
           title: blog.title,
@@ -58,6 +65,8 @@ const BlogPage = () => {
           category: blog.category?.title || 'General',
           author: blog.author?.name || 'Anonymous',
           image: imageUrl,
+          readTime: readTime,
+          publishedAt: blog.publishedAt ? new Date(blog.publishedAt) : new Date(),
         };
       });
       
@@ -69,22 +78,47 @@ const BlogPage = () => {
     loadBlogs();
   }, []);
 
-  // Filter posts by category
-  const filteredPosts = selectedCategory === 'All' 
+  // Filter posts by category and search
+  let filteredPosts = selectedCategory === 'All' 
     ? blogPosts 
     : blogPosts.filter(post => post.category === selectedCategory);
 
+  // Apply search filter
+  if (searchQuery.trim()) {
+    filteredPosts = filteredPosts.filter(post => 
+      post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      post.excerpt.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      post.category.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+  }
+
+  // Apply sorting
+  const sortedPosts = [...filteredPosts].sort((a, b) => {
+    switch(sortBy) {
+      case 'oldest':
+        return a.publishedAt - b.publishedAt;
+      case 'title':
+        return a.title.localeCompare(b.title);
+      default: // newest
+        return b.publishedAt - a.publishedAt;
+    }
+  });
+
+  // Get featured posts (first 3)
+  // const featuredPosts = blogPosts.slice(0, 3);
+
   // Pagination logic
-  const totalPages = Math.ceil(filteredPosts.length / postsPerPage);
+  const totalPages = Math.ceil(sortedPosts.length / postsPerPage);
   const startIndex = (currentPage - 1) * postsPerPage;
-  const paginatedPosts = filteredPosts.slice(startIndex, startIndex + postsPerPage);
+  const paginatedPosts = sortedPosts.slice(startIndex, startIndex + postsPerPage);
 
   // Get unique categories
   const categories = ['All', ...new Set(blogPosts.map(post => post.category))];
 
   const handleCategoryClick = (category: string) => {
     setSelectedCategory(category);
-    setCurrentPage(1); // Reset to first page when changing category
+    setCurrentPage(1);
+    setSearchQuery('');
   };
 
   const handlePreviousPage = () => {
@@ -107,7 +141,7 @@ const BlogPage = () => {
   };
 
   return (
-    <main className="overflow-x-hidden bg-gradient-to-b from-white via-gray-50 to-white">
+    <main className="overflow-x-hidden bg-white">
       {/* Page Header */}
       <section
         className="relative bg-center bg-cover py-16 sm:py-24 md:py-32 lg:py-40 overflow-hidden"
@@ -135,31 +169,69 @@ const BlogPage = () => {
           </div>
         ) : (
           <>
-            {/* Filter/Category Section */}
-            <div className="mb-16">
-              <p className="text-center text-gray-600 font-medium mb-8">Filter by Category</p>
-              <div className="flex flex-wrap gap-3 justify-center">
-                {categories.map((category) => (
-                  <button
-                    key={category}
-                    onClick={() => handleCategoryClick(category)}
-                    className={`px-6 py-3 font-semibold rounded-full transition-all duration-300 text-sm sm:text-base transform hover:scale-105 ${
-                      selectedCategory === category
-                        ? 'bg-gradient-to-r from-red-900 to-red-800 text-white shadow-lg hover:shadow-xl'
-                        : 'bg-white text-gray-900 hover:bg-gray-100 border-2 border-gray-200 hover:border-red-900'
-                    }`}
-                  >
-                    {category}
-                  </button>
-                ))}
+            {/* Search and Filter Section */}
+            <div className="mb-12 space-y-6">
+              {/* Search Bar */}
+              <div className="flex justify-center">
+                <div className="relative w-full max-w-md">
+                  <input
+                    type="text"
+                    placeholder="Search articles..."
+                    value={searchQuery}
+                    onChange={(e) => {
+                      setSearchQuery(e.target.value);
+                      setCurrentPage(1);
+                    }}
+                    className="w-full px-6 py-4 rounded-full border-2 border-gold-300 focus:outline-none focus:border-gold-600 focus:ring-2 focus:ring-gold-200 transition-all duration-300 text-gray-900 placeholder-gray-500 shadow-sm hover:shadow-md bg-gold-50"
+                  />
+                  <span className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gold-600 text-xl">🔍</span>
+                </div>
               </div>
-            </div>
 
-            {/* Results Count */}
-            <div className="text-center mb-8 text-gray-600">
-              <p className="font-medium">
-                Showing <span className="text-red-900 font-bold">{paginatedPosts.length}</span> of <span className="text-red-900 font-bold">{filteredPosts.length}</span> articles
-              </p>
+              {/* Category Filter */}
+              <div>
+                <p className="text-center text-gray-600 font-medium mb-6">Filter by Category</p>
+                <div className="flex flex-wrap gap-3 justify-center">
+                  {categories.map((category) => (
+                    <button
+                      key={category}
+                      onClick={() => handleCategoryClick(category)}
+                      className={`px-6 py-3 font-semibold rounded-full transition-all duration-300 text-sm sm:text-base transform hover:scale-105 ${
+                        selectedCategory === category
+                          ? 'bg-gradient-to-r from-gold-600 to-gold-700 text-white shadow-lg hover:shadow-xl'
+                          : 'bg-white text-gray-900 hover:bg-gold-50 border-2 border-gold-300 hover:border-gold-500'
+                      }`}
+                    >
+                      {category}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Sort and Results */}
+              <div className="flex flex-col sm:flex-row justify-between items-center gap-4 pt-4">
+                <div className="flex items-center gap-3 text-gray-600">
+                  <span className="font-medium">Sort by:</span>
+                  <select
+                    value={sortBy}
+                    onChange={(e) => {
+                      setSortBy(e.target.value);
+                      setCurrentPage(1);
+                    }}
+                    className="px-4 py-2 border-2 border-gold-300 rounded-lg focus:outline-none focus:border-gold-600 focus:ring-2 focus:ring-gold-200 cursor-pointer bg-gold-50 font-medium transition-all duration-300"
+                  >
+                    <option value="newest">Newest First</option>
+                    <option value="oldest">Oldest First</option>
+                    <option value="title">Title (A-Z)</option>
+                  </select>
+                </div>
+                <div className="text-center sm:text-right font-medium text-gray-600">
+                  <p>
+                    Showing <span className="text-gold-700 font-bold">{paginatedPosts.length}</span> of{' '}
+                    <span className="text-gold-700 font-bold">{sortedPosts.length}</span> articles
+                  </p>
+                </div>
+              </div>
             </div>
 
             {/* Blog Grid */}
@@ -184,7 +256,7 @@ const BlogPage = () => {
                     <button 
                       onClick={handlePreviousPage}
                       disabled={currentPage === 1}
-                      className="px-4 py-3 rounded-lg border-2 border-gray-300 text-gray-700 hover:bg-red-900 hover:text-white hover:border-red-900 disabled:opacity-40 disabled:cursor-not-allowed transition-all duration-200 font-semibold text-sm sm:text-base"
+                      className="px-4 py-3 rounded-lg border-2 border-gold-300 text-gray-700 hover:bg-gold-600 hover:text-white hover:border-gold-600 disabled:opacity-40 disabled:cursor-not-allowed transition-all duration-200 font-semibold text-sm sm:text-base"
                     >
                       ← Previous
                     </button>
@@ -196,8 +268,8 @@ const BlogPage = () => {
                           onClick={() => handlePageClick(page)}
                           className={`px-3 sm:px-4 py-2 sm:py-3 rounded-lg font-semibold transition-all duration-200 text-sm sm:text-base ${
                             currentPage === page
-                              ? 'bg-gradient-to-r from-red-900 to-red-800 text-white shadow-lg'
-                              : 'border-2 border-gray-300 text-gray-700 hover:border-red-900 hover:text-red-900'
+                              ? 'bg-gradient-to-r from-gold-600 to-gold-700 text-white shadow-lg'
+                              : 'border-2 border-gold-300 text-gray-700 hover:border-gold-500 hover:text-gold-700'
                           }`}
                         >
                           {page}
@@ -208,7 +280,7 @@ const BlogPage = () => {
                     <button 
                       onClick={handleNextPage}
                       disabled={currentPage === totalPages}
-                      className="px-4 py-3 rounded-lg border-2 border-gray-300 text-gray-700 hover:bg-red-900 hover:text-white hover:border-red-900 disabled:opacity-40 disabled:cursor-not-allowed transition-all duration-200 font-semibold text-sm sm:text-base"
+                      className="px-4 py-3 rounded-lg border-2 border-gold-300 text-gray-700 hover:bg-gold-600 hover:text-white hover:border-gold-600 disabled:opacity-40 disabled:cursor-not-allowed transition-all duration-200 font-semibold text-sm sm:text-base"
                     >
                       Next →
                     </button>
@@ -218,9 +290,9 @@ const BlogPage = () => {
             ) : (
               <div className="text-center py-16">
                 <div className="inline-block">
-                  <div className="text-5xl mb-4">📭</div>
-                  <p className="text-lg sm:text-xl text-gray-600 font-medium">No blog posts found</p>
-                  <p className="text-gray-500 mt-2">Try selecting a different category or check back soon!</p>
+                  <div className="text-6xl mb-4">🔍</div>
+                  <p className="text-lg sm:text-xl text-gray-600 font-bold mb-2">No articles found</p>
+                  <p className="text-gray-500">Try adjusting your search or filter criteria</p>
                 </div>
               </div>
             )}
@@ -231,7 +303,7 @@ const BlogPage = () => {
       {/* Newsletter Section */}
       <section className="bg-gradient-to-r from-red-900 to-red-800 text-white py-12 sm:py-16">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl sm:text-4xl font-bold mb-4">Stay Updated</h2>
+          <h2 className="text-3xl sm:text-4xl font-bold mb-4">📬 Stay Updated</h2>
           <p className="text-red-100 text-base sm:text-lg mb-8">
             Subscribe to our newsletter for the latest honey insights and wellness tips.
           </p>
