@@ -4,8 +4,7 @@ import Head from 'next/head';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useState, useEffect } from 'react';
-import { fetchBlogBySlug, fetchRelatedBlogs } from '@/lib/sanity';
-import BlogCard from '@/components/BlogCard';
+import { fetchBlogBySlug } from '@/lib/sanity';
 
 interface BlogPostProps {
   params: {
@@ -54,7 +53,6 @@ const renderPortableText = (blocks: any[] | undefined) => {
 
 export default function BlogPost({ params }: BlogPostProps) {
   const [blogContent, setBlogContent] = useState<any>(null);
-  const [relatedBlogs, setRelatedBlogs] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [isShareOpen, setIsShareOpen] = useState(false);
 
@@ -91,11 +89,6 @@ export default function BlogPost({ params }: BlogPostProps) {
         };
         
         setBlogContent(blogData);
-
-        // Fetch related blogs - just get latest blogs excluding current one
-        const relatedBlogsData = await fetchRelatedBlogs('', blog._id, 3);
-        console.log('Related blogs:', relatedBlogsData);
-        setRelatedBlogs(relatedBlogsData);
       }
       setLoading(false);
     };
@@ -193,32 +186,6 @@ export default function BlogPost({ params }: BlogPostProps) {
               </div>
             )}
           </div>
-        </div>
-
-        {/* Related Articles Section */}
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-20 border-t border-gray-200">
-          <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-12 text-center">Related Articles</h2>
-          {relatedBlogs.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-              {relatedBlogs.map((blog: any) => (
-                <BlogCard
-                  key={blog._id}
-                  title={blog.title}
-                  slug={blog.slug?.current || ''}
-                  image={blog.mainImage?.asset?.url || '/default-blog-image.jpg'}
-                  excerpt={blog.excerpt}
-                  category={blog.category?.title || 'General'}
-                  date={blog.publishedAt ? new Date(blog.publishedAt).toLocaleDateString('en-US', {
-                    year: 'numeric',
-                    month: 'short',
-                    day: 'numeric'
-                  }) : 'Unknown'}
-                />
-              ))}
-            </div>
-          ) : (
-            <p className="text-center text-gray-500 text-lg">No related articles found.</p>
-          )}
         </div>
       </main>
     </>
