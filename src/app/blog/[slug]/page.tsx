@@ -137,55 +137,53 @@ export default function BlogPost({ params }: BlogPostProps) {
       <main className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
         {/* Post Content with Image */}
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 md:py-16">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start mb-12">
-            {/* Main Content - Left */}
-            <article>
-              {/* Post Header */}
-              <div className="mb-10 pb-8 border-b border-gray-200">
-                <div className="flex items-center gap-3 mb-4">
-                  <span className="inline-block bg-red-900 text-white px-4 py-1 rounded-full text-sm font-semibold uppercase tracking-wide">
-                    {blogContent.category}
-                  </span>
-                </div>
-                
-                <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-6 leading-tight">
-                  {blogContent.title}
-                </h1>
+          {/* Featured Image - Top */}
+          {blogContent.image && (
+            <div className="relative w-full h-64 sm:h-80 md:h-96 overflow-hidden rounded-lg flex items-center justify-center mb-12">
+              <Image
+                src={blogContent.image}
+                alt={blogContent.title}
+                fill
+                className="object-contain w-full h-full"
+                priority
+              />
+            </div>
+          )}
 
-                {/* Meta Information */}
-                <div className="flex flex-wrap gap-6 items-center text-gray-600">
-                  <div className="flex items-center gap-2 text-gray-600">
-                    <span className="text-gray-900 font-medium">{blogContent.date}</span>
-                  </div>
-                  <div className="flex items-center gap-2 text-gray-600">
-                    <span className="text-lg">⏱️</span>
-                    <span className="font-medium">{blogContent.readTime}</span>
-                  </div>
+          {/* Main Content - Below */}
+          <article className="max-w-4xl mx-auto">
+            {/* Post Header */}
+            <div className="mb-10 pb-8 border-b border-gray-200">
+              <div className="flex items-center justify-center gap-3 mb-4">
+                <span className="inline-block bg-red-900 text-white px-4 py-1 rounded-full text-sm font-semibold uppercase tracking-wide">
+                  {blogContent.category}
+                </span>
+              </div>
+              
+              <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-6 leading-tight text-center">
+                {blogContent.title}
+              </h1>
+
+              {/* Meta Information */}
+              <div className="flex flex-wrap gap-6 items-center justify-center text-gray-600">
+                <div className="flex items-center gap-2 text-gray-600">
+                  <span className="text-gray-900 font-medium">{blogContent.date}</span>
+                </div>
+                <div className="flex items-center gap-2 text-gray-600">
+                  <span className="text-lg">⏱️</span>
+                  <span className="font-medium">{blogContent.readTime}</span>
                 </div>
               </div>
+            </div>
 
-              {/* Excerpt */}
-              <p className="text-lg sm:text-xl text-gray-700 font-light leading-relaxed mb-10 italic border-l-4 border-red-900 pl-6 py-2 bg-red-50">
-                {blogContent.excerpt}
-              </p>
+            {/* Excerpt */}
+            <p className="text-lg sm:text-xl text-gray-700 font-light leading-relaxed mb-10 italic border-l-4 border-red-900 pl-6 py-2 bg-red-50">
+              {blogContent.excerpt}
+            </p>
 
-              {/* Article Content from Sanity */}
-              {renderPortableText(blogContent.body)}
-            </article>
-
-            {/* Featured Image - Right */}
-            {blogContent.image && (
-              <div className="relative h-64 sm:h-80 md:h-96 overflow-hidden rounded-lg flex items-center justify-center">
-                <Image
-                  src={blogContent.image}
-                  alt={blogContent.title}
-                  fill
-                  className="object-contain w-full h-full"
-                  priority
-                />
-              </div>
-            )}
-          </div>
+            {/* Article Content from Sanity */}
+            {renderPortableText(blogContent.body)}
+          </article>
         </div>
       </main>
     </>
