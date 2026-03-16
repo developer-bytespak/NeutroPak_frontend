@@ -106,7 +106,6 @@ const ProductCard: React.FC<ProductCardProps> = ({
           >
             Add to Cart
           </button>
-          <button className="btn-sm border border-gray-300 text-gray-600 hover:text-amber-600 transition-colors px-2 xs:px-3 min-h-[44px] w-12">♡</button>
         </div>
       </div>
     </div>
