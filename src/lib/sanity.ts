@@ -17,14 +17,18 @@ function buildImageUrl(asset: any): string | null {
 }
 
 export async function fetchBlogs() {
-  // Query posts with expanded category reference
-  const query = `*[_type == "post"] | order(publishedAt desc) {
+  // Query posts with expanded category and image asset references
+  const query = `*[_type == "post"] | order(_createdAt desc) {
     _id,
     title,
     slug,
     category->{_id, title},
     publishedAt,
-    mainImage,
+    _createdAt,
+    mainImage{
+      asset->{url},
+      alt
+    },
     excerpt
   }`;
 
@@ -32,9 +36,9 @@ export async function fetchBlogs() {
     const encodedQuery = encodeURIComponent(query);
     const url = `https://${SANITY_PROJECT_ID}.api.sanity.io/${SANITY_API_VERSION}/data/query/${SANITY_DATASET}?query=${encodedQuery}`;
     
-    console.log('Fetching blogs from:', url);
+    console.log('🔍 Fetching blogs from:', url);
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 20000); // 20 second timeout
+    const timeoutId = setTimeout(() => controller.abort(), 20000);
 
     const response = await fetch(url, {
       headers: {
@@ -47,23 +51,32 @@ export async function fetchBlogs() {
 
     clearTimeout(timeoutId);
 
+    console.log('📡 Sanity API Response Status:', response.status);
+
     if (!response.ok) {
-      console.error('Sanity API error:', response.status, response.statusText);
+      console.error('❌ Sanity API error:', response.status, response.statusText);
       const error = await response.text();
       console.error('Error response:', error);
       return [];
     }
 
     const data = await response.json();
-    console.log('Sanity API Response:', data);
+    console.log('📊 Sanity API Response:', data);
     
     if (data.error) {
-      console.error('Sanity query error:', data.error);
+      console.error('❌ Sanity query error:', data.error);
       return [];
     }
 
-    if (!data.result || data.result.length === 0) {
-      console.warn('No blog posts found in Sanity');
+    if (!data.result) {
+      console.warn('⚠️ No result field in response');
+      return [];
+    }
+
+    console.log('✅ Total blogs found:', data.result.length);
+    
+    if (data.result.length === 0) {
+      console.warn('⚠️ No blog posts found in Sanity');
       return [];
     }
     
@@ -71,13 +84,9 @@ export async function fetchBlogs() {
     const blogsWithDetails = (data.result || []).map((blog: any) => {
       let imageUrl = '/default-blog-image.jpg';
       
-      if (blog.mainImage) {
-        if (typeof blog.mainImage === 'string') {
-          imageUrl = blog.mainImage;
-        } else if (blog.mainImage.asset) {
-          const assetUrl = buildImageUrl(blog.mainImage.asset);
-          if (assetUrl) imageUrl = assetUrl;
-        }
+      // Image asset is now expanded with URL directly
+      if (blog.mainImage?.asset?.url) {
+        imageUrl = blog.mainImage.asset.url;
       }
 
       return {
@@ -86,10 +95,10 @@ export async function fetchBlogs() {
       };
     });
     
-    console.log('Processed blogs:', blogsWithDetails);
+    console.log('✨ Processed blogs:', blogsWithDetails);
     return blogsWithDetails;
   } catch (error) {
-    console.error('Error fetching blogs from Sanity:', error);
+    console.error('❌ Error fetching blogs from Sanity:', error);
     return [];
   }
 }
@@ -102,7 +111,10 @@ export async function fetchBlogBySlug(slug: string) {
     slug,
     category->{_id, title},
     publishedAt,
-    mainImage,
+    mainImage{
+      asset->{url},
+      alt
+    },
     excerpt,
     body
   }[0]`;
@@ -149,13 +161,8 @@ export async function fetchBlogBySlug(slug: string) {
 
     // Build image URL
     let imageUrl = '/default-blog-image.jpg';
-    if (blog.mainImage) {
-      if (typeof blog.mainImage === 'string') {
-        imageUrl = blog.mainImage;
-      } else if (blog.mainImage.asset) {
-        const assetUrl = buildImageUrl(blog.mainImage.asset);
-        if (assetUrl) imageUrl = assetUrl;
-      }
+    if (blog.mainImage?.asset?.url) {
+      imageUrl = blog.mainImage.asset.url;
     }
 
     return {
@@ -173,14 +180,17 @@ export async function fetchRelatedBlogs(categoryId: string, currentBlogId: strin
   try {
     console.log('fetchRelatedBlogs called with currentBlogId:', currentBlogId);
     
-    // Fetch all blogs with expanded category
+    // Fetch all blogs with expanded category and image
     const query = `*[_type == "post" && _id != "${currentBlogId}"] | order(publishedAt desc) | [0...${limit}] {
       _id,
       title,
       slug,
       category->{_id, title},
       publishedAt,
-      mainImage,
+      mainImage{
+        asset->{url},
+        alt
+      },
       excerpt
     }`;
 
@@ -220,13 +230,9 @@ export async function fetchRelatedBlogs(categoryId: string, currentBlogId: strin
     const processedBlogs = blogs.map((blog: any) => {
       let imageUrl = '/default-blog-image.jpg';
       
-      if (blog.mainImage) {
-        if (typeof blog.mainImage === 'string') {
-          imageUrl = blog.mainImage;
-        } else if (blog.mainImage.asset) {
-          const assetUrl = buildImageUrl(blog.mainImage.asset);
-          if (assetUrl) imageUrl = assetUrl;
-        }
+      // Image asset is now expanded with URL directly
+      if (blog.mainImage?.asset?.url) {
+        imageUrl = blog.mainImage.asset.url;
       }
 
       return {
