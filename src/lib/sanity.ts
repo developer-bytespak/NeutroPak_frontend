@@ -10,37 +10,43 @@ function buildImageUrl(asset: any): string | null {
     console.warn('⚠️ No asset provided');
     return null;
   }
+  
+  // If asset is a string URL, return it directly
   if (typeof asset === 'string') {
     console.log('✅ Asset is string:', asset);
     return asset;
   }
+  
+  // If Sanity provided a direct URL, use that first
   if (asset.url) {
-    console.log('✅ Asset has url property:', asset.url);
+    console.log('✅ Using direct URL from Sanity:', asset.url);
     return asset.url;
   }
+  
+  // Fallback: build URL from _ref if no direct URL is available
   if (asset._ref) {
     // Sanity image reference format: image-abc123def456-800x600-jpg
     // URL format: https://cdn.sanity.io/images/{projectId}/{dataset}/abc123def456-800x600.jpg
-    // Convert: remove 'image-' prefix and change last '-' to '.'
-    const refWithoutPrefix = asset._ref.replace('image-', ''); // "abc123def456-800x600-jpg"
-    const urlPath = refWithoutPrefix.replace(/-([a-z]+)$/, '.$1'); // "abc123def456-800x600.jpg"
+    const refWithoutPrefix = asset._ref.replace('image-', '');
+    const urlPath = refWithoutPrefix.replace(/-([a-z]+)$/, '.$1');
     const url = `https://cdn.sanity.io/images/${SANITY_PROJECT_ID}/${SANITY_DATASET}/${urlPath}`;
-    console.log('✅ Built image URL:', url, 'from ref:', asset._ref);
+    console.log('✅ Built image URL from ref:', url);
     return url;
   }
+  
   console.warn('⚠️ Could not build URL from asset:', JSON.stringify(asset));
   return null;
 }
 
 export async function fetchBlogs() {
-  // Query posts with expanded category reference
+  // Query posts with expanded category reference and full asset data
   const query = `*[_type == "post"] | order(_createdAt desc) {
     _id,
     title,
     slug,
     category->{_id, title},
     publishedAt,
-    mainImage{asset->{_ref}},
+    mainImage{asset->{_ref, url}},
     excerpt
   }`;
 
