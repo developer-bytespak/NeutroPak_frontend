@@ -40,18 +40,16 @@ const BlogPage = () => {
       }
       
       // Transform Sanity blogs to match the expected format
+      // Note: sanity.ts already converts mainImage asset refs to URLs, so we just use what it returns
       const transformedBlogs = blogs.map((blog: SanityBlog) => {
-        // Handle image URL - could be string, object with asset.url, or null
-        let imageUrl = '/default-blog-image.jpg';
-        if (typeof blog.mainImage === 'string') {
-          imageUrl = blog.mainImage;
-        } else if (blog.mainImage?.asset?.url) {
-          imageUrl = blog.mainImage.asset.url;
-        }
+        // Get the image URL that was already built by sanity.ts
+        const imageUrl = blog.mainImage?.asset?.url || null;
 
         // Calculate read time (roughly 200 words per minute)
         const wordCount = (blog.excerpt || '').split(/\s+/).length + (blog.body ? 500 : 0);
         const readTime = Math.max(1, Math.round(wordCount / 200));
+        
+        console.log(`📸 Blog: ${blog.title}, Image URL:`, imageUrl);
         
         return {
           title: blog.title,
