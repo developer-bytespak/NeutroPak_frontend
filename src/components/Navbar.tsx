@@ -102,6 +102,9 @@ const Navbar: React.FC = () => {
               <Link href="/contact" className="text-sm lg:text-base text-gray-700 hover:text-gold-600 transition-colors font-medium">
                 Contact
               </Link>
+              <Link href="/blog" className="text-sm lg:text-base text-gray-700 hover:text-gold-600 transition-colors font-medium">
+                Blog
+              </Link>
               <Link href="/faqs" className="text-sm lg:text-base text-gray-700 hover:text-gold-600 transition-colors font-medium">
                 FAQs
               </Link>
@@ -173,6 +176,13 @@ const Navbar: React.FC = () => {
               onClick={() => setIsMobileMenuOpen(false)}
             >
               SHOP
+            </Link>
+            <Link
+              href="/blog"
+              className="text-base font-semibold text-gray-800 hover:text-gold-600 transition-colors text-center"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              BLOG
             </Link>
             <Link
               href="/faqs"

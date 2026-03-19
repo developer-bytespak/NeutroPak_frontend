@@ -27,6 +27,9 @@ module.exports = {
       fontFamily: {
         sans: ['system-ui', 'sans-serif'],
       },
+      animation: {
+        fadeInUp: 'fadeInUp 0.6s ease-out forwards',
+      },
     },
   },
   plugins: [],

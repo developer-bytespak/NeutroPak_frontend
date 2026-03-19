@@ -1,9 +1,55 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { productService } from '@/services/productService';
 
 const Footer: React.FC = () => {
+  const [productLinks, setProductLinks] = useState<Record<string, string>>({});
+
+  useEffect(() => {
+    const fetchProductIds = async () => {
+      try {
+        const response = await productService.getAllProducts(1, 100);
+        const productsFromResponse = response?.data?.data?.products as any[];
+        
+        if (Array.isArray(productsFromResponse)) {
+          const links: Record<string, string> = {};
+          
+          productsFromResponse.forEach((product) => {
+            if (product.name.includes('Cinnamon') && product.name.includes('250g')) {
+              links['cinnamon250'] = `/product/product-${product.id}`;
+            }
+            if (product.name.includes('Cinnamon') && product.name.includes('500g')) {
+              links['cinnamon500'] = `/product/product-${product.id}`;
+            }
+            if (product.name.includes('Chilli') && product.name.includes('250g')) {
+              links['chilli250'] = `/product/product-${product.id}`;
+            }
+            if (product.name.includes('Chilli') && product.name.includes('500g')) {
+              links['chilli500'] = `/product/product-${product.id}`;
+            }
+            if (product.name.includes('Acacia') && product.name.includes('250g')) {
+              links['acacia250'] = `/product/product-${product.id}`;
+            }
+            if (product.name.includes('Acacia') && product.name.includes('500g')) {
+              links['acacia500'] = `/product/product-${product.id}`;
+            }
+            if (product.name.includes('Gift Box')) {
+              links['giftbox'] = `/product/product-${product.id}`;
+            }
+          });
+          
+          setProductLinks(links);
+        }
+      } catch (error) {
+        console.error('Error fetching product IDs:', error);
+      }
+    };
+
+    fetchProductIds();
+  }, []);
+
   return (
     <footer className="bg-gray-900 text-gray-100 mt-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -34,9 +80,28 @@ const Footer: React.FC = () => {
             <h3 className="text-lg font-bold text-gold-400 mb-4">Shop</h3>
             <ul className="space-y-2">
               <li><Link href="/shop" className="text-gray-400 hover:text-gold-400 transition-colors text-sm">All Products</Link></li>
-              <li><Link href="/shop?category=wild-honey" className="text-gray-400 hover:text-gold-400 transition-colors text-sm">Wild Honey</Link></li>
-              <li><Link href="/shop?category=farm-honey" className="text-gray-400 hover:text-gold-400 transition-colors text-sm">Farm Honey</Link></li>
-              <li><Link href="/blog" className="text-gray-400 hover:text-gold-400 transition-colors text-sm">Honey Guide</Link></li>
+              <li className="text-gray-400 text-sm">
+                <span className="block mb-1">Cinnamon Infused Honey</span>
+                <div className="flex gap-2 ml-2">
+                  {productLinks.cinnamon250 && <Link href={productLinks.cinnamon250} className="text-gray-500 hover:text-gold-400 transition-colors text-xs">250g</Link>}
+                  {productLinks.cinnamon500 && <Link href={productLinks.cinnamon500} className="text-gray-500 hover:text-gold-400 transition-colors text-xs">500g</Link>}
+                </div>
+              </li>
+              <li className="text-gray-400 text-sm">
+                <span className="block mb-1">Chilli Infused Honey</span>
+                <div className="flex gap-2 ml-2">
+                  {productLinks.chilli250 && <Link href={productLinks.chilli250} className="text-gray-500 hover:text-gold-400 transition-colors text-xs">250g</Link>}
+                  {productLinks.chilli500 && <Link href={productLinks.chilli500} className="text-gray-500 hover:text-gold-400 transition-colors text-xs">500g</Link>}
+                </div>
+              </li>
+              <li className="text-gray-400 text-sm">
+                <span className="block mb-1">Acacia Honey</span>
+                <div className="flex gap-2 ml-2">
+                  {productLinks.acacia250 && <Link href={productLinks.acacia250} className="text-gray-500 hover:text-gold-400 transition-colors text-xs">250g</Link>}
+                  {productLinks.acacia500 && <Link href={productLinks.acacia500} className="text-gray-500 hover:text-gold-400 transition-colors text-xs">500g</Link>}
+                </div>
+              </li>
+              {productLinks.giftbox && <li><Link href={productLinks.giftbox} className="text-gray-400 hover:text-gold-400 transition-colors text-sm">Gift Box</Link></li>}
             </ul>
           </div>
 
@@ -80,8 +145,6 @@ const Footer: React.FC = () => {
             </p>
             <div className="flex gap-6 text-gray-400 text-sm">
               <Link href="/disclaimer" className="hover:text-gold-400 transition-colors">Disclaimer</Link>
-              <span>•</span>
-              <a href="#newsletter" className="hover:text-gold-400 transition-colors">Newsletter</a>
             </div>
           </div>
         </div>

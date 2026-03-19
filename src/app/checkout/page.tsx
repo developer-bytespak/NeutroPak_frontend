@@ -146,7 +146,7 @@ const CheckoutPage = () => {
         <div className="absolute inset-0 bg-black bg-opacity-50" />
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-2 drop-shadow-lg">Checkout</h1>
-          <p className="text-sm sm:text-base md:text-lg text-yellow-50 drop-shadow-md">Complete your order</p>
+          <p className="text-sm sm:text-base md:text-lg text-yellow-50 drop-shadow-md text-center">Complete your order</p>
         </div>
       </section>
 

@@ -33,9 +33,6 @@
       "@/store/*": [
         "./src/store/*"
       ],
-      "@/pages/*": [
-        "./src/pages/*"
-      ],
       "@/utils/*": [
         "./src/utils/*"
       ],
