@@ -3,6 +3,17 @@ const SANITY_PROJECT_ID = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || 'pjldabm4
 const SANITY_DATASET = process.env.NEXT_PUBLIC_SANITY_DATASET || 'product';
 const SANITY_API_VERSION = 'v2021-06-07';
 
+// Log environment variables on module load for debugging
+if (typeof window !== 'undefined') {
+  console.log('🔧 Sanity Config:', {
+    projectId: SANITY_PROJECT_ID,
+    dataset: SANITY_DATASET,
+    apiVersion: SANITY_API_VERSION,
+    env_projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || 'NOT SET',
+    env_dataset: process.env.NEXT_PUBLIC_SANITY_DATASET || 'NOT SET',
+  });
+}
+
 // Simple function to build image URL from Sanity asset reference
 function buildImageUrl(asset: any): string | null {
   console.log('🔍 buildImageUrl called with asset:', asset);
@@ -75,6 +86,7 @@ export async function fetchBlogs() {
       console.error('❌ Sanity API error:', response.status, response.statusText);
       const error = await response.text();
       console.error('Error response:', error);
+      console.error('Full URL:', url);
       return [];
     }
 
