@@ -17,18 +17,14 @@ function buildImageUrl(asset: any): string | null {
 }
 
 export async function fetchBlogs() {
-  // Query posts with expanded category and image asset references
+  // Query posts with expanded category reference
   const query = `*[_type == "post"] | order(_createdAt desc) {
     _id,
     title,
     slug,
     category->{_id, title},
     publishedAt,
-    _createdAt,
-    mainImage{
-      asset->{url},
-      alt
-    },
+    mainImage,
     excerpt
   }`;
 
@@ -84,8 +80,11 @@ export async function fetchBlogs() {
     const blogsWithDetails = (data.result || []).map((blog: any) => {
       let imageUrl = '/default-blog-image.jpg';
       
-      // Image asset is now expanded with URL directly
-      if (blog.mainImage?.asset?.url) {
+      if (blog.mainImage?.asset?._ref) {
+        // Build proper Sanity image CDN URL
+        const imageId = blog.mainImage.asset._ref.replace('image-', '').split('-').slice(0, -1).join('-');
+        imageUrl = `https://cdn.sanity.io/images/${SANITY_PROJECT_ID}/${SANITY_DATASET}/${imageId}?w=800&h=600&fit=crop`;
+      } else if (blog.mainImage?.asset?.url) {
         imageUrl = blog.mainImage.asset.url;
       }
 
@@ -111,10 +110,7 @@ export async function fetchBlogBySlug(slug: string) {
     slug,
     category->{_id, title},
     publishedAt,
-    mainImage{
-      asset->{url},
-      alt
-    },
+    mainImage,
     excerpt,
     body
   }[0]`;
@@ -161,7 +157,10 @@ export async function fetchBlogBySlug(slug: string) {
 
     // Build image URL
     let imageUrl = '/default-blog-image.jpg';
-    if (blog.mainImage?.asset?.url) {
+    if (blog.mainImage?.asset?._ref) {
+      const imageId = blog.mainImage.asset._ref.replace('image-', '').split('-').slice(0, -1).join('-');
+      imageUrl = `https://cdn.sanity.io/images/${SANITY_PROJECT_ID}/${SANITY_DATASET}/${imageId}?w=800&h=600&fit=crop`;
+    } else if (blog.mainImage?.asset?.url) {
       imageUrl = blog.mainImage.asset.url;
     }
 
@@ -180,17 +179,14 @@ export async function fetchRelatedBlogs(categoryId: string, currentBlogId: strin
   try {
     console.log('fetchRelatedBlogs called with currentBlogId:', currentBlogId);
     
-    // Fetch all blogs with expanded category and image
+    // Fetch all blogs with expanded category
     const query = `*[_type == "post" && _id != "${currentBlogId}"] | order(publishedAt desc) | [0...${limit}] {
       _id,
       title,
       slug,
       category->{_id, title},
       publishedAt,
-      mainImage{
-        asset->{url},
-        alt
-      },
+      mainImage,
       excerpt
     }`;
 
@@ -230,8 +226,10 @@ export async function fetchRelatedBlogs(categoryId: string, currentBlogId: strin
     const processedBlogs = blogs.map((blog: any) => {
       let imageUrl = '/default-blog-image.jpg';
       
-      // Image asset is now expanded with URL directly
-      if (blog.mainImage?.asset?.url) {
+      if (blog.mainImage?.asset?._ref) {
+        const imageId = blog.mainImage.asset._ref.replace('image-', '').split('-').slice(0, -1).join('-');
+        imageUrl = `https://cdn.sanity.io/images/${SANITY_PROJECT_ID}/${SANITY_DATASET}/${imageId}?w=800&h=600&fit=crop`;
+      } else if (blog.mainImage?.asset?.url) {
         imageUrl = blog.mainImage.asset.url;
       }
 
