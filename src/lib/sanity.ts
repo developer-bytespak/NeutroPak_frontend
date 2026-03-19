@@ -140,7 +140,7 @@ export async function fetchBlogBySlug(slug: string) {
     slug,
     category->{_id, title},
     publishedAt,
-    mainImage,
+    mainImage{asset->{_ref, url}},
     excerpt,
     body
   }[0]`;
@@ -214,7 +214,7 @@ export async function fetchRelatedBlogs(categoryId: string, currentBlogId: strin
       slug,
       category->{_id, title},
       publishedAt,
-      mainImage,
+      mainImage{asset->{_ref, url}},
       excerpt
     }`;
 
