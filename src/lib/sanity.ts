@@ -20,11 +20,12 @@ function buildImageUrl(asset: any): string | null {
   }
   if (asset._ref) {
     // Sanity image reference format: image-abc123def456-800x600-jpg
-    // Extract just the ID part (abc123def456) before the dimensions
-    const refWithoutPrefix = asset._ref.replace('image-', '');
-    const assetId = refWithoutPrefix.split('-')[0]; // Get the ID before the first dash
-    const url = `https://cdn.sanity.io/images/${SANITY_PROJECT_ID}/${SANITY_DATASET}/${assetId}`;
-    console.log('✅ Built image URL:', url, 'from ref:', asset._ref, 'assetId:', assetId);
+    // URL format: https://cdn.sanity.io/images/{projectId}/{dataset}/abc123def456-800x600.jpg
+    // Convert: remove 'image-' prefix and change last '-' to '.'
+    const refWithoutPrefix = asset._ref.replace('image-', ''); // "abc123def456-800x600-jpg"
+    const urlPath = refWithoutPrefix.replace(/-([a-z]+)$/, '.$1'); // "abc123def456-800x600.jpg"
+    const url = `https://cdn.sanity.io/images/${SANITY_PROJECT_ID}/${SANITY_DATASET}/${urlPath}`;
+    console.log('✅ Built image URL:', url, 'from ref:', asset._ref);
     return url;
   }
   console.warn('⚠️ Could not build URL from asset:', JSON.stringify(asset));
