@@ -5,14 +5,29 @@ const SANITY_API_VERSION = 'v2021-06-07';
 
 // Simple function to build image URL from Sanity asset reference
 function buildImageUrl(asset: any): string | null {
-  if (!asset) return null;
-  if (typeof asset === 'string') return asset;
-  if (asset.url) return asset.url;
-  if (asset._ref) {
-    // Extract image ID and build CDN URL
-    const imageId = asset._ref.replace('image-', '').split('-').slice(0, -1).join('-');
-    return `https://cdn.sanity.io/images/${SANITY_PROJECT_ID}/${SANITY_DATASET}/${imageId}`;
+  console.log('🔍 buildImageUrl called with asset:', asset);
+  if (!asset) {
+    console.warn('⚠️ No asset provided');
+    return null;
   }
+  if (typeof asset === 'string') {
+    console.log('✅ Asset is string:', asset);
+    return asset;
+  }
+  if (asset.url) {
+    console.log('✅ Asset has url property:', asset.url);
+    return asset.url;
+  }
+  if (asset._ref) {
+    // Sanity image reference format: image-abc123def456-800x600-jpg
+    // Extract just the ID part (abc123def456) before the dimensions
+    const refWithoutPrefix = asset._ref.replace('image-', '');
+    const assetId = refWithoutPrefix.split('-')[0]; // Get the ID before the first dash
+    const url = `https://cdn.sanity.io/images/${SANITY_PROJECT_ID}/${SANITY_DATASET}/${assetId}`;
+    console.log('✅ Built image URL:', url, 'from ref:', asset._ref, 'assetId:', assetId);
+    return url;
+  }
+  console.warn('⚠️ Could not build URL from asset:', JSON.stringify(asset));
   return null;
 }
 
@@ -24,7 +39,7 @@ export async function fetchBlogs() {
     slug,
     category->{_id, title},
     publishedAt,
-    mainImage,
+    mainImage{asset->{_ref}},
     excerpt
   }`;
 
@@ -58,6 +73,7 @@ export async function fetchBlogs() {
 
     const data = await response.json();
     console.log('📊 Sanity API Response:', data);
+    console.log('📊 First blog mainImage:', data.result?.[0]?.mainImage);
     
     if (data.error) {
       console.error('❌ Sanity query error:', data.error);
@@ -80,12 +96,19 @@ export async function fetchBlogs() {
     const blogsWithDetails = (data.result || []).map((blog: any) => {
       let imageUrl = '/default-blog-image.jpg';
       
-      if (blog.mainImage?.asset?._ref) {
-        // Build proper Sanity image CDN URL
-        const imageId = blog.mainImage.asset._ref.replace('image-', '').split('-').slice(0, -1).join('-');
-        imageUrl = `https://cdn.sanity.io/images/${SANITY_PROJECT_ID}/${SANITY_DATASET}/${imageId}?w=800&h=600&fit=crop`;
-      } else if (blog.mainImage?.asset?.url) {
-        imageUrl = blog.mainImage.asset.url;
+      console.log(`📝 Processing blog: ${blog.title}`);
+      console.log('   mainImage:', blog.mainImage);
+      
+      if (blog.mainImage?.asset) {
+        const builtUrl = buildImageUrl(blog.mainImage.asset);
+        if (builtUrl) {
+          imageUrl = builtUrl;
+          console.log(`   ✅ Final image URL: ${imageUrl}`);
+        } else {
+          console.log('   ❌ Failed to build URL');
+        }
+      } else {
+        console.log('   ⚠️ No mainImage.asset found');
       }
 
       return {
@@ -157,11 +180,9 @@ export async function fetchBlogBySlug(slug: string) {
 
     // Build image URL
     let imageUrl = '/default-blog-image.jpg';
-    if (blog.mainImage?.asset?._ref) {
-      const imageId = blog.mainImage.asset._ref.replace('image-', '').split('-').slice(0, -1).join('-');
-      imageUrl = `https://cdn.sanity.io/images/${SANITY_PROJECT_ID}/${SANITY_DATASET}/${imageId}?w=800&h=600&fit=crop`;
-    } else if (blog.mainImage?.asset?.url) {
-      imageUrl = blog.mainImage.asset.url;
+    if (blog.mainImage?.asset) {
+      const builtUrl = buildImageUrl(blog.mainImage.asset);
+      if (builtUrl) imageUrl = builtUrl;
     }
 
     return {
@@ -226,11 +247,9 @@ export async function fetchRelatedBlogs(categoryId: string, currentBlogId: strin
     const processedBlogs = blogs.map((blog: any) => {
       let imageUrl = '/default-blog-image.jpg';
       
-      if (blog.mainImage?.asset?._ref) {
-        const imageId = blog.mainImage.asset._ref.replace('image-', '').split('-').slice(0, -1).join('-');
-        imageUrl = `https://cdn.sanity.io/images/${SANITY_PROJECT_ID}/${SANITY_DATASET}/${imageId}?w=800&h=600&fit=crop`;
-      } else if (blog.mainImage?.asset?.url) {
-        imageUrl = blog.mainImage.asset.url;
+      if (blog.mainImage?.asset) {
+        const builtUrl = buildImageUrl(blog.mainImage.asset);
+        if (builtUrl) imageUrl = builtUrl;
       }
 
       return {

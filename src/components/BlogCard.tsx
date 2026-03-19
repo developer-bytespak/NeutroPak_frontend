@@ -1,5 +1,4 @@
 import React from 'react';
-import Image from 'next/image';
 import Link from 'next/link';
 import { CalendarIcon, ClockIcon, PenIcon, ArrowIcon } from './Icons';
 
@@ -22,16 +21,15 @@ const BlogCard: React.FC<BlogCardProps> = ({
   category,
   readTime,
 }) => {
+  console.log(`🎨 BlogCard rendering: ${title}, Image:`, image);
   return (
     <Link href={`/blog/${slug}`} className="block group h-full">
       <div className="bg-gradient-to-br from-gold-100 to-gold-200 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden h-full flex flex-col border-2 border-gold-600 hover:border-gold-700 transform hover:-translate-y-1">
         {image && (
           <div className="relative h-48 sm:h-56 bg-gradient-to-br from-gold-100 to-gold-50 overflow-hidden">
-            <Image
+            <img
               src={image}
               alt={title}
-              width={400}
-              height={300}
               className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
             />
             {/* Overlay */}
