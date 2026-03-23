@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect, useContext } from 'react';
 import Link from 'next/link';
-import ProductCard from '@/components/ProductCard';
 import Image from 'next/image';
 import CartContext from '@/store/CartContext';
 import { productService } from '@/services/productService';
@@ -21,13 +20,12 @@ interface Product {
   price: number;
   category: string;
   stock: number;
-  imageUrl?: string;
+  imageUrl?: string | null;
 }
 
 const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ params }) => {
   const [quantity, setQuantity] = useState(1);
   const [product, setProduct] = useState<Product | null>(null);
-  const [relatedProducts, setRelatedProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [imageLoading, setImageLoading] = useState(true);
@@ -45,22 +43,8 @@ const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ params }) => {
         const response = await productService.getProductById(parseInt(params.id));
         
         if (response.data.success && response.data.data) {
-          setProduct(response.data.data);
-
-          // Fetch all products to show related items
-          const allProductsResponse = await productService.getAllProducts(1, 100);
-          const productsFromResponse = allProductsResponse?.data?.data?.products as unknown;
-          
-          if (Array.isArray(productsFromResponse)) {
-            // Filter related products (same category, exclude current)
-            const related = (productsFromResponse as Product[])
-              .filter(p => 
-                String(p.id) !== params.id && 
-                p.category === response.data.data.category
-              )
-              .slice(0, 3);
-            setRelatedProducts(related);
-          }
+          const productData = response.data.data;
+          setProduct(productData);
         } else {
           setError('Product not found');
         }
@@ -101,11 +85,6 @@ const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ params }) => {
 
   return (
     <main className="bg-white">
-      {/* Preload main image */}
-      {product?.imageUrl && (
-        <link rel="preload" as="image" href={getOptimizedImageUrl(product.imageUrl, 'large')} />
-      )}
-      
       {/* Product Section */}
       <section className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -206,7 +185,7 @@ const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ params }) => {
                         variants: [],
                         inStock: product.stock > 0,
                         sku: `SKU-${product.id}`,
-                        imageUrl: product.imageUrl,
+                        imageUrl: product.imageUrl || undefined,
                       };
                       cartContext.addToCart(cartProduct, quantity);
                     } else {
@@ -287,31 +266,6 @@ const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ params }) => {
         </div>
       </section>
 
-      {/* Related Products */}
-      <section className="py-16 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-gray-900 mb-12">Related Products</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {relatedProducts.map((relatedProduct) => (
-              <ProductCard
-                key={relatedProduct.id}
-                product={{
-                  id: String(relatedProduct.id),
-                  name: relatedProduct.name,
-                  slug: `${relatedProduct.id}`,
-                  price: relatedProduct.price,
-                  category: relatedProduct.category,
-                  imageUrl: relatedProduct.imageUrl,
-                  description: relatedProduct.description,
-                  inStock: relatedProduct.stock > 0,
-                  rating: 0,
-                  reviews: 0,
-                } as any}
-              />
-            ))}
-          </div>
-        </div>
-      </section>
     </main>
   );
 };
