@@ -10,7 +10,7 @@ import { getOptimizedImageUrl } from '@/utils/cloudinaryImage';
 
 interface ProductDetailPageProps {
   params: {
-    slug: string;
+    id: string;
   };
 }
 
@@ -27,41 +27,42 @@ interface Product {
 const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ params }) => {
   const [quantity, setQuantity] = useState(1);
   const [product, setProduct] = useState<Product | null>(null);
-  const [allProducts, setAllProducts] = useState<Product[]>([]);
+  const [relatedProducts, setRelatedProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [imageLoading, setImageLoading] = useState(true);
   const [imageError, setImageError] = useState(false);
   const cartContext = useContext(CartContext);
 
-  // Fetch all products from API
+  // Fetch product directly using ID
   useEffect(() => {
     const fetchProductData = async () => {
       try {
         setLoading(true);
-        const response = await productService.getAllProducts(1, 100);
-        console.log('Product detail - API Response:', response);
+        setError('');
+
+        // Get the product directly by ID (much more efficient)
+        const response = await productService.getProductById(parseInt(params.id));
         
-        // Extract products from response (axios wraps in response.data, API wraps in data field)
-        const productsFromResponse = response?.data?.data?.products as unknown;
-        let products: Product[] = [];
-        
-        if (Array.isArray(productsFromResponse)) {
-          products = productsFromResponse;
-        }
-        
-        if (products.length > 0) {
-          setAllProducts(products);
+        if (response.data.success && response.data.data) {
+          setProduct(response.data.data);
+
+          // Fetch all products to show related items
+          const allProductsResponse = await productService.getAllProducts(1, 100);
+          const productsFromResponse = allProductsResponse?.data?.data?.products as unknown;
           
-          // Extract product ID from slug (format: product-{id})
-          const idFromSlug = params.slug.split('-').pop();
-          const foundProduct = products.find(p => String(p.id) === idFromSlug);
-          
-          if (foundProduct) {
-            setProduct(foundProduct);
-          } else {
-            setError('Product not found');
+          if (Array.isArray(productsFromResponse)) {
+            // Filter related products (same category, exclude current)
+            const related = (productsFromResponse as Product[])
+              .filter(p => 
+                String(p.id) !== params.id && 
+                p.category === response.data.data.category
+              )
+              .slice(0, 3);
+            setRelatedProducts(related);
           }
+        } else {
+          setError('Product not found');
         }
       } catch (err) {
         console.error('Error fetching product:', err);
@@ -72,12 +73,7 @@ const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ params }) => {
     };
 
     fetchProductData();
-  }, [params.slug]);
-
-  // Get related products (exclude current product)
-  const relatedProducts = allProducts
-    .filter(p => String(p.id) !== (product?.id ? String(product.id) : ''))
-    .slice(0, 3);
+  }, [params.id]);
 
   if (loading) {
     return (
@@ -299,14 +295,18 @@ const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ params }) => {
             {relatedProducts.map((relatedProduct) => (
               <ProductCard
                 key={relatedProduct.id}
-                id={String(relatedProduct.id)}
-                name={relatedProduct.name}
-                price={relatedProduct.price}
-                image={relatedProduct.imageUrl || '/product-placeholder.jpg'}
-                slug={`product-${relatedProduct.id}`}
-                category={relatedProduct.category}
-                description={relatedProduct.description}
-                inStock={relatedProduct.stock > 0}
+                product={{
+                  id: String(relatedProduct.id),
+                  name: relatedProduct.name,
+                  slug: `${relatedProduct.id}`,
+                  price: relatedProduct.price,
+                  category: relatedProduct.category,
+                  imageUrl: relatedProduct.imageUrl,
+                  description: relatedProduct.description,
+                  inStock: relatedProduct.stock > 0,
+                  rating: 0,
+                  reviews: 0,
+                } as any}
               />
             ))}
           </div>
