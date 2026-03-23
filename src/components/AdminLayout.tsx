@@ -1,6 +1,6 @@
 'use client';
 
-import React, { ReactNode, useState, useEffect } from 'react';
+import React, { ReactNode, useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
@@ -11,6 +11,7 @@ interface AdminLayoutProps {
 const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [isLargeScreen, setIsLargeScreen] = useState(false);
+  const sidebarNavRef = useRef<HTMLElement>(null);
   const pathname = usePathname();
 
   useEffect(() => {
@@ -18,6 +19,8 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
       setIsLargeScreen(window.innerWidth >= 1024);
       if (window.innerWidth >= 1024) {
         setSidebarOpen(true);
+      } else {
+        setSidebarOpen(false);
       }
     };
 
@@ -26,8 +29,36 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
+  // Prevent body scroll when sidebar overlay is visible on mobile
+  useEffect(() => {
+    if (sidebarOpen && !isLargeScreen) {
+      document.body.classList.add('sidebar-open');
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.classList.remove('sidebar-open');
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.classList.remove('sidebar-open');
+      document.body.style.overflow = 'unset';
+    };
+  }, [sidebarOpen, isLargeScreen]);
+
+  // Scroll sidebar nav to top when sidebar opens
+  useEffect(() => {
+    if (sidebarOpen && sidebarNavRef.current && !isLargeScreen) {
+      sidebarNavRef.current.scrollTop = 0;
+    }
+  }, [sidebarOpen, isLargeScreen]);
+
   const isActive = (href: string) => {
     return pathname === href || pathname.startsWith(href + '/');
+  };
+
+  const closeSidebar = () => {
+    if (!isLargeScreen) {
+      setSidebarOpen(false);
+    }
   };
 
   return (
@@ -41,16 +72,17 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
       )}
 
       {/* Sidebar */}
-      <aside className="admin-sidebar">
+      <aside className={`admin-sidebar ${!sidebarOpen && !isLargeScreen ? 'mobile-closed' : ''}`}>
         <div className="sidebar-header">
           <span className="collapse-icon">☰</span>
           <h2>NutreoPak Admin</h2>
         </div>
 
-        <nav className="sidebar-nav">
+        <nav className="sidebar-nav" ref={sidebarNavRef}>
           <Link 
             href="/admin/dashboard" 
             className={`nav-link ${isActive('/admin/dashboard') ? 'active' : ''}`}
+            onClick={closeSidebar}
           >
             <span className="icon">📊</span>
             <span className="text">Dashboard</span>
@@ -58,6 +90,7 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
           <Link 
             href="/admin/products" 
             className={`nav-link ${isActive('/admin/products') ? 'active' : ''}`}
+            onClick={closeSidebar}
           >
             <span className="icon">🛍️</span>
             <span className="text">Products</span>
@@ -65,6 +98,7 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
           <Link 
             href="/admin/orders" 
             className={`nav-link ${isActive('/admin/orders') ? 'active' : ''}`}
+            onClick={closeSidebar}
           >
             <span className="icon">📦</span>
             <span className="text">Orders</span>
@@ -72,6 +106,7 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
           <Link 
             href="/admin/payments" 
             className={`nav-link ${isActive('/admin/payments') ? 'active' : ''}`}
+            onClick={closeSidebar}
           >
             <span className="icon">💳</span>
             <span className="text">Payments</span>
@@ -79,6 +114,7 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
           <Link 
             href="/admin/blog" 
             className={`nav-link ${isActive('/admin/blog') ? 'active' : ''}`}
+            onClick={closeSidebar}
           >
             <span className="icon">📝</span>
             <span className="text">Blog</span>
@@ -89,6 +125,7 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
           <Link 
             href="/" 
             className="nav-link"
+            onClick={closeSidebar}
           >
             <span className="icon">👁️</span>
             <span className="text">View Store</span>
@@ -96,6 +133,7 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
           <button 
             className="logout-btn"
             onClick={() => {
+              closeSidebar();
               setTimeout(() => {
                 window.location.href = '/admin/login';
               }, 300);
@@ -113,6 +151,17 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
           {children}
         </div>
       </div>
+
+      {/* Mobile Menu Toggle Button */}
+      {!isLargeScreen && (
+        <button
+          onClick={() => setSidebarOpen(!sidebarOpen)}
+          className="mobile-menu-toggle"
+          aria-label="Toggle menu"
+        >
+          ☰
+        </button>
+      )}
     </div>
   );
 };

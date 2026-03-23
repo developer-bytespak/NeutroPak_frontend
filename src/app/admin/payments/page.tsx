@@ -29,7 +29,8 @@ const AdminPayments: NextPage = () => {
           </div>
         </div>
 
-        <div className="bg-white rounded-lg shadow-md overflow-hidden mt-8">
+        <div className="bg-white rounded-lg shadow-md mt-8">
+          <div className="table-wrapper">
           <table className="admin-table">
             <thead>
               <tr>
@@ -62,6 +63,7 @@ const AdminPayments: NextPage = () => {
               ))}
             </tbody>
           </table>
+          </div>
         </div>
       </main>
     </AdminLayout>

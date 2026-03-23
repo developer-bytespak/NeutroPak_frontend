@@ -102,10 +102,11 @@ export default function AdminOrders() {
           </div>
         )}
 
-        <div className="bg-white rounded-lg shadow-md overflow-hidden">
+        <div className="bg-white rounded-lg shadow-md">
           {loading ? (
             <p className="p-8 text-center text-gray-500">Loading orders...</p>
           ) : orders.length > 0 ? (
+            <div className="table-wrapper">
             <table className="admin-table">
               <thead>
                 <tr>
@@ -138,6 +139,7 @@ export default function AdminOrders() {
                 ))}
               </tbody>
             </table>
+            </div>
           ) : (
             <p className="p-8 text-center text-gray-500">No orders found</p>
           )}
