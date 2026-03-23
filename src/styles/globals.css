@@ -203,7 +203,7 @@ html, body {
 }
 
 .admin-sidebar {
-  @apply w-24 text-white fixed h-screen overflow-hidden transition-all duration-300 z-50 lg:relative lg:translate-x-0 shadow-2xl flex flex-col hover:w-72;
+  @apply w-24 text-white fixed h-screen overflow-hidden transition-all duration-300 z-50 lg:relative lg:translate-x-0 shadow-2xl flex flex-col lg:hover:w-72;
   background: linear-gradient(180deg, #0f1729 0%, #1a0f3f 25%, #0f1729 50%, #1a0f3f 75%, #0f1729 100%);
   box-shadow: inset 2px 0 0 rgba(251, 191, 36, 0.2), 0 0 30px rgba(251, 191, 36, 0.1);
 }
@@ -359,12 +359,12 @@ html, body {
 }
 
 .table-wrapper {
-  @apply border border-gray-200 rounded-lg;
+  @apply border border-gray-200 rounded-lg overflow-x-auto;
 }
 
 /* Admin Tables */
 .admin-table {
-  @apply w-full border-collapse table-fixed;
+  @apply w-full border-collapse min-w-full;
 }
 
 .admin-table thead {
@@ -372,7 +372,7 @@ html, body {
 }
 
 .admin-table th {
-  @apply px-6 py-4 text-left font-bold text-gray-800 border-b-4 border-yellow-400 uppercase text-sm tracking-wider;
+  @apply px-4 md:px-6 py-4 text-left font-bold text-gray-800 border-b-4 border-yellow-400 uppercase text-sm tracking-wider whitespace-nowrap;
 }
 
 .admin-table tbody tr {
@@ -384,7 +384,7 @@ html, body {
 }
 
 .admin-table td {
-  @apply px-6 py-4 text-gray-700;
+  @apply px-4 md:px-6 py-4 text-gray-700 whitespace-nowrap text-sm md:text-base;
 }
 
 /* Pagination Controls */
