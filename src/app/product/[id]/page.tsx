@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect, useContext } from 'react';
 import Link from 'next/link';
-import ProductCard from '@/components/ProductCard';
 import Image from 'next/image';
 import CartContext from '@/store/CartContext';
 import { productService } from '@/services/productService';
@@ -10,7 +9,7 @@ import { getOptimizedImageUrl } from '@/utils/cloudinaryImage';
 
 interface ProductDetailPageProps {
   params: {
-    slug: string;
+    id: string;
   };
 }
 
@@ -21,47 +20,33 @@ interface Product {
   price: number;
   category: string;
   stock: number;
-  imageUrl?: string;
+  imageUrl?: string | null;
 }
 
 const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ params }) => {
   const [quantity, setQuantity] = useState(1);
   const [product, setProduct] = useState<Product | null>(null);
-  const [allProducts, setAllProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [imageLoading, setImageLoading] = useState(true);
   const [imageError, setImageError] = useState(false);
   const cartContext = useContext(CartContext);
 
-  // Fetch all products from API
+  // Fetch product directly using ID
   useEffect(() => {
     const fetchProductData = async () => {
       try {
         setLoading(true);
-        const response = await productService.getAllProducts(1, 100);
-        console.log('Product detail - API Response:', response);
+        setError('');
+
+        // Get the product directly by ID (much more efficient)
+        const response = await productService.getProductById(parseInt(params.id));
         
-        // Extract products from response (axios wraps in response.data, API wraps in data field)
-        const productsFromResponse = response?.data?.data?.products as unknown;
-        let products: Product[] = [];
-        
-        if (Array.isArray(productsFromResponse)) {
-          products = productsFromResponse;
-        }
-        
-        if (products.length > 0) {
-          setAllProducts(products);
-          
-          // Extract product ID from slug (format: product-{id})
-          const idFromSlug = params.slug.split('-').pop();
-          const foundProduct = products.find(p => String(p.id) === idFromSlug);
-          
-          if (foundProduct) {
-            setProduct(foundProduct);
-          } else {
-            setError('Product not found');
-          }
+        if (response.data.success && response.data.data) {
+          const productData = response.data.data;
+          setProduct(productData);
+        } else {
+          setError('Product not found');
         }
       } catch (err) {
         console.error('Error fetching product:', err);
@@ -72,12 +57,7 @@ const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ params }) => {
     };
 
     fetchProductData();
-  }, [params.slug]);
-
-  // Get related products (exclude current product)
-  const relatedProducts = allProducts
-    .filter(p => String(p.id) !== (product?.id ? String(product.id) : ''))
-    .slice(0, 3);
+  }, [params.id]);
 
   if (loading) {
     return (
@@ -105,11 +85,6 @@ const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ params }) => {
 
   return (
     <main className="bg-white">
-      {/* Preload main image */}
-      {product?.imageUrl && (
-        <link rel="preload" as="image" href={getOptimizedImageUrl(product.imageUrl, 'large')} />
-      )}
-      
       {/* Product Section */}
       <section className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -210,7 +185,7 @@ const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ params }) => {
                         variants: [],
                         inStock: product.stock > 0,
                         sku: `SKU-${product.id}`,
-                        imageUrl: product.imageUrl,
+                        imageUrl: product.imageUrl || undefined,
                       };
                       cartContext.addToCart(cartProduct, quantity);
                     } else {
@@ -291,27 +266,6 @@ const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ params }) => {
         </div>
       </section>
 
-      {/* Related Products */}
-      <section className="py-16 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-gray-900 mb-12">Related Products</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {relatedProducts.map((relatedProduct) => (
-              <ProductCard
-                key={relatedProduct.id}
-                id={String(relatedProduct.id)}
-                name={relatedProduct.name}
-                price={relatedProduct.price}
-                image={relatedProduct.imageUrl || '/product-placeholder.jpg'}
-                slug={`product-${relatedProduct.id}`}
-                category={relatedProduct.category}
-                description={relatedProduct.description}
-                inStock={relatedProduct.stock > 0}
-              />
-            ))}
-          </div>
-        </div>
-      </section>
     </main>
   );
 };

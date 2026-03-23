@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import AdminLayout from '@/components/AdminLayout';
 import { productService } from '@/services/productService';
+import { apiPost } from '@/utils/api';
 
 export default function AddProduct() {
   const router = useRouter();
@@ -15,9 +16,13 @@ export default function AddProduct() {
     price: '',
     stock: '',
     category: '',
+    imageUrl: '',
   });
 
+  const [imageFile, setImageFile] = useState<File | null>(null);
+  const [imagePreview, setImagePreview] = useState<string>('');
   const [submitting, setSubmitting] = useState(false);
+  const [uploadingImage, setUploadingImage] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
 
@@ -27,6 +32,60 @@ export default function AddProduct() {
       ...prev,
       [name]: value,
     }));
+  };
+
+  const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    // Validate file
+    if (!file.type.startsWith('image/')) {
+      setError('Please select a valid image file');
+      return;
+    }
+
+    if (file.size > 5 * 1024 * 1024) {
+      setError('Image size must be less than 5MB');
+      return;
+    }
+
+    setImageFile(file);
+
+    // Create preview
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setImagePreview(reader.result as string);
+    };
+    reader.readAsDataURL(file);
+
+    setError('');
+  };
+
+  const uploadImageToCloudinary = async (): Promise<string | null> => {
+    if (!imageFile) return null;
+
+    try {
+      setUploadingImage(true);
+      setError('');
+
+      const formDataToUpload = new FormData();
+      formDataToUpload.append('file', imageFile);
+
+      const response = await apiPost<any>('/api/upload/image', formDataToUpload);
+
+      if (response.data.success) {
+        return response.data.data.url;
+      } else {
+        setError('Failed to upload image: ' + (response.data.message || 'Unknown error'));
+        return null;
+      }
+    } catch (err: any) {
+      setError('Error uploading image: ' + (err.response?.data?.message || err.message));
+      console.error(err);
+      return null;
+    } finally {
+      setUploadingImage(false);
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -42,12 +101,24 @@ export default function AddProduct() {
         return;
       }
 
+      // Upload image if provided (optional)
+      let imageUrl = formData.imageUrl; // Start with manual URL
+      if (imageFile) {
+        const uploadedUrl = await uploadImageToCloudinary();
+        if (!uploadedUrl) {
+          setSubmitting(false);
+          return;
+        }
+        imageUrl = uploadedUrl;
+      }
+
       const response = await productService.createProduct({
         name: formData.name,
         description: formData.description,
         price: parseFloat(formData.price),
         category: formData.category,
         stock: parseInt(formData.stock),
+        imageUrl: imageUrl, // Use uploaded URL or manual URL
       });
 
       if (response.data.success) {
@@ -140,7 +211,7 @@ export default function AddProduct() {
                     step="0.01"
                     min="0"
                     required
-                    disabled={submitting}
+                    disabled={submitting || uploadingImage}
                   />
                 </div>
 
@@ -156,8 +227,80 @@ export default function AddProduct() {
                     placeholder="0"
                     min="0"
                     required
-                    disabled={submitting}
+                    disabled={submitting || uploadingImage}
                   />
+                </div>
+              </div>
+
+              {/* Product Image */}
+              <div className="form-group">
+                <label htmlFor="image" className="form-label">Product Image</label>
+                
+                {/* Option 1: Upload File */}
+                <div className="mb-4">
+                  <p className="text-sm text-gray-600 mb-2 font-semibold">Option 1: Upload Image File</p>
+                  <div className="border-2 border-dashed border-yellow-300 rounded-lg p-6 text-center">
+                    {imagePreview && !imageFile ? (
+                      <div className="flex flex-col items-center">
+                        <p className="text-xs text-gray-500 mb-2">Uploaded to Cloudinary</p>
+                      </div>
+                    ) : imagePreview && imageFile ? (
+                      <div className="flex flex-col items-center">
+                        <img src={imagePreview} alt="Preview" className="max-h-48 mb-4 rounded-lg" />
+                        <input
+                          type="file"
+                          id="image"
+                          accept="image/*"
+                          onChange={handleImageChange}
+                          className="hidden"
+                          disabled={submitting || uploadingImage}
+                        />
+                        <label htmlFor="image" className="cursor-pointer text-yellow-600 hover:text-yellow-700 font-semibold">
+                          {uploadingImage ? '⏳ Uploading...' : '📷 Change Image'}
+                        </label>
+                      </div>
+                    ) : (
+                      <div>
+                        <input
+                          type="file"
+                          id="image"
+                          accept="image/*"
+                          onChange={handleImageChange}
+                          className="hidden"
+                          disabled={submitting || uploadingImage}
+                        />
+                        <label htmlFor="image" className="cursor-pointer text-gray-500 hover:text-yellow-600 transition-colors">
+                          <svg className="w-12 h-12 mx-auto mb-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                          </svg>
+                          <p className="font-semibold">Click to upload product image</p>
+                          <p className="text-sm text-gray-400">PNG, JPG up to 5MB</p>
+                        </label>
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                {/* Option 2: Manual URL */}
+                <div>
+                  <p className="text-sm text-gray-600 mb-2 font-semibold">Option 2: Paste Image URL</p>
+                  <p className="text-xs text-gray-500 mb-2">If file upload isn't working, paste a direct image URL</p>
+                  <input
+                    type="url"
+                    placeholder="https://example.com/image.jpg"
+                    value={formData.imageUrl}
+                    onChange={(e) => {
+                      setFormData(prev => ({ ...prev, imageUrl: e.target.value }));
+                      if (e.target.value && !imageFile) {
+                        setImagePreview(e.target.value);
+                      }
+                    }}
+                    className="form-input"
+                    disabled={submitting || uploadingImage}
+                  />
+                  {formData.imageUrl && !imageFile && (
+                    <img src={formData.imageUrl} alt="Preview" className="mt-3 max-h-48 rounded-lg" onError={() => setError('Invalid image URL')} />
+                  )}
                 </div>
               </div>
 

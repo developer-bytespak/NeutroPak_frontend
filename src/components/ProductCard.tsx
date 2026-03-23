@@ -58,7 +58,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
   return (
     <div className="card overflow-hidden group hover:shadow-2xl active:shadow-xl transition-all duration-300 flex flex-col h-full">
       <div className="relative h-40 xs:h-48 sm:h-56 md:h-64 bg-white overflow-hidden flex items-center justify-center">
-        <Link href={`/product/${slug}`} className="block w-full h-full flex items-center justify-center">
+        <Link href={`/product/${id || slug}`} className="block w-full h-full flex items-center justify-center">
           {isImageLoading && (
             <div className="absolute inset-0 bg-white animate-pulse flex items-center justify-center">
               <span className="text-gray-400 text-xs sm:text-sm">Loading...</span>
@@ -87,7 +87,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
 
       <div className="p-2.5 xs:p-3 sm:p-4 flex flex-col flex-grow">
         <h3 className="text-xs xs:text-sm sm:text-base md:text-lg font-bold text-gray-900 mb-2 line-clamp-2 group-hover:text-gold-600 transition-colors">
-          <Link href={`/product/${slug}`}>{name}</Link>
+          <Link href={`/product/${id || slug}`}>{name}</Link>
         </h3>
 
         <div className="flex items-center gap-1.5 xs:gap-2 mb-2 xs:mb-3">

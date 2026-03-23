@@ -18,25 +18,25 @@ const Footer: React.FC = () => {
           
           productsFromResponse.forEach((product) => {
             if (product.name.includes('Cinnamon') && product.name.includes('250g')) {
-              links['cinnamon250'] = `/product/product-${product.id}`;
+              links['cinnamon250'] = `/product/${product.id}`;
             }
             if (product.name.includes('Cinnamon') && product.name.includes('500g')) {
-              links['cinnamon500'] = `/product/product-${product.id}`;
+              links['cinnamon500'] = `/product/${product.id}`;
             }
             if (product.name.includes('Chilli') && product.name.includes('250g')) {
-              links['chilli250'] = `/product/product-${product.id}`;
+              links['chilli250'] = `/product/${product.id}`;
             }
             if (product.name.includes('Chilli') && product.name.includes('500g')) {
-              links['chilli500'] = `/product/product-${product.id}`;
+              links['chilli500'] = `/product/${product.id}`;
             }
             if (product.name.includes('Acacia') && product.name.includes('250g')) {
-              links['acacia250'] = `/product/product-${product.id}`;
+              links['acacia250'] = `/product/${product.id}`;
             }
             if (product.name.includes('Acacia') && product.name.includes('500g')) {
-              links['acacia500'] = `/product/product-${product.id}`;
+              links['acacia500'] = `/product/${product.id}`;
             }
             if (product.name.includes('Gift Box')) {
-              links['giftbox'] = `/product/product-${product.id}`;
+              links['giftbox'] = `/product/${product.id}`;
             }
           });
           
