@@ -102,7 +102,7 @@ export default function AdminOrders() {
           </div>
         )}
 
-        <div className="bg-white rounded-lg shadow-md overflow-hidden">
+        <div className="table-wrapper">
           {loading ? (
             <p className="p-8 text-center text-gray-500">Loading orders...</p>
           ) : orders.length > 0 ? (

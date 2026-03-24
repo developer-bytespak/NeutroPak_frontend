@@ -88,7 +88,7 @@ export default function AdminProducts() {
           </div>
         )}
 
-        <div className="bg-white rounded-lg shadow-md overflow-hidden">
+        <div className="table-wrapper">
           {loading ? (
             <p className="p-8 text-center text-gray-500">Loading products...</p>
           ) : products.length > 0 ? (
