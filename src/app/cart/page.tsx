@@ -54,8 +54,7 @@ const CartPage = () => {
     0
   );
   const shipping = subtotal > 2500 ? 0 : 200;
-  const tax = Math.round(subtotal * 0.05);
-  const total = subtotal + shipping + tax;
+  const total = subtotal + shipping;
 
   return (
     <main>
@@ -182,30 +181,7 @@ const CartPage = () => {
               <div className="card p-8 h-fit sticky top-20">
                 <h2 className="text-2xl font-bold text-gray-900 mb-6">Order Summary</h2>
 
-                <div className="space-y-3 mb-6">
-                  <div className="flex justify-between items-center py-2 border-b border-gray-200">
-                    <span className="text-gray-700">Subtotal:</span>
-                    <span className="font-semibold text-gray-900">₨{subtotal.toLocaleString()}</span>
-                  </div>
-
-                  <div className="flex justify-between items-center py-2 border-b border-gray-200">
-                    <span className="text-gray-700">Shipping:</span>
-                    <span className="font-semibold text-gray-900">
-                      {shipping === 0 ? (
-                        <span className="text-green-600 font-bold">
-                          FREE
-                        </span>
-                      ) : (
-                        `₨${shipping}`
-                      )}
-                    </span>
-                  </div>
-
-                  <div className="flex justify-between items-center py-2 border-b border-gray-200">
-                    <span className="text-gray-700">Tax (5%):</span>
-                    <span className="font-semibold text-gray-900">₨{tax.toLocaleString()}</span>
-                  </div>
-
+                <div className="mb-6">
                   <div className="flex justify-between items-center py-3 border-b-2 border-gray-300">
                     <span className="font-bold text-gray-900">Total:</span>
                     <span className="text-xl font-bold text-gold-600">₨{total.toLocaleString()}</span>

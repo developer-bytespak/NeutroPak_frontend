@@ -28,10 +28,8 @@ const CheckoutPage = () => {
   const cartContext = useContext(CartContext);
   const cart = cartContext?.cart || [];
   const subtotal = cartContext?.total || 0;
-  const taxRate = 0.1; // 10% tax
-  const tax = Math.round(subtotal * taxRate);
   const shippingCost = 0; // Free shipping
-  const total = subtotal + tax + shippingCost;
+  const total = subtotal + shippingCost;
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -74,7 +72,7 @@ const CheckoutPage = () => {
         shippingMethod: 'standard',
         shippingCost: Number(shippingCost) || 0,
         subtotal: Number(subtotal) || 0,
-        tax: Number(tax) || 0,
+        tax: 0,
         total: Number(total) || 0,
         orderItems: cart.map((item: any) => {
           // Handle both string and number IDs
@@ -146,7 +144,7 @@ const CheckoutPage = () => {
         <div className="absolute inset-0 bg-black bg-opacity-50" />
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-2 drop-shadow-lg">Checkout</h1>
-          <p className="text-sm sm:text-base md:text-lg text-yellow-50 drop-shadow-md text-center">Complete your order</p>
+          <p className="text-sm sm:text-base md:text-lg text-yellow-50 drop-shadow-md">Complete your order</p>
         </div>
       </section>
 
@@ -401,23 +399,6 @@ const CheckoutPage = () => {
                         </span>
                       </div>
                     ))}
-                  </div>
-
-                  <div className="space-y-3 mb-6 pb-6 border-b border-gray-200">
-                    <div className="flex justify-between text-xs sm:text-sm">
-                      <span className="text-gray-700">Subtotal:</span>
-                      <span className="font-semibold text-gray-900">₨ {subtotal.toLocaleString('en-PK')}</span>
-                    </div>
-
-                    <div className="flex justify-between text-xs sm:text-sm">
-                      <span className="text-gray-700">Shipping:</span>
-                      <span className="text-green-600 font-bold">FREE</span>
-                    </div>
-
-                    <div className="flex justify-between text-xs sm:text-sm">
-                      <span className="text-gray-700">Tax:</span>
-                      <span className="font-semibold text-gray-900">₨ {tax.toLocaleString('en-PK')}</span>
-                    </div>
                   </div>
 
                   <div className="flex justify-between py-3 border-b-2 border-gray-300 mb-6">
