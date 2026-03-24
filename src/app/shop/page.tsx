@@ -21,10 +21,10 @@ const ShopPage = () => {
   const [priceRange, setPriceRange] = useState([790, 6000]);
   const [appliedFilters, setAppliedFilters] = useState({
     priceRange: [790, 6000],
-    stockStatus: null as 'onSale' | 'inStock' | 'onBackorder' | null,
+    stockStatus: null as 'onSale' | 'inStock' | null,
   });
-  const [tempStockStatus, setTempStockStatus] = useState<'onSale' | 'inStock' | 'onBackorder' | null>(null);
-  const [sortBy, setSortBy] = useState('popularity');
+  const [tempStockStatus, setTempStockStatus] = useState<'onSale' | 'inStock' | null>(null);
+  const [sortBy, setSortBy] = useState('price-low');
 
   // Fetch products from backend API
   useEffect(() => {
@@ -72,8 +72,6 @@ const ShopPage = () => {
       let stockMatch = true;
       if (appliedFilters.stockStatus === 'inStock') {
         stockMatch = product.stock > 0;
-      } else if (appliedFilters.stockStatus === 'onBackorder') {
-        stockMatch = product.stock === 0;
       }
       
       return priceMatch && stockMatch;
@@ -84,9 +82,6 @@ const ShopPage = () => {
           return a.price - b.price;
         case 'price-high':
           return b.price - a.price;
-        case 'newest':
-          return (b.id as number) - (a.id as number);
-        case 'popularity':
         default:
           return 0;
       }
@@ -185,15 +180,6 @@ const ShopPage = () => {
                   />
                   <span className="text-gray-700 text-xs sm:text-sm">In stock</span>
                 </label>
-                <label className="flex items-center gap-3 cursor-pointer hover:text-red-900 transition-colors">
-                  <input 
-                    type="checkbox" 
-                    checked={tempStockStatus === 'onBackorder'}
-                    onChange={() => setTempStockStatus(tempStockStatus === 'onBackorder' ? null : 'onBackorder')}
-                    className="w-5 h-5 rounded border-2 border-gray-300 cursor-pointer accent-red-900" 
-                  />
-                  <span className="text-gray-700 text-xs sm:text-sm">On backorder</span>
-                </label>
               </div>
             </div>
           </aside>
@@ -210,16 +196,12 @@ const ShopPage = () => {
                 onChange={(e) => setSortBy(e.target.value)}
                 className="px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 rounded text-xs sm:text-sm text-gray-900 bg-white hover:border-gray-400 focus:outline-none focus:border-red-900 focus:ring-1 focus:ring-red-900 transition-colors"
               >
-                <option value="popularity">
-                  Sort by Popularity
-                </option>
                 <option value="price-low">
                   Sort by Price: Low to High
                 </option>
                 <option value="price-high">
                   Sort by Price: High to Low
                 </option>
-                <option value="newest">Sort by Newest</option>
               </select>
             </div>
 

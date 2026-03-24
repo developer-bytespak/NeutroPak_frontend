@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 const Filters: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState('');
   const [priceRange, setPriceRange] = useState([0, 1000]);
-  const [sortBy, setSortBy] = useState('latest');
+  const [sortBy, setSortBy] = useState('price-low');
 
   return (
     <div className="filters">
@@ -75,11 +75,9 @@ const Filters: React.FC = () => {
       <div className="filter-group">
         <h3>Sort By</h3>
         <select value={sortBy} onChange={(e) => setSortBy(e.target.value)} className="sort-select">
-          <option value="latest">Latest</option>
           <option value="price-low">Price: Low to High</option>
           <option value="price-high">Price: High to Low</option>
           <option value="rating">Highest Rated</option>
-          <option value="popular">Most Popular</option>
         </select>
       </div>
 
