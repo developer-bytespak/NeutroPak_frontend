@@ -80,8 +80,8 @@ const ProductCard: React.FC<ProductCardProps> = ({
             style={{ imageRendering: 'crisp-edges' }}
           />
         </Link>
-        <div className="absolute top-1.5 xs:top-2 right-1.5 xs:right-2 sm:top-3 sm:right-3 bg-gold-600 text-white px-2 xs:px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-full text-xs font-semibold">
-          Sale
+        <div className={`absolute top-1.5 xs:top-2 right-1.5 xs:right-2 sm:top-3 sm:right-3 ${rest.inStock === false ? 'bg-red-600' : 'bg-gold-600'} text-white px-2 xs:px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-full text-xs font-semibold`}>
+          {rest.inStock === false ? 'Out of Stock' : 'Sale'}
         </div>
       </div>
 
@@ -102,9 +102,10 @@ const ProductCard: React.FC<ProductCardProps> = ({
         <div className="flex gap-1.5 xs:gap-2 mt-auto">
           <button 
             onClick={handleAddToCart}
-            className="flex-1 btn-primary text-xs xs:text-xs sm:text-sm px-2 xs:px-3 py-2 xs:py-2.5 sm:py-3 hover:bg-gold-700 transition-colors min-h-[44px]"
+            disabled={rest.inStock === false}
+            className={`flex-1 text-xs xs:text-xs sm:text-sm px-2 xs:px-3 py-2 xs:py-2.5 sm:py-3 min-h-[44px] ${rest.inStock === false ? 'btn-disabled text-gray-400 cursor-not-allowed bg-gray-300' : 'btn-primary hover:bg-gold-700 transition-colors'}`}
           >
-            Add to Cart
+            {rest.inStock === false ? 'Out of Stock' : 'Add to Cart'}
           </button>
         </div>
       </div>

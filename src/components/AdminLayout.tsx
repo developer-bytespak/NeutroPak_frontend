@@ -15,9 +15,12 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
 
   useEffect(() => {
     const handleResize = () => {
-      setIsLargeScreen(window.innerWidth >= 1024);
-      if (window.innerWidth >= 1024) {
+      const isLarge = window.innerWidth >= 1024;
+      setIsLargeScreen(isLarge);
+      if (isLarge) {
         setSidebarOpen(true);
+      } else {
+        setSidebarOpen(false);
       }
     };
 
@@ -28,6 +31,13 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
 
   const isActive = (href: string) => {
     return pathname === href || pathname.startsWith(href + '/');
+  };
+
+  // Close sidebar when a link is clicked on mobile
+  const handleNavClick = () => {
+    if (!isLargeScreen) {
+      setSidebarOpen(false);
+    }
   };
 
   return (
@@ -41,7 +51,7 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
       )}
 
       {/* Sidebar */}
-      <aside className="admin-sidebar">
+      <aside className={`admin-sidebar ${!sidebarOpen && !isLargeScreen ? 'closed' : ''}`}>
         <div className="sidebar-header">
           <span className="collapse-icon">☰</span>
           <h2>NutreoPak Admin</h2>
@@ -51,6 +61,7 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
           <Link 
             href="/admin/dashboard" 
             className={`nav-link ${isActive('/admin/dashboard') ? 'active' : ''}`}
+            onClick={handleNavClick}
           >
             <span className="icon">📊</span>
             <span className="text">Dashboard</span>
@@ -58,6 +69,7 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
           <Link 
             href="/admin/products" 
             className={`nav-link ${isActive('/admin/products') ? 'active' : ''}`}
+            onClick={handleNavClick}
           >
             <span className="icon">🛍️</span>
             <span className="text">Products</span>
@@ -65,6 +77,7 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
           <Link 
             href="/admin/orders" 
             className={`nav-link ${isActive('/admin/orders') ? 'active' : ''}`}
+            onClick={handleNavClick}
           >
             <span className="icon">📦</span>
             <span className="text">Orders</span>
@@ -72,6 +85,7 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
           <Link 
             href="/admin/payments" 
             className={`nav-link ${isActive('/admin/payments') ? 'active' : ''}`}
+            onClick={handleNavClick}
           >
             <span className="icon">💳</span>
             <span className="text">Payments</span>
@@ -79,6 +93,7 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
           <Link 
             href="/admin/blog" 
             className={`nav-link ${isActive('/admin/blog') ? 'active' : ''}`}
+            onClick={handleNavClick}
           >
             <span className="icon">📝</span>
             <span className="text">Blog</span>
@@ -89,6 +104,7 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
           <Link 
             href="/" 
             className="nav-link"
+            onClick={handleNavClick}
           >
             <span className="icon">👁️</span>
             <span className="text">View Store</span>
@@ -110,6 +126,17 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
       {/* Main Content */}
       <div className="admin-main">
         <div className="admin-content">
+          {/* Mobile Menu Toggle - shown above heading */}
+          {!isLargeScreen && (
+            <button
+              onClick={() => setSidebarOpen(!sidebarOpen)}
+              className="menu-toggle mb-4 lg:hidden"
+              aria-label="Toggle menu"
+            >
+              ☰
+            </button>
+          )}
+          
           {children}
         </div>
       </div>

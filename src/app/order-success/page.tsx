@@ -1,10 +1,82 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { Suspense } from 'react';
 import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
+import { orderService, Order } from '@/services/orderService';
 
-const OrderSuccessPage = () => {
-  const orderNumber = 'HZ-' + Math.random().toString(36).substr(2, 9).toUpperCase();
+interface OrderData extends Order {
+  orderNo: string;
+}
+
+const OrderSuccessContent = () => {
+  const searchParams = useSearchParams();
+  const orderId = searchParams.get('orderId');
+  const [order, setOrder] = useState<OrderData | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
+
+  useEffect(() => {
+    const fetchOrderDetails = async () => {
+      if (!orderId) {
+        setError('Order ID not found');
+        setLoading(false);
+        return;
+      }
+
+      try {
+        const response = await orderService.getOrderById(parseInt(orderId));
+        if (response.data.success && response.data.data) {
+          setOrder(response.data.data as unknown as OrderData);
+        } else {
+          setError('Failed to load order details');
+        }
+      } catch (err) {
+        console.error('Error fetching order:', err);
+        setError('Failed to load order details');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchOrderDetails();
+  }, [orderId]);
+
+  if (loading) {
+    return (
+      <main className="bg-white overflow-x-hidden">
+        <section className="bg-gradient-to-r from-yellow-50 to-amber-50 py-8 sm:py-12 md:py-16 border-b-4 border-yellow-500">
+          <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h1 className="text-2xl sm:text-3xl md:text-5xl font-bold text-amber-900 mb-2">Order Confirmed</h1>
+            <p className="text-sm sm:text-base md:text-lg text-amber-700">Your pure honey is on its way</p>
+          </div>
+        </section>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 md:py-12 lg:py-16 text-center">
+          <p className="text-gray-600">Loading order details...</p>
+        </div>
+      </main>
+    );
+  }
+
+  if (error || !order) {
+    return (
+      <main className="bg-white overflow-x-hidden">
+        <section className="bg-gradient-to-r from-yellow-50 to-amber-50 py-8 sm:py-12 md:py-16 border-b-4 border-yellow-500">
+          <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h1 className="text-2xl sm:text-3xl md:text-5xl font-bold text-amber-900 mb-2">Order Confirmed</h1>
+            <p className="text-sm sm:text-base md:text-lg text-amber-700">Your pure honey is on its way</p>
+          </div>
+        </section>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 md:py-12 lg:py-16 text-center">
+          <p className="text-red-600 mb-4">{error || 'Order not found'}</p>
+          <Link href="/shop" className="inline-flex items-center justify-center bg-yellow-500 hover:bg-yellow-600 text-white font-semibold py-2.5 sm:py-3 md:py-4 px-6 sm:px-8 rounded-lg transition-colors text-xs sm:text-sm md:text-base">
+            Continue Shopping
+          </Link>
+        </div>
+      </main>
+    );
+  }
 
   return (
     <main className="bg-white overflow-x-hidden">
@@ -32,19 +104,19 @@ const OrderSuccessPage = () => {
             <div className="space-y-3 sm:space-y-4">
               <div>
                 <p className="text-xs sm:text-sm text-amber-700 mb-1">Order Number</p>
-                <p className="text-sm sm:text-base md:text-lg font-mono font-semibold text-amber-900">{orderNumber}</p>
+                <p className="text-sm sm:text-base md:text-lg font-mono font-semibold text-amber-900">{order.orderNo}</p>
               </div>
               <div>
                 <p className="text-xs sm:text-sm text-amber-700 mb-1">Order Date</p>
-                <p className="text-sm sm:text-base text-amber-900">{new Date().toLocaleDateString('en-PK', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
+                <p className="text-sm sm:text-base text-amber-900">{new Date(order.createdAt).toLocaleDateString('en-PK', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
               </div>
               <div>
                 <p className="text-xs sm:text-sm text-amber-700 mb-1">Total Amount</p>
-                <p className="text-lg sm:text-xl md:text-2xl font-bold text-yellow-600">₨ 8,607</p>
+                <p className="text-lg sm:text-xl md:text-2xl font-bold text-yellow-600">₨ {(order.total).toLocaleString('en-PK')}</p>
               </div>
               <div>
                 <p className="text-xs sm:text-sm text-amber-700 mb-1">Delivery Method</p>
-                <p className="text-sm sm:text-base text-amber-900">Cash on Delivery (COD)</p>
+                <p className="text-sm sm:text-base text-amber-900">{order.payment?.paymentMethod === 'COD' ? 'Cash on Delivery (COD)' : order.payment?.paymentMethod || 'COD'}</p>
               </div>
             </div>
           </div>
@@ -55,67 +127,22 @@ const OrderSuccessPage = () => {
             <div className="space-y-2 sm:space-y-3">
               <div>
                 <p className="text-xs sm:text-sm text-amber-700 mb-1">Name</p>
-                <p className="text-sm sm:text-base text-amber-900">John Doe</p>
+                <p className="text-sm sm:text-base text-amber-900">{order.firstName} {order.lastName}</p>
               </div>
               <div>
                 <p className="text-xs sm:text-sm text-amber-700 mb-1">Address</p>
-                <p className="text-sm sm:text-base text-amber-900">123 Main Street, Lahore, 54000</p>
+                <p className="text-sm sm:text-base text-amber-900">{order.address}, {order.city}, {order.postalCode}</p>
               </div>
               <div>
                 <p className="text-xs sm:text-sm text-amber-700 mb-1">Phone</p>
-                <p className="text-sm sm:text-base text-amber-900">+92 320 1234567</p>
+                <p className="text-sm sm:text-base text-amber-900">{order.phone}</p>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Order Status Timeline */}
-        <div className="border-2 border-yellow-200 rounded-lg p-4 sm:p-6 md:p-8 mb-6 sm:mb-8 md:mb-12 bg-yellow-50">
-          <h3 className="text-base sm:text-lg md:text-xl font-semibold text-amber-900 mb-6 sm:mb-8">Order Status</h3>
-          <div className="space-y-4 sm:space-y-6">
-            {[
-              { title: 'Order Confirmed', description: 'Your order has been confirmed', completed: true },
-              { title: 'Processing', description: 'We\'re preparing your order', completed: false },
-              { title: 'Shipped', description: 'Your order is on its way', completed: false },
-              { title: 'Delivered', description: 'Order delivered', completed: false },
-            ].map((status, idx) => (
-              <div key={idx} className="flex gap-3 sm:gap-4">
-                <div className="flex flex-col items-center">
-                  <div className={`w-7 h-7 sm:w-8 sm:h-8 md:w-10 md:h-10 rounded-full flex items-center justify-center font-semibold text-xs sm:text-sm ${status.completed ? 'bg-yellow-500 text-white' : 'bg-gray-200 text-gray-600'}`}>
-                    {status.completed ? '✓' : ''}
-                  </div>
-                  {idx < 3 && <div className={`w-0.5 h-12 sm:h-16 md:h-20 ${status.completed ? 'bg-yellow-500' : 'bg-gray-200'}`}></div>}
-                </div>
-                <div className="pt-0.5 sm:pt-1">
-                  <p className="font-semibold text-sm sm:text-base text-amber-900">{status.title}</p>
-                  <p className="text-xs sm:text-sm text-amber-700">{status.description}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* What Happens Next */}
-        <div className="bg-gradient-to-r from-yellow-50 to-amber-50 border-2 border-yellow-200 rounded-lg p-4 sm:p-6 md:p-8 mb-6 sm:mb-8 md:mb-12">
-          <h3 className="text-base sm:text-lg md:text-xl font-semibold text-amber-900 mb-4 sm:mb-6">What Happens Next</h3>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-            {[
-              { title: 'Email Confirmation', description: 'You\'ll receive an order confirmation with tracking info' },
-              { title: 'Preparation', description: 'We prepare your order carefully (1-2 business days)' },
-              { title: 'Shipment', description: 'Your package ships via COD (3-5 business days)' },
-              { title: 'Delivery', description: 'Receive your pure honey in perfect condition' },
-            ].map((step, idx) => (
-              <div key={idx}>
-                <div className="flex items-center justify-center w-8 h-8 sm:w-9 sm:h-9 md:w-10 md:h-10 bg-yellow-200 text-amber-900 font-semibold rounded-full mb-2 sm:mb-3 text-xs sm:text-sm">{idx + 1}</div>
-                <h4 className="font-semibold text-amber-900 mb-1 sm:mb-2 text-xs sm:text-sm md:text-base">{step.title}</h4>
-                <p className="text-xs sm:text-sm text-amber-700 leading-relaxed">{step.description}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-
         {/* Action Buttons */}
-        <div className="flex flex-col xs:flex-row gap-2 sm:gap-3 md:gap-4 justify-center mb-6 sm:mb-8 md:mb-12">
+        <div className="flex flex-col xs:flex-row gap-2 sm:gap-3 md:gap-4 justify-center">
           <Link href="/shop" className="inline-flex items-center justify-center bg-yellow-500 hover:bg-yellow-600 text-white font-semibold py-2.5 sm:py-3 md:py-4 px-6 sm:px-8 rounded-lg transition-colors text-xs sm:text-sm md:text-base">
             Continue Shopping
           </Link>
@@ -123,19 +150,16 @@ const OrderSuccessPage = () => {
             Back to Home
           </Link>
         </div>
-
-        {/* Support Section */}
-        <div className="border-2 border-yellow-200 rounded-lg p-4 sm:p-6 md:p-8 bg-gradient-to-r from-yellow-50 to-amber-50">
-          <h3 className="font-semibold text-amber-900 mb-2 sm:mb-3 text-sm sm:text-base">Questions?</h3>
-          <p className="text-xs sm:text-sm md:text-base text-amber-700">
-            Contact us at{' '}
-            <a href="mailto:nutreopak@gmail.com" className="text-yellow-600 hover:text-yellow-700 font-semibold">
-              nutreopak@gmail.com
-            </a>
-          </p>
-        </div>
       </div>
     </main>
+  );
+};
+
+const OrderSuccessPage = () => {
+  return (
+    <Suspense fallback={<div className="text-center py-16">Loading...</div>}>
+      <OrderSuccessContent />
+    </Suspense>
   );
 };
 
