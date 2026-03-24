@@ -141,32 +141,6 @@ const OrderSuccessContent = () => {
           </div>
         </div>
 
-        {/* Order Status Timeline */}
-        <div className="border-2 border-yellow-200 rounded-lg p-4 sm:p-6 md:p-8 mb-6 sm:mb-8 md:mb-12 bg-yellow-50">
-          <h3 className="text-base sm:text-lg md:text-xl font-semibold text-amber-900 mb-6 sm:mb-8">Order Status</h3>
-          <div className="space-y-4 sm:space-y-6">
-            {[
-              { title: 'Order Confirmed', description: 'Your order has been confirmed', completed: true },
-              { title: 'Processing', description: 'We\'re preparing your order', completed: false },
-              { title: 'Shipped', description: 'Your order is on its way', completed: false },
-              { title: 'Delivered', description: 'Order delivered', completed: false },
-            ].map((status, idx) => (
-              <div key={idx} className="flex gap-3 sm:gap-4">
-                <div className="flex flex-col items-center">
-                  <div className={`w-7 h-7 sm:w-8 sm:h-8 md:w-10 md:h-10 rounded-full flex items-center justify-center font-semibold text-xs sm:text-sm ${status.completed ? 'bg-yellow-500 text-white' : 'bg-gray-200 text-gray-600'}`}>
-                    {status.completed ? '✓' : ''}
-                  </div>
-                  {idx < 3 && <div className={`w-0.5 h-12 sm:h-16 md:h-20 ${status.completed ? 'bg-yellow-500' : 'bg-gray-200'}`}></div>}
-                </div>
-                <div className="pt-0.5 sm:pt-1">
-                  <p className="font-semibold text-sm sm:text-base text-amber-900">{status.title}</p>
-                  <p className="text-xs sm:text-sm text-amber-700">{status.description}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
         {/* Action Buttons */}
         <div className="flex flex-col xs:flex-row gap-2 sm:gap-3 md:gap-4 justify-center">
           <Link href="/shop" className="inline-flex items-center justify-center bg-yellow-500 hover:bg-yellow-600 text-white font-semibold py-2.5 sm:py-3 md:py-4 px-6 sm:px-8 rounded-lg transition-colors text-xs sm:text-sm md:text-base">
