@@ -76,7 +76,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
               setImageError(true);
               setIsImageLoading(false);
             }}
-            className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300 p-2"
+            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
             style={{ imageRendering: 'crisp-edges' }}
           />
         </Link>

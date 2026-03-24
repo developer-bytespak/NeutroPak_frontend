@@ -42,18 +42,18 @@ const HeroBanner: React.FC<HeroBannerProps> = ({
         alt="Hero Banner" 
         className="absolute inset-0 w-full h-full object-cover"
       />
-      <div className="absolute inset-0 bg-black bg-opacity-5" />
-      <div className="absolute inset-0 z-10 text-left text-red-900 px-3 xs:px-4 sm:px-6 md:px-12 pt-32 md:pt-40 w-full h-full flex flex-col justify-start items-start ml-12 sm:ml-16 md:ml-20">
-        <h1 className="text-xl xs:text-2xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold mb-2 xs:mb-3 sm:mb-4 leading-tight max-w-xs xs:max-w-sm sm:max-w-2xl text-red-950 drop-shadow-lg">
+      <div className="absolute inset-0 bg-black bg-opacity-40" />
+      <div className="absolute inset-0 z-10 px-3 xs:px-4 sm:px-6 md:px-12 pt-32 md:pt-40 w-full h-full flex flex-col justify-center items-center">
+        <h1 className="text-3xl xs:text-4xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold mb-2 xs:mb-3 sm:mb-4 leading-tight text-center !text-white drop-shadow-lg">
           {title}
         </h1>
-        <div className="w-full flex flex-col items-start">
-          <p className="text-base xs:text-lg sm:text-xl md:text-2xl lg:text-3xl mb-4 xs:mb-6 sm:mb-8 opacity-95 ml-4 sm:ml-12 md:ml-20">
+        <div className="w-full flex flex-col items-center">
+          <p className="text-xl xs:text-2xl sm:text-xl md:text-2xl lg:text-3xl mb-4 xs:mb-6 sm:mb-8 opacity-95 !text-white drop-shadow-lg">
             {subtitle}
           </p>
           <Link 
             href={ctaLink} 
-            className="inline-flex items-center justify-center bg-yellow-500 text-white font-bold px-2 xs:px-3 sm:px-8 py-1 xs:py-2 sm:py-3 rounded-lg hover:bg-red-900 hover:text-yellow-300 transition-colors text-xs xs:text-sm md:text-base active:scale-95 transform transition-transform ml-6 sm:ml-20 md:ml-32"
+            className="inline-flex items-center justify-center bg-yellow-500 text-white font-bold px-2 xs:px-3 sm:px-8 py-1 xs:py-2 sm:py-3 rounded-lg hover:bg-red-900 hover:text-yellow-300 transition-colors text-xs xs:text-sm md:text-base active:scale-95 transform transition-transform"
           >
             {ctaText}
           </Link>

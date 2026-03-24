@@ -25,6 +25,39 @@ const HomePage = () => {
   const [loading, setLoading] = useState(true);
   const [expandedFaqCategory, setExpandedFaqCategory] = useState<Set<number>>(new Set());
 
+  // Sort products in custom order: 250g, 500g, then gift box
+  const sortProducts = (products: Product[]): Product[] => {
+    return products.sort((a, b) => {
+      const nameA = a.name.toLowerCase();
+      const nameB = b.name.toLowerCase();
+      
+      // Check for gift box products FIRST (must be checked before size)
+      const aIsGift = nameA.includes('gift') || nameA.includes('box');
+      const bIsGift = nameB.includes('gift') || nameB.includes('box');
+      
+      // Check for 250g products
+      const aIs250g = !aIsGift && (nameA.includes('250') || nameA.includes('250g'));
+      const bIs250g = !bIsGift && (nameB.includes('250') || nameB.includes('250g'));
+      
+      // Check for 500g products
+      const aIs500g = !aIsGift && (nameA.includes('500') || nameA.includes('500g'));
+      const bIs500g = !bIsGift && (nameB.includes('500') || nameB.includes('500g'));
+      
+      // Priority order: 250g (0), 500g (1), gift box (2), others (3)
+      const getPriority = (is250: boolean, is500: boolean, isGift: boolean): number => {
+        if (is250) return 0;
+        if (is500) return 1;
+        if (isGift) return 2;
+        return 3;
+      };
+      
+      const priorityA = getPriority(aIs250g, aIs500g, aIsGift);
+      const priorityB = getPriority(bIs250g, bIs500g, bIsGift);
+      
+      return priorityA - priorityB;
+    });
+  };
+
   // Fetch products from backend API
   useEffect(() => {
     const fetchProducts = async () => {
@@ -41,7 +74,8 @@ const HomePage = () => {
         }
         
         if (productsData.length > 0) {
-          setTopProducts(productsData);
+          const sortedProducts = sortProducts(productsData);
+          setTopProducts(sortedProducts);
         }
       } catch (err) {
         console.error('Error fetching products:', err);
@@ -257,8 +291,8 @@ const HomePage = () => {
       <HeroBanner
         title="Nature's Purest Honey"
         subtitle="100% Organic Raw Honey"
-        backgroundImage="/hero.png"
-        mobileBackgroundImage="/hero_mobile.png"
+        backgroundImage="/hero-sec.webp"
+        mobileBackgroundImage="/hero-secc.png"
         ctaText="Shop Pure Honey Now"
         ctaLink="/shop"
       />
@@ -317,7 +351,7 @@ const HomePage = () => {
             <h2 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-red-900 mb-2 md:mb-4">Top Selling Honey</h2>
             <p className="section-subtitle text-sm sm:text-base md:text-lg">Best Sellers From Our Collection</p>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
+          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
             {loading ? (
               <p className="text-center col-span-full">Loading products...</p>
             ) : topProducts.length > 0 ? (
