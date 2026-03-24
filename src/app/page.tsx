@@ -257,8 +257,8 @@ const HomePage = () => {
       <HeroBanner
         title="Nature's Purest Honey"
         subtitle="100% Organic Raw Honey"
-        backgroundImage="/hero.png"
-        mobileBackgroundImage="/hero_mobile.png"
+        backgroundImage="/hero-sec.webp"
+        mobileBackgroundImage="/hero-secc.png"
         ctaText="Shop Pure Honey Now"
         ctaLink="/shop"
       />
@@ -317,7 +317,7 @@ const HomePage = () => {
             <h2 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-red-900 mb-2 md:mb-4">Top Selling Honey</h2>
             <p className="section-subtitle text-sm sm:text-base md:text-lg">Best Sellers From Our Collection</p>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
+          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
             {loading ? (
               <p className="text-center col-span-full">Loading products...</p>
             ) : topProducts.length > 0 ? (
