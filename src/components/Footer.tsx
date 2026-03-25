@@ -130,10 +130,10 @@ const Footer: React.FC = () => {
           {/* Policies */}
           <div className="text-center">
             <h3 className="text-lg font-bold text-gold-400 mb-4">Legal</h3>
-            <div className="flex flex-col gap-3 [&_a]:no-underline [&_a]:border-none">
-              <Link href="/privacy-policy" className="text-gray-400 hover:text-gold-400 transition-colors text-sm">Privacy Policy</Link>
-              <Link href="/terms-and-conditions" className="text-gray-400 hover:text-gold-400 transition-colors text-sm">Terms & Conditions</Link>
-              <Link href="/refund-return-policy" className="text-gray-400 hover:text-gold-400 transition-colors text-sm">Returns</Link>
+            <div className="flex flex-col gap-3 [&_a]:border-none [&_a]:decoration-none">
+              <Link href="/privacy-policy" className="text-gray-400 hover:text-gold-400 transition-colors text-sm !no-underline !border-none decoration-none">Privacy Policy</Link>
+              <Link href="/terms-and-conditions" className="text-gray-400 hover:text-gold-400 transition-colors text-sm !no-underline !border-none decoration-none">Terms & Conditions</Link>
+              <Link href="/refund-return-policy" className="text-gray-400 hover:text-gold-400 transition-colors text-sm !no-underline !border-none decoration-none">Returns</Link>
             </div>
           </div>
 
