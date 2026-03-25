@@ -43,7 +43,7 @@ const HeroBanner: React.FC<HeroBannerProps> = ({
         className="absolute inset-0 w-full h-full object-cover"
       />
       <div className="absolute inset-0 bg-black bg-opacity-40" />
-      <div className="absolute inset-0 z-10 px-3 xs:px-4 sm:px-6 md:px-12 pt-32 md:pt-40 w-full h-full flex flex-col justify-center items-center">
+      <div className="absolute inset-0 z-10 px-3 xs:px-4 sm:px-6 md:px-12 pt-48 md:pt-56 w-full h-full flex flex-col justify-center items-center">
         <h1 className="text-3xl xs:text-4xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold mb-2 xs:mb-3 sm:mb-4 leading-tight text-center !text-white drop-shadow-lg">
           {title}
         </h1>
@@ -53,7 +53,7 @@ const HeroBanner: React.FC<HeroBannerProps> = ({
           </p>
           <Link 
             href={ctaLink} 
-            className="inline-flex items-center justify-center bg-yellow-500 text-white font-bold px-2 xs:px-3 sm:px-8 py-1 xs:py-2 sm:py-3 rounded-lg hover:bg-red-900 hover:text-yellow-300 transition-colors text-xs xs:text-sm md:text-base active:scale-95 transform transition-transform"
+            className="inline-flex items-center justify-center bg-yellow-500 text-white font-bold px-1 xs:px-1 sm:px-8 py-0 xs:py-0 sm:py-3 rounded-lg hover:bg-red-900 hover:text-yellow-300 transition-colors text-xl xs:text-xl sm:text-base active:scale-95 transform transition-transform w-40 xs:w-48 sm:w-auto"
           >
             {ctaText}
           </Link>

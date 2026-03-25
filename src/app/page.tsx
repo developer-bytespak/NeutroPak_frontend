@@ -293,7 +293,7 @@ const HomePage = () => {
         subtitle="100% Organic Raw Honey"
         backgroundImage="/hero-sec.webp"
         mobileBackgroundImage="/hero-secc.png"
-        ctaText="Shop Pure Honey Now"
+        ctaText="Shop Now"
         ctaLink="/shop"
       />
 

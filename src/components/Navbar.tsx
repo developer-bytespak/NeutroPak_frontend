@@ -9,6 +9,7 @@ import CartDrawer from './CartDrawer';
 const Navbar: React.FC = () => {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isLegalPagesOpen, setIsLegalPagesOpen] = useState(false);
   const [cartCount, setCartCount] = useState(0);
   const [isHydrated, setIsHydrated] = useState(false);
   
@@ -36,19 +37,20 @@ const Navbar: React.FC = () => {
       document.body.style.overflow = 'unset';
     };
   }, [isMobileMenuOpen]);
+
   if (!isHydrated) {
     return (
       <nav className="sticky top-0 z-50 bg-white shadow-md">
         <div className="max-w-7xl mx-auto px-3 xs:px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16 xs:h-24">
-            <div className="flex-1 md:flex-none flex justify-start">
-              <Link href="/" className="flex items-center mt-8">
+          <div className="flex justify-between items-center h-16 xs:h-20">
+            <div className="flex-1 md:flex-none flex justify-start items-center h-full">
+              <Link href="/" className="flex items-center pt-2">
                 <Image
                   src="/neutropakk.png"
                   alt="NeutroPak"
-                  width={250}
-                  height={250}
-                  className="h-52 w-auto xs:h-60"
+                  width={300}
+                  height={300}
+                  className="h-24 xs:h-32 sm:h-36 md:h-40 lg:h-52 w-auto"
                   priority
                 />
               </Link>
@@ -88,23 +90,21 @@ const Navbar: React.FC = () => {
     <>
       <nav className="sticky top-0 z-50 bg-white shadow-md">
         <div className="max-w-7xl mx-auto px-3 xs:px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16 xs:h-24">
+          <div className="flex justify-between items-center h-16 xs:h-20">
             {/* Logo */}
-            <div className="md:flex-none flex justify-start">
-              <Link href="/" className="flex items-center mt-10">
+            <div className="flex-1 md:flex-none flex justify-start items-center h-full">
+              <Link href="/" className="flex items-center pt-2">
                 <Image
                   src="/neutropakk.png"
                   alt="NeutroPak"
-                  width={250}
-                  height={250}
-                  className="h-52 w-auto xs:h-60"
+                  width={300}
+                  height={300}
+                  className="h-20 xs:h-24 sm:h-28 md:h-32 lg:h-40 w-auto"
                   priority
                 />
               </Link>
             </div>
-
-            {/* Navigation Links */}
-            <div className="hidden md:flex items-center gap-6 lg:gap-8 self-center">
+            <div className="hidden md:flex items-center gap-6 lg:gap-8">
               <Link href="/" className="text-base lg:text-lg text-gray-700 hover:text-gold-600 transition-colors font-medium">
                 Home
               </Link>
@@ -163,81 +163,84 @@ const Navbar: React.FC = () => {
           isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
       >
-        <div className="p-4 xs:p-6 flex flex-col">
+        <div className="flex flex-col">
           <button
             onClick={() => setIsMobileMenuOpen(false)}
-            className="absolute top-4 right-4 text-2xl text-gray-700 hover:text-gold-600"
+            className="absolute top-4 right-4 text-2xl text-gray-700 hover:text-gold-600 z-50 p-4 xs:p-6"
           >
             ✕
           </button>
-          <div className="mt-16 space-y-6 flex flex-col w-full px-4 xs:px-6">
+          <div className="mt-20 xs:mt-24 flex flex-col w-full">
             <Link
               href="/about"
-              className="text-base font-semibold text-gray-800 hover:text-gold-600 transition-colors"
+              className="text-base font-bold text-gray-800 hover:text-gold-600 transition-colors py-4 px-4 xs:px-6 border-b border-gray-300 w-full"
               onClick={() => setIsMobileMenuOpen(false)}
             >
               ABOUT
             </Link>
             <Link
-              href="/contact"
-              className="text-base font-semibold text-gray-800 hover:text-gold-600 transition-colors"
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
-              CONTACT
-            </Link>
-            <Link
               href="/shop"
-              className="text-base font-semibold text-gray-800 hover:text-gold-600 transition-colors"
+              className="text-base font-bold text-gray-800 hover:text-gold-600 transition-colors py-4 px-4 xs:px-6 border-b border-gray-300 w-full"
               onClick={() => setIsMobileMenuOpen(false)}
             >
               SHOP
             </Link>
             <Link
               href="/blog"
-              className="text-base font-semibold text-gray-800 hover:text-gold-600 transition-colors"
+              className="text-base font-bold text-gray-800 hover:text-gold-600 transition-colors py-4 px-4 xs:px-6 border-b border-gray-300 w-full"
               onClick={() => setIsMobileMenuOpen(false)}
             >
               BLOG
             </Link>
             <Link
+              href="/contact"
+              className="text-base font-bold text-gray-800 hover:text-gold-600 transition-colors py-4 px-4 xs:px-6 border-b border-gray-300 w-full"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              CONTACT
+            </Link>
+            <Link
               href="/faqs"
-              className="text-base font-semibold text-gray-800 hover:text-gold-600 transition-colors"
+              className="text-base font-bold text-gray-800 hover:text-gold-600 transition-colors py-4 px-4 xs:px-6 border-b border-gray-300 w-full"
               onClick={() => setIsMobileMenuOpen(false)}
             >
               FAQS
             </Link>
-            <div className="pt-6 border-t border-gray-300 w-full">
-              <p className="text-xs font-bold text-gray-600 mb-6 tracking-wide text-center">LEGAL PAGES</p>
-              <div className="space-y-4 flex flex-col w-full">
-                <Link
-                  href="/privacy-policy"
-                  className="text-sm text-gray-700 hover:text-gold-600 transition-colors"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
-                  Privacy Policy
-                </Link>
-                <Link
-                  href="/terms-and-conditions"
-                  className="text-sm text-gray-700 hover:text-gold-600 transition-colors"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
-                  Terms & Conditions
-                </Link>
-                <Link
-                  href="/refund-return-policy"
-                  className="text-sm text-gray-700 hover:text-gold-600 transition-colors"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
-                  Refund & Return Policy
-                </Link>
-                <Link
-                  href="/disclaimer"
-                  className="text-sm text-gray-700 hover:text-gold-600 transition-colors"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
-                  Disclaimer
-                </Link>
-              </div>
+            <div className="pt-4 px-4 xs:px-6 border-b border-gray-300 w-full">
+              <button
+                onClick={() => setIsLegalPagesOpen(!isLegalPagesOpen)}
+                className="text-base font-bold text-gray-800 hover:text-gold-600 transition-colors w-full flex items-center justify-center gap-2"
+              >
+                LEGAL PAGES
+                <span className={`transform transition-transform ${isLegalPagesOpen ? 'rotate-180' : ''}`}>
+                  ▼
+                </span>
+              </button>
+              {isLegalPagesOpen && (
+                <div className="mt-4 flex flex-col w-screen -mx-4 xs:-mx-6">
+                  <Link
+                    href="/privacy-policy"
+                    className="text-sm text-gray-700 hover:text-gold-600 transition-colors py-2 px-4 xs:px-6 border-b border-gray-300 text-center w-full block"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    <span className="block -ml-24 xs:-ml-26s">Privacy Policy</span>
+                  </Link>
+                  <Link
+                    href="/terms-and-conditions"
+                    className="text-sm text-gray-700 hover:text-gold-600 transition-colors py-2 px-4 xs:px-6 border-b border-gray-300 text-center w-full block"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    <span className="block -ml-24 xs:-ml-26">Terms & Conditions</span>
+                  </Link>
+                  <Link
+                    href="/refund-return-policy"
+                    className="text-sm text-gray-700 hover:text-gold-600 transition-colors py-2 px-4 xs:px-6 text-center w-full block"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    <span className="block -ml-24 xs:-ml-26">Refund & Return Policy</span>
+                  </Link>
+                </div>
+              )}
             </div>
           </div>
         </div>
