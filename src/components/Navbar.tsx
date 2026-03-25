@@ -224,13 +224,6 @@ const Navbar: React.FC = () => {
                   Terms & Conditions
                 </Link>
                 <Link
-                  href="/shipping-policy"
-                  className="text-sm text-gray-700 hover:text-gold-600 transition-colors"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
-                  Shipping Policy
-                </Link>
-                <Link
                   href="/refund-return-policy"
                   className="text-sm text-gray-700 hover:text-gold-600 transition-colors"
                   onClick={() => setIsMobileMenuOpen(false)}
