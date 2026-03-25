@@ -220,14 +220,14 @@ const Navbar: React.FC = () => {
                 <div className="mt-4 flex flex-col w-screen -mx-4 xs:-mx-6">
                   <Link
                     href="/privacy-policy"
-                    className="text-sm text-gray-700 hover:text-gold-600 transition-colors py-2 px-4 xs:px-6 border-b border-gray-300 text-center w-full block"
+                    className="text-sm text-gray-700 hover:text-gold-600 transition-colors py-2 px-4 xs:px-6 text-center w-full block"
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
                     <span className="block -ml-24 xs:-ml-26s">Privacy Policy</span>
                   </Link>
                   <Link
                     href="/terms-and-conditions"
-                    className="text-sm text-gray-700 hover:text-gold-600 transition-colors py-2 px-4 xs:px-6 border-b border-gray-300 text-center w-full block"
+                    className="text-sm text-gray-700 hover:text-gold-600 transition-colors py-2 px-4 xs:px-6 text-center w-full block"
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
                     <span className="block -ml-24 xs:-ml-26">Terms & Conditions</span>

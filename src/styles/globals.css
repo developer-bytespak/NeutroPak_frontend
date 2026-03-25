@@ -92,7 +92,7 @@ html, body {
   }
 
   .btn-primary {
-    @apply px-6 py-3 bg-gold-600 text-white rounded-lg hover:bg-gold-700 transition-colors font-semibold;
+    @apply px-6 py-3 bg-gold-600 text-white rounded-lg hover:bg-gold-700 transition-colors font-semibold text-center;
   }
 
   .btn-secondary {

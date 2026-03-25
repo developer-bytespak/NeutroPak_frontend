@@ -194,7 +194,7 @@ const CartPage = () => {
                   </p>
                 )}
 
-                <Link href="/checkout" className="btn-primary block text-center mb-6 py-4">
+                <Link href="/checkout" className="btn-primary w-full flex items-center justify-center mb-6 py-4">
                   Proceed to Checkout
                 </Link>
 
