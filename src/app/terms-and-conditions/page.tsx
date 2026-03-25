@@ -84,16 +84,6 @@ export default function TermsAndConditions() {
               These terms are governed by the laws of Pakistan. You agree to the exclusive jurisdiction of Pakistani courts.
             </p>
           </section>
-
-          {/* Contact Section */}
-          <section className="bg-gold-50 rounded-lg p-8">
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">Questions?</h2>
-            <p className="text-gray-700 mb-4">For any inquiries about our terms and conditions, please contact us:</p>
-            <ul className="space-y-2 text-gray-700">
-              <li><strong>Email:</strong> <a href="mailto:nutreopak@gmail.com" className="text-gold-600 hover:text-gold-700">nutreopak@gmail.com</a></li>
-              <li><strong>Phone:</strong> <a href="tel:+923379788677" className="text-gold-600 hover:text-gold-700">+92 337 9788677</a></li>
-            </ul>
-          </section>
         </div>
       </div>
     </main>

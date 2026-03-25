@@ -29,10 +29,14 @@ const RefundReturnPolicy = () => {
             <h2 className="text-2xl font-bold text-gray-900 mb-4">2. Return Conditions</h2>
             <p className="text-gray-700 mb-3">Items can be returned if:</p>
             <ul className="list-disc pl-6 space-y-2 text-gray-700 mb-4">
+              <li>The product is unopened and unused within 5 days of purchase</li>
               <li>The jar arrives damaged or the seal is broken during shipping</li>
               <li>The product does not match the description</li>
               <li>You have quality concerns</li>
             </ul>
+            <p className="text-gray-700 bg-blue-50 p-4 rounded-lg border-l-4 border-blue-600 mb-4">
+              <strong>Damage Policy:</strong> Any damaged product is refundable or exchangeable at no extra cost.
+            </p>
             <p className="text-gray-700 bg-red-50 p-4 rounded-lg border-l-4 border-red-600">
               <strong>Note:</strong> We cannot accept returns of opened honey that has been consumed or contaminated.
             </p>
@@ -69,16 +73,7 @@ const RefundReturnPolicy = () => {
             </ul>
           </section>
 
-          {/* Contact Section */}
-          <section className="bg-gold-50 rounded-lg p-8">
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">Have Questions About Returns?</h2>
-            <p className="text-gray-700 mb-4">We're here to help make the process smooth and hassle-free:</p>
-            <ul className="space-y-2 text-gray-700">
-              <li><strong>Email:</strong> <a href="mailto:nutreopak@gmail.com" className="text-gold-600 hover:text-gold-700">nutreopak@gmail.com</a></li>
-              <li><strong>Phone:</strong> <a href="tel:+923379788677" className="text-gold-600 hover:text-gold-700">+92 337 9788677</a></li>
-              <li><strong>Hours:</strong> Daily 10:00 AM — 5:00 PM</li>
-            </ul>
-          </section>
+
         </div>
       </div>
     </main>

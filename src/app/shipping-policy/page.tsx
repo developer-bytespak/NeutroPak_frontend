@@ -73,16 +73,7 @@ const ShippingPolicy = () => {
             </p>
           </section>
 
-          {/* Contact Section */}
-          <section className="bg-gold-50 rounded-lg p-8">
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">Need Help with Your Delivery?</h2>
-            <p className="text-gray-700 mb-4">Our customer support team is here to assist:</p>
-            <ul className="space-y-2 text-gray-700">
-              <li><strong>Email:</strong> <a href="mailto:nutreopak@gmail.com" className="text-gold-600 hover:text-gold-700">nutreopak@gmail.com</a></li>
-              <li><strong>Phone:</strong> <a href="tel:+923379788677" className="text-gold-600 hover:text-gold-700">+92 337 9788677</a></li>
-              <li><strong>Hours:</strong> Daily 10:00 AM — 5:00 PM</li>
-            </ul>
-          </section>
+
         </div>
       </div>
     </main>
