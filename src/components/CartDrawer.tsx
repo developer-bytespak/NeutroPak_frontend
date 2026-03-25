@@ -5,6 +5,11 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useCart } from '@/store/CartContext';
 
+// Calculate the markup price (30% increase)
+const calculateMarkupPrice = (actualPrice: number): number => {
+  return Math.round(actualPrice * 1.3 * 100) / 100;
+};
+
 interface CartDrawerProps {
   isOpen: boolean;
   onClose: () => void;
@@ -74,8 +79,13 @@ const CartDrawer: React.FC<CartDrawerProps> = ({ isOpen, onClose }) => {
                 <div className="flex-1 flex flex-col justify-between">
                   <div>
                     <h4 className="text-sm font-semibold text-gray-900">{item.name}</h4>
-                    <p className="text-xs text-gray-600 mt-1">
-                      ₨{item.price.toLocaleString('en-PK')}
+                    <p className="text-xs text-gray-600 mt-1 space-y-0.5">
+                      <span className="block line-through decoration-red-600 decoration-2 text-black">
+                        ₨{calculateMarkupPrice(item.price).toLocaleString('en-PK')}
+                      </span>
+                      <span className="block font-semibold text-gray-900">
+                        ₨{item.price.toLocaleString('en-PK')}
+                      </span>
                     </p>
                   </div>
 

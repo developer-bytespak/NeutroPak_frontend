@@ -56,12 +56,12 @@ const Footer: React.FC = () => {
         {/* Footer Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 mb-8">
           {/* About */}
-          <div>
+          <div className="text-center md:text-left">
             <h3 className="text-lg font-bold text-gold-400 mb-4">NutreoPak</h3>
             <p className="text-gray-400 text-sm leading-relaxed">
               Premium raw honey from trusted beekeepers. Pure, natural, and lab-tested.
             </p>
-            <div className="flex gap-4 mt-4">
+            <div className="flex gap-4 mt-4 justify-center md:justify-start">
               <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-blue-500 transition-colors">
                 <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
@@ -76,7 +76,7 @@ const Footer: React.FC = () => {
           </div>
 
           {/* Quick Links */}
-          <div>
+          <div className="text-center md:text-left">
             <h3 className="text-lg font-bold text-gold-400 mb-4">Shop</h3>
             <ul className="space-y-2">
               <li><Link href="/shop" className="text-gray-400 hover:text-gold-400 transition-colors text-sm">All Products</Link></li>
@@ -106,7 +106,7 @@ const Footer: React.FC = () => {
           </div>
 
           {/* Company */}
-          <div>
+          <div className="text-center md:text-left">
             <h3 className="text-lg font-bold text-gold-400 mb-4">Company</h3>
             <ul className="space-y-2">
               <li><Link href="/about" className="text-gray-400 hover:text-gold-400 transition-colors text-sm">About Us</Link></li>
@@ -117,7 +117,7 @@ const Footer: React.FC = () => {
           </div>
 
           {/* Policies */}
-          <div>
+          <div className="text-center md:text-left">
             <h3 className="text-lg font-bold text-gold-400 mb-4">Legal</h3>
             <ul className="space-y-2">
               <li><Link href="/privacy-policy" className="text-gray-400 hover:text-gold-400 transition-colors text-sm">Privacy Policy</Link></li>
@@ -128,7 +128,7 @@ const Footer: React.FC = () => {
           </div>
 
           {/* Contact */}
-          <div>
+          <div className="text-center md:text-left">
             <h3 className="text-lg font-bold text-gold-400 mb-4">Contact</h3>
             <div className="space-y-2 text-sm text-gray-400">
               <p><span className="font-semibold">Email:</span> nutreopak@gmail.com</p>
@@ -139,7 +139,7 @@ const Footer: React.FC = () => {
 
         {/* Divider */}
         <div className="border-t border-gray-800 pt-8">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+          <div className="flex flex-col md:flex-row justify-center md:justify-between items-center gap-4 text-center md:text-left">
             <p className="text-gray-400 text-sm">
               &copy; 2025 NutreoPak. All rights reserved.
             </p>

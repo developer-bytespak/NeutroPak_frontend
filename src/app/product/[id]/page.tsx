@@ -7,6 +7,11 @@ import CartContext from '@/store/CartContext';
 import { productService } from '@/services/productService';
 import { getOptimizedImageUrl } from '@/utils/cloudinaryImage';
 
+// Calculate the markup price (30% increase)
+const calculateMarkupPrice = (actualPrice: number): number => {
+  return Math.round(actualPrice * 1.3 * 100) / 100;
+};
+
 interface ProductDetailPageProps {
   params: {
     id: string;
@@ -129,10 +134,16 @@ const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ params }) => {
                 <span className="text-gray-600 text-sm">(Based on customer reviews)</span>
               </div>
 
-              <div className="flex items-center gap-4 mb-6">
-                <span className="text-3xl font-bold text-gold-600">
+              {/* Price Display with Markup */}
+              <div className="mb-6 space-y-2">
+                {/* Markup Price (Original Display Price with Strikethrough) */}
+                <p className="text-lg text-black line-through decoration-red-600 decoration-2">
+                  ₨{calculateMarkupPrice(product.price).toLocaleString()}
+                </p>
+                {/* Actual Price (Sale Price) */}
+                <p className="text-4xl font-bold text-gold-600">
                   ₨{product.price.toLocaleString()}
-                </span>
+                </p>
               </div>
 
               <p className="text-gray-700 mb-8">{product.description}</p>

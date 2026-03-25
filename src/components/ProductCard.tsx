@@ -7,6 +7,11 @@ import CartContext from '@/store/CartContext';
 import { Product } from '@/types';
 import { getOptimizedImageUrl } from '@/utils/cloudinaryImage';
 
+// Calculate the markup price (30% increase)
+const calculateMarkupPrice = (actualPrice: number): number => {
+  return Math.round(actualPrice * 1.3 * 100) / 100;
+};
+
 interface ProductCardProps extends Partial<Product> {
   id?: string;
   name?: string;
@@ -95,9 +100,17 @@ const ProductCard: React.FC<ProductCardProps> = ({
           <span className="text-gray-500 text-xs">({reviews})</span>
         </div>
 
-        <p className="text-base xs:text-lg sm:text-xl md:text-2xl font-bold text-gold-600 mb-2.5 xs:mb-3 sm:mb-4">
-          ₨{(price as number).toLocaleString()}
-        </p>
+        {/* Price Display with Markup */}
+        <div className="mb-2.5 xs:mb-3 sm:mb-4 space-y-1">
+          {/* Markup Price (Original Display Price with Strikethrough) */}
+          <p className="text-xs xs:text-sm sm:text-base text-black line-through decoration-red-600 decoration-2">
+            ₨{calculateMarkupPrice(price as number).toLocaleString()}
+          </p>
+          {/* Actual Price (Sale Price) */}
+          <p className="text-base xs:text-lg sm:text-xl md:text-2xl font-bold text-gold-600">
+            ₨{(price as number).toLocaleString()}
+          </p>
+        </div>
 
         <div className="flex gap-1.5 xs:gap-2 mt-auto">
           <button 
