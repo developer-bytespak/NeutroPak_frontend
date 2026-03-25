@@ -42,7 +42,7 @@ const Navbar: React.FC = () => {
     return (
       <nav className="sticky top-0 z-50 bg-white shadow-md">
         <div className="max-w-7xl mx-auto px-3 xs:px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16 xs:h-20">
+          <div className="flex justify-between items-center h-20 xs:h-28 sm:h-28">
             <div className="flex-1 md:flex-none flex justify-start items-center h-full">
               <Link href="/" className="flex items-center pt-2">
                 <Image
@@ -50,7 +50,7 @@ const Navbar: React.FC = () => {
                   alt="NeutroPak"
                   width={300}
                   height={300}
-                  className="h-24 xs:h-32 sm:h-36 md:h-40 lg:h-52 w-auto"
+                  className="h-40 xs:h-56 sm:h-36 md:h-40 lg:h-52 w-auto"
                   priority
                 />
               </Link>
@@ -73,10 +73,10 @@ const Navbar: React.FC = () => {
               </Link>
             </div>
             <div className="flex items-center gap-2 xs:gap-3">
-              <button className="relative btn-icon text-gray-700 hover:text-gold-600 transition-colors active:text-gold-700 text-xl xs:text-2xl min-h-[48px] min-w-[48px]">
+              <button className="relative btn-icon text-gray-700 hover:text-gold-600 transition-colors active:text-gold-700 text-xl xs:text-3xl min-h-[48px] min-w-[48px] xs:min-h-[64px] xs:min-w-[64px] xs:-translate-y-4">
                 🛒
               </button>
-              <button className="md:hidden btn-icon text-gray-700 hover:text-gold-600 transition-colors active:text-gold-700 text-xl xs:text-2xl min-h-[48px] min-w-[48px]">
+              <button className="md:hidden btn-icon text-gray-700 hover:text-gold-600 transition-colors active:text-gold-700 text-xl xs:text-3xl min-h-[48px] min-w-[48px] xs:min-h-[64px] xs:min-w-[64px] xs:-translate-y-4">
                 ☰
               </button>
             </div>
@@ -90,7 +90,7 @@ const Navbar: React.FC = () => {
     <>
       <nav className="sticky top-0 z-50 bg-white shadow-md">
         <div className="max-w-7xl mx-auto px-3 xs:px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16 xs:h-20">
+          <div className="flex justify-between items-center h-20 xs:h-28 sm:h-28">
             {/* Logo */}
             <div className="flex-1 md:flex-none flex justify-start items-center h-full">
               <Link href="/" className="flex items-center pt-2">
@@ -99,7 +99,7 @@ const Navbar: React.FC = () => {
                   alt="NeutroPak"
                   width={300}
                   height={300}
-                  className="h-20 xs:h-24 sm:h-28 md:h-32 lg:h-40 w-auto"
+                  className="h-40 xs:h-56 sm:h-28 md:h-40 lg:h-52 w-auto"
                   priority
                 />
               </Link>
@@ -129,7 +129,7 @@ const Navbar: React.FC = () => {
             <div className="flex items-center gap-2 xs:gap-3">
               <button 
                 onClick={() => setIsCartOpen(true)}
-                className="relative btn-icon text-gray-700 hover:text-gold-600 transition-colors active:text-gold-700 text-xl xs:text-3xl min-h-[48px] min-w-[48px] xs:min-h-[56px] xs:min-w-[56px]" 
+                className="relative btn-icon text-gray-700 hover:text-gold-600 transition-colors active:text-gold-700 text-xl xs:text-3xl min-h-[48px] min-w-[48px] xs:min-h-[56px] xs:min-w-[56px] xs:-translate-y-2" 
                 title="Cart"
               >
                 🛒
@@ -141,7 +141,7 @@ const Navbar: React.FC = () => {
               </button>
               <button 
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                className="md:hidden btn-icon text-gray-700 hover:text-gold-600 transition-colors active:text-gold-700 text-xl xs:text-3xl min-h-[48px] min-w-[48px] xs:min-h-[56px] xs:min-w-[56px]"
+                className="md:hidden btn-icon text-gray-700 hover:text-gold-600 transition-colors active:text-gold-700 text-xl xs:text-3xl min-h-[48px] min-w-[48px] xs:min-h-[56px] xs:min-w-[56px] xs:-translate-y-2"
                 title="Menu"
               >
                 ☰
