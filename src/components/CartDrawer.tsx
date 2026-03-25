@@ -144,7 +144,7 @@ const CartDrawer: React.FC<CartDrawerProps> = ({ isOpen, onClose }) => {
             </div>
             <Link 
               href="/checkout" 
-              className="block w-full bg-amber-600 hover:bg-amber-700 text-white font-semibold py-3 rounded-lg text-center transition-colors"
+              className="w-full bg-amber-600 hover:bg-amber-700 text-white font-semibold py-3 rounded-lg transition-colors flex items-center justify-center"
               onClick={onClose}
             >
               Proceed to Checkout

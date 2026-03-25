@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { productService } from '@/services/productService';
 
 const Footer: React.FC = () => {
@@ -56,9 +57,19 @@ const Footer: React.FC = () => {
         {/* Footer Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 mb-8">
           {/* About */}
-          <div className="text-center">
-            <h3 className="text-lg font-bold text-gold-400 mb-4">NutreoPak</h3>
-            <p className="text-gray-400 text-sm leading-relaxed">
+          <div className="text-center -mt-16">
+            <div className="flex items-center justify-center gap-2 mb-4">
+              <Link href="/">
+                <Image
+                  src="/neutropakk.png"
+                  alt="NutreoPak Logo"
+                  width={192}
+                  height={192}
+                  className="w-48 h-48 flex-shrink-0 cursor-pointer hover:opacity-80 transition-opacity"
+                />
+              </Link>
+            </div>
+            <p className="text-gray-400 text-sm leading-relaxed -mt-12">
               Premium raw honey from trusted beekeepers. Pure, natural, and lab-tested.
             </p>
             <div className="flex gap-4 mt-4 justify-center">
@@ -119,11 +130,11 @@ const Footer: React.FC = () => {
           {/* Policies */}
           <div className="text-center">
             <h3 className="text-lg font-bold text-gold-400 mb-4">Legal</h3>
-            <ul className="space-y-2">
-              <li><Link href="/privacy-policy" className="text-gray-400 hover:text-gold-400 transition-colors text-sm">Privacy Policy</Link></li>
-              <li><Link href="/terms-and-conditions" className="text-gray-400 hover:text-gold-400 transition-colors text-sm">Terms & Conditions</Link></li>
-              <li><Link href="/refund-return-policy" className="text-gray-400 hover:text-gold-400 transition-colors text-sm">Returns</Link></li>
-            </ul>
+            <div className="flex flex-col gap-3 [&_a]:no-underline [&_a]:border-none">
+              <Link href="/privacy-policy" className="text-gray-400 hover:text-gold-400 transition-colors text-sm">Privacy Policy</Link>
+              <Link href="/terms-and-conditions" className="text-gray-400 hover:text-gold-400 transition-colors text-sm">Terms & Conditions</Link>
+              <Link href="/refund-return-policy" className="text-gray-400 hover:text-gold-400 transition-colors text-sm">Returns</Link>
+            </div>
           </div>
 
           {/* Contact */}
@@ -137,7 +148,7 @@ const Footer: React.FC = () => {
         </div>
 
         {/* Divider */}
-        <div className="border-t border-gray-800 pt-12">
+        <div className="pt-12">
           <div className="flex flex-col md:flex-row justify-center items-center gap-4 text-center">
             <p className="text-gray-400 text-sm">
               &copy; 2025 NutreoPak. All rights reserved.
