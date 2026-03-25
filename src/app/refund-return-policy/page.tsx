@@ -46,7 +46,7 @@ const RefundReturnPolicy = () => {
           <section className="mb-12">
             <h2 className="text-2xl font-bold text-gray-900 mb-4">3. How to Return</h2>
             <ol className="list-decimal pl-6 space-y-2 text-gray-700 mb-4">
-              <li>Contact us at <a href="mailto:nutreopak@gmail.com" className="text-gold-600 hover:text-gold-700">nutreopak@gmail.com</a> or <a href="tel:+923379788677" className="text-gold-600 hover:text-gold-700">+92 337 9788677</a> within 30 days</li>
+              <li>Contact us at <a href="mailto:nutreopak@gmail.com" className="text-gold-600 hover:text-gold-700">nutreopak@gmail.com</a> within 30 days</li>
               <li>Provide your order number and photos of the issue</li>
               <li>We will guide you through the return process</li>
               <li>Ship the item back (prepaid label provided for defective items)</li>
