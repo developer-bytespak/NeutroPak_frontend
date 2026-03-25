@@ -129,11 +129,6 @@ const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ params }) => {
 
               <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">{product.name}</h1>
 
-              <div className="flex items-center gap-4 mb-6">
-                <span className="text-gold-400 text-lg">★★★★★</span>
-                <span className="text-gray-600 text-sm">(Based on customer reviews)</span>
-              </div>
-
               {/* Price Display with Markup */}
               <div className="mb-6 space-y-2">
                 {/* Markup Price (Original Display Price with Strikethrough) */}

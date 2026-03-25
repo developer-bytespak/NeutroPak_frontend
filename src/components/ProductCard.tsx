@@ -95,11 +95,6 @@ const ProductCard: React.FC<ProductCardProps> = ({
           <Link href={`/product/${id || slug}`}>{name}</Link>
         </h3>
 
-        <div className="flex items-center gap-1.5 xs:gap-2 mb-2 xs:mb-3">
-          <span className="text-gold-400 text-xs xs:text-sm">★★★★★</span>
-          <span className="text-gray-500 text-xs">({reviews})</span>
-        </div>
-
         {/* Price Display with Markup */}
         <div className="mb-2.5 xs:mb-3 sm:mb-4 space-y-1">
           {/* Markup Price (Original Display Price with Strikethrough) */}
