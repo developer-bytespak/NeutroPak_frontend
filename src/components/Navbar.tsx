@@ -73,10 +73,10 @@ const Navbar: React.FC = () => {
               </Link>
             </div>
             <div className="flex items-center gap-2 xs:gap-3">
-              <button className="relative btn-icon text-gray-700 hover:text-gold-600 transition-colors active:text-gold-700 text-xl xs:text-3xl min-h-[48px] min-w-[48px] xs:min-h-[64px] xs:min-w-[64px]">
+              <button className="relative btn-icon text-gray-700 hover:text-gold-600 transition-colors active:text-gold-700 text-xl xs:text-3xl min-h-[48px] min-w-[48px] xs:min-h-[64px] xs:min-w-[64px] xs:-translate-y-4">
                 🛒
               </button>
-              <button className="md:hidden btn-icon text-gray-700 hover:text-gold-600 transition-colors active:text-gold-700 text-xl xs:text-3xl min-h-[48px] min-w-[48px] xs:min-h-[64px] xs:min-w-[64px]">
+              <button className="md:hidden btn-icon text-gray-700 hover:text-gold-600 transition-colors active:text-gold-700 text-xl xs:text-3xl min-h-[48px] min-w-[48px] xs:min-h-[64px] xs:min-w-[64px] xs:-translate-y-4">
                 ☰
               </button>
             </div>
@@ -129,7 +129,7 @@ const Navbar: React.FC = () => {
             <div className="flex items-center gap-2 xs:gap-3">
               <button 
                 onClick={() => setIsCartOpen(true)}
-                className="relative btn-icon text-gray-700 hover:text-gold-600 transition-colors active:text-gold-700 text-xl xs:text-3xl min-h-[48px] min-w-[48px] xs:min-h-[56px] xs:min-w-[56px]" 
+                className="relative btn-icon text-gray-700 hover:text-gold-600 transition-colors active:text-gold-700 text-xl xs:text-3xl min-h-[48px] min-w-[48px] xs:min-h-[56px] xs:min-w-[56px] xs:-translate-y-2" 
                 title="Cart"
               >
                 🛒
@@ -141,7 +141,7 @@ const Navbar: React.FC = () => {
               </button>
               <button 
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                className="md:hidden btn-icon text-gray-700 hover:text-gold-600 transition-colors active:text-gold-700 text-xl xs:text-3xl min-h-[48px] min-w-[48px] xs:min-h-[56px] xs:min-w-[56px]"
+                className="md:hidden btn-icon text-gray-700 hover:text-gold-600 transition-colors active:text-gold-700 text-xl xs:text-3xl min-h-[48px] min-w-[48px] xs:min-h-[56px] xs:min-w-[56px] xs:-translate-y-2"
                 title="Menu"
               >
                 ☰
