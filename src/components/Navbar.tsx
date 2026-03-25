@@ -50,7 +50,7 @@ const Navbar: React.FC = () => {
                   alt="NeutroPak"
                   width={300}
                   height={300}
-                  className="h-40 xs:h-56 sm:h-36 w-auto"
+                  className="h-40 xs:h-56 sm:h-36 md:h-40 lg:h-52 w-auto"
                   priority
                 />
               </Link>
@@ -99,7 +99,7 @@ const Navbar: React.FC = () => {
                   alt="NeutroPak"
                   width={300}
                   height={300}
-                  className="h-40 xs:h-56 sm:h-28 w-auto"
+                  className="h-40 xs:h-56 sm:h-28 md:h-40 lg:h-52 w-auto"
                   priority
                 />
               </Link>
