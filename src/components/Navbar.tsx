@@ -37,6 +37,7 @@ const Navbar: React.FC = () => {
       document.body.style.overflow = 'unset';
     };
   }, [isMobileMenuOpen]);
+
   if (!isHydrated) {
     return (
       <nav className="sticky top-0 z-50 bg-white shadow-md">
@@ -205,7 +206,7 @@ const Navbar: React.FC = () => {
             >
               FAQS
             </Link>
-            <div className="py-4 px-4 xs:px-6 border-b border-gray-300 w-full">
+            <div className="pt-4 px-4 xs:px-6 border-b border-gray-300 w-full">
               <button
                 onClick={() => setIsLegalPagesOpen(!isLegalPagesOpen)}
                 className="text-base font-bold text-gray-800 hover:text-gold-600 transition-colors w-full flex items-center justify-center gap-2"
@@ -216,34 +217,27 @@ const Navbar: React.FC = () => {
                 </span>
               </button>
               {isLegalPagesOpen && (
-                <div className="mt-4 space-y-4 flex flex-col w-full">
+                <div className="mt-4 flex flex-col w-screen -mx-4 xs:-mx-6">
                   <Link
                     href="/privacy-policy"
-                    className="text-sm text-gray-700 hover:text-gold-600 transition-colors"
+                    className="text-sm text-gray-700 hover:text-gold-600 transition-colors py-2 px-4 xs:px-6 border-b border-gray-300 text-center w-full block"
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
-                    Privacy Policy
+                    <span className="block -ml-24 xs:-ml-26s">Privacy Policy</span>
                   </Link>
                   <Link
                     href="/terms-and-conditions"
-                    className="text-sm text-gray-700 hover:text-gold-600 transition-colors"
+                    className="text-sm text-gray-700 hover:text-gold-600 transition-colors py-2 px-4 xs:px-6 border-b border-gray-300 text-center w-full block"
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
-                    Terms & Conditions
+                    <span className="block -ml-24 xs:-ml-26">Terms & Conditions</span>
                   </Link>
                   <Link
                     href="/refund-return-policy"
-                    className="text-sm text-gray-700 hover:text-gold-600 transition-colors"
+                    className="text-sm text-gray-700 hover:text-gold-600 transition-colors py-2 px-4 xs:px-6 text-center w-full block"
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
-                    Refund & Return Policy
-                  </Link>
-                  <Link
-                    href="/disclaimer"
-                    className="text-sm text-gray-700 hover:text-gold-600 transition-colors"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                  >
-                    Disclaimer
+                    <span className="block -ml-24 xs:-ml-26">Refund & Return Policy</span>
                   </Link>
                 </div>
               )}
