@@ -40,15 +40,15 @@ const Navbar: React.FC = () => {
     return (
       <nav className="sticky top-0 z-50 bg-white shadow-md">
         <div className="max-w-7xl mx-auto px-3 xs:px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16 xs:h-24">
-            <div className="flex-1 md:flex-none flex justify-start">
-              <Link href="/" className="flex items-center mt-8">
+          <div className="flex justify-between items-center h-16 xs:h-20">
+            <div className="flex-1 md:flex-none flex justify-start items-center h-full">
+              <Link href="/" className="flex items-center pt-2">
                 <Image
                   src="/neutropakk.png"
                   alt="NeutroPak"
-                  width={250}
-                  height={250}
-                  className="h-52 w-auto xs:h-60"
+                  width={300}
+                  height={300}
+                  className="h-24 xs:h-32 sm:h-36 md:h-40 lg:h-52 w-auto"
                   priority
                 />
               </Link>
@@ -88,23 +88,21 @@ const Navbar: React.FC = () => {
     <>
       <nav className="sticky top-0 z-50 bg-white shadow-md">
         <div className="max-w-7xl mx-auto px-3 xs:px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16 xs:h-24">
+          <div className="flex justify-between items-center h-16 xs:h-20">
             {/* Logo */}
-            <div className="md:flex-none flex justify-start">
-              <Link href="/" className="flex items-center mt-10">
+            <div className="flex-1 md:flex-none flex justify-start items-center h-full">
+              <Link href="/" className="flex items-center pt-2">
                 <Image
                   src="/neutropakk.png"
                   alt="NeutroPak"
-                  width={250}
-                  height={250}
-                  className="h-52 w-auto xs:h-60"
+                  width={300}
+                  height={300}
+                  className="h-20 xs:h-24 sm:h-28 md:h-32 lg:h-40 w-auto"
                   priority
                 />
               </Link>
             </div>
-
-            {/* Navigation Links */}
-            <div className="hidden md:flex items-center gap-6 lg:gap-8 self-center">
+            <div className="hidden md:flex items-center gap-6 lg:gap-8">
               <Link href="/" className="text-base lg:text-lg text-gray-700 hover:text-gold-600 transition-colors font-medium">
                 Home
               </Link>
