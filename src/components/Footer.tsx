@@ -56,12 +56,12 @@ const Footer: React.FC = () => {
         {/* Footer Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 mb-8">
           {/* About */}
-          <div className="text-center md:text-left">
+          <div className="text-center">
             <h3 className="text-lg font-bold text-gold-400 mb-4">NutreoPak</h3>
             <p className="text-gray-400 text-sm leading-relaxed">
               Premium raw honey from trusted beekeepers. Pure, natural, and lab-tested.
             </p>
-            <div className="flex gap-4 mt-4 justify-center md:justify-start">
+            <div className="flex gap-4 mt-4 justify-center">
               <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-blue-500 transition-colors">
                 <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
@@ -76,27 +76,27 @@ const Footer: React.FC = () => {
           </div>
 
           {/* Quick Links */}
-          <div className="text-center md:text-left">
+          <div className="text-center">
             <h3 className="text-lg font-bold text-gold-400 mb-4">Shop</h3>
             <ul className="space-y-2">
               <li><Link href="/shop" className="text-gray-400 hover:text-gold-400 transition-colors text-sm">All Products</Link></li>
               <li className="text-gray-400 text-sm">
                 <span className="block mb-1">Cinnamon Infused Honey</span>
-                <div className="flex gap-2 ml-2">
+                <div className="flex gap-2 ml-2 justify-center">
                   {productLinks.cinnamon250 && <Link href={productLinks.cinnamon250} className="text-gray-500 hover:text-gold-400 transition-colors text-xs">250g</Link>}
                   {productLinks.cinnamon500 && <Link href={productLinks.cinnamon500} className="text-gray-500 hover:text-gold-400 transition-colors text-xs">500g</Link>}
                 </div>
               </li>
               <li className="text-gray-400 text-sm">
                 <span className="block mb-1">Chilli Infused Honey</span>
-                <div className="flex gap-2 ml-2">
+                <div className="flex gap-2 ml-2 justify-center">
                   {productLinks.chilli250 && <Link href={productLinks.chilli250} className="text-gray-500 hover:text-gold-400 transition-colors text-xs">250g</Link>}
                   {productLinks.chilli500 && <Link href={productLinks.chilli500} className="text-gray-500 hover:text-gold-400 transition-colors text-xs">500g</Link>}
                 </div>
               </li>
               <li className="text-gray-400 text-sm">
                 <span className="block mb-1">Acacia Honey</span>
-                <div className="flex gap-2 ml-2">
+                <div className="flex gap-2 ml-2 justify-center">
                   {productLinks.acacia250 && <Link href={productLinks.acacia250} className="text-gray-500 hover:text-gold-400 transition-colors text-xs">250g</Link>}
                   {productLinks.acacia500 && <Link href={productLinks.acacia500} className="text-gray-500 hover:text-gold-400 transition-colors text-xs">500g</Link>}
                 </div>
@@ -106,7 +106,7 @@ const Footer: React.FC = () => {
           </div>
 
           {/* Company */}
-          <div className="text-center md:text-left">
+          <div className="text-center">
             <h3 className="text-lg font-bold text-gold-400 mb-4">Company</h3>
             <ul className="space-y-2">
               <li><Link href="/about" className="text-gray-400 hover:text-gold-400 transition-colors text-sm">About Us</Link></li>
@@ -117,7 +117,7 @@ const Footer: React.FC = () => {
           </div>
 
           {/* Policies */}
-          <div className="text-center md:text-left">
+          <div className="text-center">
             <h3 className="text-lg font-bold text-gold-400 mb-4">Legal</h3>
             <ul className="space-y-2">
               <li><Link href="/privacy-policy" className="text-gray-400 hover:text-gold-400 transition-colors text-sm">Privacy Policy</Link></li>
@@ -127,7 +127,7 @@ const Footer: React.FC = () => {
           </div>
 
           {/* Contact */}
-          <div className="text-center md:text-left">
+          <div className="text-center">
             <h3 className="text-lg font-bold text-gold-400 mb-4">Contact</h3>
             <div className="space-y-2 text-sm text-gray-400">
               <p><span className="font-semibold">Email:</span> nutreopak@gmail.com</p>
@@ -138,7 +138,7 @@ const Footer: React.FC = () => {
 
         {/* Divider */}
         <div className="border-t border-gray-800 pt-8">
-          <div className="flex flex-col md:flex-row justify-center md:justify-between items-center gap-4 text-center md:text-left">
+          <div className="flex flex-col md:flex-row justify-center items-center gap-4 text-center">
             <p className="text-gray-400 text-sm">
               &copy; 2025 NutreoPak. All rights reserved.
             </p>
