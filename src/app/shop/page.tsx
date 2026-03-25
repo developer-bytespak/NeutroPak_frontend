@@ -115,9 +115,9 @@ const ShopPage = () => {
           {/* Sidebar */}
           <aside className="md:col-span-1">
             {/* Price Filter */}
-            <div className="py-4 sm:py-6 border-b border-gray-200">
-              <h3 className="text-xs sm:text-sm font-bold text-gray-900 mb-4 uppercase tracking-wider">Filter by Price</h3>
-              <div className="space-y-4">
+            <div className="py-2 sm:py-6 border-b border-gray-200">
+              <h3 className="hidden sm:block text-xs sm:text-sm font-bold text-gray-900 mb-4 uppercase tracking-wider">Filter by Price</h3>
+              <div className="space-y-2 sm:space-y-4">
                 <input
                   type="range"
                   min="0"
@@ -131,14 +131,14 @@ const ShopPage = () => {
                   }
                   className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-red-900"
                 />
-                <div className="flex justify-between items-center pt-2">
+                <div className="hidden sm:flex justify-between items-center pt-1 sm:pt-2">
                   <p className="text-gray-700 font-medium text-xs sm:text-sm">
                     Price: ₨ {priceRange[0]} — ₨ {priceRange[1]}
                   </p>
                 </div>
                 <button 
                   onClick={handleFilterClick}
-                  className="text-xs font-bold text-white bg-red-900 hover:bg-red-800 transition-colors uppercase tracking-wider w-full text-center py-2 rounded"
+                  className="hidden sm:block text-xs font-bold text-white bg-red-900 hover:bg-red-800 transition-colors uppercase tracking-wider w-full text-center py-2 rounded"
                 >
                   Apply Filters
                 </button>
@@ -151,7 +151,7 @@ const ShopPage = () => {
                       stockStatus: null,
                     });
                   }}
-                  className="text-xs font-bold text-gray-700 hover:text-red-900 transition-colors uppercase tracking-wider w-full text-center py-2 border border-gray-300 rounded"
+                  className="hidden sm:block text-xs font-bold text-gray-700 hover:text-red-900 transition-colors uppercase tracking-wider w-full text-center py-2 border border-gray-300 rounded"
                 >
                   Reset Filters
                 </button>

@@ -121,7 +121,7 @@ const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ params }) => {
 
             {/* Product Details */}
             <div>
-              <div className="mb-6">
+              <div className="mb-6 hidden sm:block">
                 <Link href="/" className="text-gray-600 hover:text-gray-800 text-sm">Home</Link> / 
                 <Link href="/shop" className="text-gray-600 hover:text-gray-800 text-sm"> Shop</Link> / 
                 <span className="text-gray-800 text-sm"> {product.category}</span>
