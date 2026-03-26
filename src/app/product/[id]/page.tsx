@@ -221,7 +221,7 @@ const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ params }) => {
                 <div className="flex justify-between">
                   <strong className="text-gray-700">Stock Status:</strong>
                   <span className={product.stock > 0 ? 'text-green-600' : 'text-red-600'}>
-                    {product.stock > 0 ? `In Stock (${product.stock})` : 'Out of Stock'}
+                    {product.stock > 0 ? 'In Stock' : 'Out of Stock'}
                   </span>
                 </div>
               </div>

@@ -301,7 +301,7 @@ const HomePage = () => {
       <FeaturesSlider />
 
       {/* Why Choose Section */}
-      <section className="py-12 sm:py-16 md:py-20 bg-yellow-200 px-4 sm:px-6 lg:px-8">
+      <section className="py-12 sm:py-16 md:py-20 bg-[#fee86399] px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 items-center">
             {/* Left Side */}
@@ -329,8 +329,8 @@ const HomePage = () => {
             {/* Right Side - Cards */}
             <div className="space-y-3">
               {valueProps.map((prop, idx) => (
-                <div key={idx} className="group bg-yellow-300 rounded-lg p-3 sm:p-3 md:p-5 flex gap-3 items-start border-2 border-yellow-400 hover:shadow-lg transition-shadow">
-                  <div className="bg-yellow-300 rounded-full w-14 sm:w-16 md:w-18 h-14 sm:h-16 md:h-18 flex items-center justify-center flex-shrink-0 text-lg sm:text-xl md:text-2xl group-hover:bg-red-800 transition-colors duration-300">
+                <div key={idx} className="group bg-[#f4d03f80] rounded-lg p-3 sm:p-3 md:p-5 flex gap-3 items-start border-2 border-[#f4d03f80] hover:shadow-lg transition-shadow">
+                  <div className="bg-[#f4d03f80] rounded-full w-14 sm:w-16 md:w-18 h-14 sm:h-16 md:h-18 flex items-center justify-center flex-shrink-0 text-lg sm:text-xl md:text-2xl group-hover:bg-red-900 transition-colors duration-300">
                     {prop.icon}
                   </div>
                   <div>

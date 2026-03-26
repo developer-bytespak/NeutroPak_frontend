@@ -40,7 +40,7 @@ const Navbar: React.FC = () => {
 
   if (!isHydrated) {
     return (
-      <nav className="sticky top-0 z-50 bg-white shadow-md">
+      <nav className="sticky top-0 z-50 bg-gold-50 shadow-md">
         <div className="max-w-7xl mx-auto px-3 xs:px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-20 xs:h-28 sm:h-28">
             <div className="flex-1 md:flex-none flex justify-start items-center h-full">
@@ -88,7 +88,7 @@ const Navbar: React.FC = () => {
 
   return (
     <>
-      <nav className="sticky top-0 z-50 bg-white shadow-md">
+      <nav className="sticky top-0 z-50 bg-gold-50 shadow-md">
         <div className="max-w-7xl mx-auto px-3 xs:px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-20 xs:h-28 sm:h-28">
             {/* Logo */}
@@ -170,7 +170,7 @@ const Navbar: React.FC = () => {
           >
             ✕
           </button>
-          <div className="mt-20 xs:mt-24 flex flex-col w-full">
+          <div className="mt-28 xs:mt-30 flex flex-col w-full">
             <Link
               href="/about"
               className="text-base font-bold text-gray-800 hover:text-gold-600 transition-colors py-4 px-4 xs:px-6 border-b border-gray-300 w-full"
