@@ -23,6 +23,7 @@ module.exports = {
           800: '#804020',
           900: '#5c2c0f',
         },
+        brandBrown: '#957f46',
       },
       fontFamily: {
         sans: ['system-ui', 'sans-serif'],
