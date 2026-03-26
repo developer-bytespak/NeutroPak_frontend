@@ -170,7 +170,7 @@ const Navbar: React.FC = () => {
           >
             ✕
           </button>
-          <div className="mt-20 xs:mt-24 flex flex-col w-full">
+          <div className="mt-28 xs:mt-30 flex flex-col w-full">
             <Link
               href="/about"
               className="text-base font-bold text-gray-800 hover:text-gold-600 transition-colors py-4 px-4 xs:px-6 border-b border-gray-300 w-full"
