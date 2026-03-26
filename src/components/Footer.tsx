@@ -55,7 +55,7 @@ const Footer: React.FC = () => {
     <footer className="bg-gray-100 text-gray-800 mt-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16">
         {/* Footer Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 mb-8 mt-16">
           {/* About */}
           <div className="text-center -mt-16">
             <div className="flex items-center justify-center gap-2 mb-4 h-72 sm:h-auto">
@@ -69,7 +69,7 @@ const Footer: React.FC = () => {
                 />
               </Link>
             </div>
-            <p className="text-gray-600 text-sm leading-relaxed -mt-12">
+            <p className="text-gray-600 text-sm leading-relaxed -mt-20">
               Premium raw honey from trusted beekeepers. Pure, natural, and lab-tested.
             </p>
             <div className="flex gap-4 mt-4 justify-center">
